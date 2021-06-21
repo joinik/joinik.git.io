@@ -391,6 +391,48 @@
   </entry>
   <entry>
     <title></title>
+    <url>/2021/04/23/docker/</url>
+    <content><![CDATA[<h3 id="镜像images"><a href="#镜像images" class="headerlink" title="镜像images"></a>镜像images</h3><ol>
+<li>获取镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dock pull [选项] [Docker Registry 地址[:端口号]&#x2F;]仓库名[:标签]</span><br></pre></td></tr></table></figure></li>
+<li>运行<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ docker run -it --rm ubuntu:18.04 bash</span><br><span class="line">root@e7009c6ce357:&#x2F;# cat &#x2F;etc&#x2F;os-release</span><br><span class="line">NAME&#x3D;&quot;Ubuntu&quot;</span><br><span class="line">VERSION&#x3D;&quot;18.04.1 LTS (Bionic Beaver)&quot;</span><br><span class="line">ID&#x3D;ubuntu</span><br><span class="line">ID_LIKE&#x3D;debian</span><br><span class="line">PRETTY_NAME&#x3D;&quot;Ubuntu 18.04.1 LTS&quot;</span><br><span class="line">VERSION_ID&#x3D;&quot;18.04&quot;</span><br><span class="line">HOME_URL&#x3D;&quot;https:&#x2F;&#x2F;www.ubuntu.com&#x2F;&quot;</span><br><span class="line">SUPPORT_URL&#x3D;&quot;https:&#x2F;&#x2F;help.ubuntu.com&#x2F;&quot;</span><br><span class="line">BUG_REPORT_URL&#x3D;&quot;https:&#x2F;&#x2F;bugs.launchpad.net&#x2F;ubuntu&#x2F;&quot;</span><br><span class="line">PRIVACY_POLICY_URL&#x3D;&quot;https:&#x2F;&#x2F;www.ubuntu.com&#x2F;legal&#x2F;terms-and-policies&#x2F;privacy-policy&quot;</span><br><span class="line">VERSION_CODENAME&#x3D;bionic</span><br><span class="line">UBUNTU_CODENAME&#x3D;bionic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>docker run 就是运行容器的命令</strong></p>
+<ul>
+<li><code>-it</code> ：这是两个参数， 一个是<code>-i</code>  交互式操作，一个是’-t’ 终端，我们这里打算 进入<code>bash</code> 执行一些命令并</li>
+<li>–rm：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 docker rm。我们这里只是随便执行个命令，看看结果，不需要排障和保留结果，因此使用 –rm 可以避免浪费空间</li>
+<li>ubuntu:18.04：这是指用 ubuntu:18.04 镜像为基础来启动容器。</li>
+<li>bash：放在镜像名后的是 命令，这里我们希望有个交互式 Shell，因此用的是 bash</li>
+<li>exit 退出了这个容器</li>
+</ul>
+<h5 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker images</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="docker.assets/642_1.png"></p>
+<h5 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run ... -v 主机目录:容器中的目录 ...</span><br></pre></td></tr></table></figure>
+<h5 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker cp 源目录 目标目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker images -----&gt; 查看已下载的镜像</span><br><span class="line">docker rmi 镜像名称:标签名      -----&gt; 删除已下载镜像</span><br><span class="line">docker search 镜像   -----&gt;   从官方仓库（hub.docker.com）查找镜像</span><br><span class="line">docker pull 镜像名称:标签名   -----&gt; 标签名默认是 latest，代表最新版本。</span><br><span class="line">docker pull 镜像名 ------&gt;下载最新版</span><br><span class="line">docker ps      -----&gt;  列出运行中的容器（运行中）</span><br><span class="line">docker ps -a  ------&gt; 列出所有的容器（运行、未运行）</span><br><span class="line">docker ps -a 查看所有的容器</span><br><span class="line">CONTAINER ID   IMAGE        COMMAND     CREATED         STATUS         PORTS     NAMES</span><br><span class="line">7c291fb47b70   python:3.9   &quot;python3&quot;   4 minutes ago   Up 4 minutes             priceless_almeida</span><br><span class="line">docker stop 容器名称id  -----&gt;  停止容器</span><br><span class="line">docker start 容器名称id   -----&gt;  启动容器</span><br><span class="line">docker start -i 容器的id  ---&gt;在将一个停止的容器运行起来的同时，指定交互模式</span><br><span class="line">docker restart 容器名称id  -----&gt;  重启容器</span><br><span class="line">docker rm 容器id   -----&gt; 删除 已经停止运行的容器</span><br><span class="line">docker rm $(docker ps -a -q)    -----&gt; 删除所有停止运行的容器 （慎用）</span><br><span class="line">docker rm -f 容器的id  -----&gt; 强制删除容器 （无论是否停止运行）</span><br><span class="line">docker rmi  镜像的id</span><br><span class="line">docker run 镜像名字:版本  -----&gt;创建一个容器且运行</span><br><span class="line">                -it ---&gt;交互模式</span><br><span class="line">docker exec  执行容器中的指令</span><br></pre></td></tr></table></figure>
+<p><strong>Dockerfile 参数</strong></p>
+<p>FROM：指定基础镜像，必须为第一个命令<br>MAINTAINER: 维护者信息<br>ENV：设置环境变量<br>RUN：构建镜像时执行的命令<br>ADD：将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget<br>EXPOSE：指定于外界交互的端口<br>VOLUME：用于指定持久化目录<br>WORKDIR：工作目录，类似于cd命令<br><img src="docker.assets/643_1.png"></p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>使用MySQL镜像</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d --name&#x3D;mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.5</span><br></pre></td></tr></table></figure>
+
+<p>命令说明：</p>
+<ul>
+<li>–name=mysql：为容器指定一个名称为mysql</li>
+<li>-p 3306:3306：将容器的（后面的3306） 3306 端口映射到主机的（前面的3306） 3306端口。</li>
+<li>-d：后台运行容器，并返回容器ID。</li>
+<li>-e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码为123456。</li>
+<li>mysql:5.5 要使用的镜像的名称</li>
+</ul>
+<h4 id="网络-指令"><a href="#网络-指令" class="headerlink" title="网络 指令"></a>网络 指令</h4><p><strong>查看 网络列表</strong><br><code>docker network ls</code><br><img src="docker.assets/645_1.png"></p>
+<p><strong>当我们在使用docker-compose构建服务时，会自动创建一个新的网络如下</strong><br><strong>查看这个网络中所有的容器ip以及其他信息</strong><br><code>docker network inspect 网络id</code><br><img src="docker.assets/644_1.png"></p>
+<p><strong>新建一个网络</strong><br><code>$ docker network create -d bridge my-net</code></p>
+<p><strong>运行容器连接到my-net 网络</strong><br><code>docker run --rm -it --network my-net my_flask:1.0 bash</code></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>/2021/04/23/docker02/</url>
     <content><![CDATA[<h4 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h4><ol>
 <li>下载一个基本的镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu:16.04</span><br></pre></td></tr></table></figure></li>
@@ -440,44 +482,30 @@
   </entry>
   <entry>
     <title></title>
-    <url>/2021/04/23/docker/</url>
-    <content><![CDATA[<h3 id="镜像images"><a href="#镜像images" class="headerlink" title="镜像images"></a>镜像images</h3><ol>
-<li>获取镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dock pull [选项] [Docker Registry 地址[:端口号]&#x2F;]仓库名[:标签]</span><br></pre></td></tr></table></figure></li>
-<li>运行<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ docker run -it --rm ubuntu:18.04 bash</span><br><span class="line">root@e7009c6ce357:&#x2F;# cat &#x2F;etc&#x2F;os-release</span><br><span class="line">NAME&#x3D;&quot;Ubuntu&quot;</span><br><span class="line">VERSION&#x3D;&quot;18.04.1 LTS (Bionic Beaver)&quot;</span><br><span class="line">ID&#x3D;ubuntu</span><br><span class="line">ID_LIKE&#x3D;debian</span><br><span class="line">PRETTY_NAME&#x3D;&quot;Ubuntu 18.04.1 LTS&quot;</span><br><span class="line">VERSION_ID&#x3D;&quot;18.04&quot;</span><br><span class="line">HOME_URL&#x3D;&quot;https:&#x2F;&#x2F;www.ubuntu.com&#x2F;&quot;</span><br><span class="line">SUPPORT_URL&#x3D;&quot;https:&#x2F;&#x2F;help.ubuntu.com&#x2F;&quot;</span><br><span class="line">BUG_REPORT_URL&#x3D;&quot;https:&#x2F;&#x2F;bugs.launchpad.net&#x2F;ubuntu&#x2F;&quot;</span><br><span class="line">PRIVACY_POLICY_URL&#x3D;&quot;https:&#x2F;&#x2F;www.ubuntu.com&#x2F;legal&#x2F;terms-and-policies&#x2F;privacy-policy&quot;</span><br><span class="line">VERSION_CODENAME&#x3D;bionic</span><br><span class="line">UBUNTU_CODENAME&#x3D;bionic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
+    <url>/2021/04/23/docker03/</url>
+    <content><![CDATA[<h3 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h3><ol>
+<li>创建docker-compose.yml <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">    redis:</span><br><span class="line">        image: redis</span><br><span class="line">        expose:</span><br><span class="line">            - 6379</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;6389:6379&quot;</span><br><span class="line">    mysql:</span><br><span class="line">        image: mysql:5.5</span><br><span class="line">        expose:</span><br><span class="line">            - 3306</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;3307:3306&quot;</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: python</span><br><span class="line">            MYSQL_USER: root</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;02_mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">    flask:</span><br><span class="line">        build: .&#x2F;01_flask</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;01_flask&#x2F;project:&#x2F;home&#x2F;project</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;5000:5000&quot;</span><br><span class="line">        depends_on:</span><br><span class="line">            - mysql</span><br><span class="line">            - redis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="一些常用的命令"><a href="#一些常用的命令" class="headerlink" title="一些常用的命令"></a>一些常用的命令</h4></li>
 </ol>
-<p><strong>docker run 就是运行容器的命令</strong></p>
 <ul>
-<li><code>-it</code> ：这是两个参数， 一个是<code>-i</code>  交互式操作，一个是’-t’ 终端，我们这里打算 进入<code>bash</code> 执行一些命令并</li>
-<li>–rm：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 docker rm。我们这里只是随便执行个命令，看看结果，不需要排障和保留结果，因此使用 –rm 可以避免浪费空间</li>
-<li>ubuntu:18.04：这是指用 ubuntu:18.04 镜像为基础来启动容器。</li>
-<li>bash：放在镜像名后的是 命令，这里我们希望有个交互式 Shell，因此用的是 bash</li>
-<li>exit 退出了这个容器</li>
+<li>生成容器并运行<ul>
+<li><code>docker-compose up</code></li>
 </ul>
-<h5 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker images</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="docker.assets/642_1.png"></p>
-<h5 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run ... -v 主机目录:容器中的目录 ...</span><br></pre></td></tr></table></figure>
-<h5 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker cp 源目录 目标目录</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker images -----&gt; 查看已下载的镜像</span><br><span class="line">docker rmi 镜像名称:标签名      -----&gt; 删除已下载镜像</span><br><span class="line">docker search 镜像   -----&gt;   从官方仓库（hub.docker.com）查找镜像</span><br><span class="line">docker pull 镜像名称:标签名   -----&gt; 标签名默认是 latest，代表最新版本。</span><br><span class="line">docker pull 镜像名 ------&gt;下载最新版</span><br><span class="line">docker ps      -----&gt;  列出运行中的容器（运行中）</span><br><span class="line">docker ps -a  ------&gt; 列出所有的容器（运行、未运行）</span><br><span class="line">docker ps -a 查看所有的容器</span><br><span class="line">CONTAINER ID   IMAGE        COMMAND     CREATED         STATUS         PORTS     NAMES</span><br><span class="line">7c291fb47b70   python:3.9   &quot;python3&quot;   4 minutes ago   Up 4 minutes             priceless_almeida</span><br><span class="line">docker stop 容器名称id  -----&gt;  停止容器</span><br><span class="line">docker start 容器名称id   -----&gt;  启动容器</span><br><span class="line">docker start -i 容器的id  ---&gt;在将一个停止的容器运行起来的同时，指定交互模式</span><br><span class="line">docker restart 容器名称id  -----&gt;  重启容器</span><br><span class="line">docker rm 容器id   -----&gt; 删除 已经停止运行的容器</span><br><span class="line">docker rm $(docker ps -a -q)    -----&gt; 删除所有停止运行的容器 （慎用）</span><br><span class="line">docker rm -f 容器的id  -----&gt; 强制删除容器 （无论是否停止运行）</span><br><span class="line">docker rmi  镜像的id</span><br><span class="line">docker run 镜像名字:版本  -----&gt;创建一个容器且运行</span><br><span class="line">                -it ---&gt;交互模式</span><br><span class="line">docker exec  执行容器中的指令</span><br></pre></td></tr></table></figure>
-<p><strong>Dockerfile 参数</strong></p>
-<p>FROM：指定基础镜像，必须为第一个命令<br>MAINTAINER: 维护者信息<br>ENV：设置环境变量<br>RUN：构建镜像时执行的命令<br>ADD：将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget<br>EXPOSE：指定于外界交互的端口<br>VOLUME：用于指定持久化目录<br>WORKDIR：工作目录，类似于cd命令<br><img src="docker.assets/643_1.png"></p>
-<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>使用MySQL镜像</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d --name&#x3D;mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.5</span><br></pre></td></tr></table></figure>
-
-<p>命令说明：</p>
-<ul>
-<li>–name=mysql：为容器指定一个名称为mysql</li>
-<li>-p 3306:3306：将容器的（后面的3306） 3306 端口映射到主机的（前面的3306） 3306端口。</li>
-<li>-d：后台运行容器，并返回容器ID。</li>
-<li>-e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码为123456。</li>
-<li>mysql:5.5 要使用的镜像的名称</li>
+</li>
+<li>删除容器 <ul>
+<li><code>docker-compose down</code></li>
 </ul>
-<h4 id="网络-指令"><a href="#网络-指令" class="headerlink" title="网络 指令"></a>网络 指令</h4><p><strong>查看 网络列表</strong><br><code>docker network ls</code><br><img src="docker.assets/645_1.png"></p>
-<p><strong>当我们在使用docker-compose构建服务时，会自动创建一个新的网络如下</strong><br><strong>查看这个网络中所有的容器ip以及其他信息</strong><br><code>docker network inspect 网络id</code><br><img src="docker.assets/644_1.png"></p>
-<p><strong>新建一个网络</strong><br><code>$ docker network create -d bridge my-net</code></p>
-<p><strong>运行容器连接到my-net 网络</strong><br><code>docker run --rm -it --network my-net my_flask:1.0 bash</code></p>
+</li>
+<li>开启容器并运行<ul>
+<li><code>docker-compose start</code></li>
+</ul>
+</li>
+<li>停止容器运行<ul>
+<li><code>docker-compose stop</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>depends_on</strong><br><img src="docker03.assets/647_1.png"></p>
 ]]></content>
   </entry>
   <entry>
@@ -512,34 +540,6 @@
       <tags>
         <tag>git 命令</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/04/23/docker03/</url>
-    <content><![CDATA[<h3 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h3><ol>
-<li>创建docker-compose.yml <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">    redis:</span><br><span class="line">        image: redis</span><br><span class="line">        expose:</span><br><span class="line">            - 6379</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;6389:6379&quot;</span><br><span class="line">    mysql:</span><br><span class="line">        image: mysql:5.5</span><br><span class="line">        expose:</span><br><span class="line">            - 3306</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;3307:3306&quot;</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: python</span><br><span class="line">            MYSQL_USER: root</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;02_mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">    flask:</span><br><span class="line">        build: .&#x2F;01_flask</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;01_flask&#x2F;project:&#x2F;home&#x2F;project</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;5000:5000&quot;</span><br><span class="line">        depends_on:</span><br><span class="line">            - mysql</span><br><span class="line">            - redis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="一些常用的命令"><a href="#一些常用的命令" class="headerlink" title="一些常用的命令"></a>一些常用的命令</h4></li>
-</ol>
-<ul>
-<li>生成容器并运行<ul>
-<li><code>docker-compose up</code></li>
-</ul>
-</li>
-<li>删除容器 <ul>
-<li><code>docker-compose down</code></li>
-</ul>
-</li>
-<li>开启容器并运行<ul>
-<li><code>docker-compose start</code></li>
-</ul>
-</li>
-<li>停止容器运行<ul>
-<li><code>docker-compose stop</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>depends_on</strong><br><img src="docker03.assets/647_1.png"></p>
-]]></content>
   </entry>
   <entry>
     <title></title>
@@ -897,6 +897,11 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/06/20/vue3.0/</url>
+    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
+  </entry>
+  <entry>
     <title>xpath 语法</title>
     <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<p> xpath 语法</p>
@@ -958,11 +963,6 @@
         <tag>xpath 语法</tag>
         <tag>爬虫必备-语法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/06/20/vue3.0/</url>
-    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
   </entry>
   <entry>
     <title>flask 项目使用redis数据库的原因</title>
@@ -1071,149 +1071,6 @@
       </categories>
       <tags>
         <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 排序算法</title>
-    <url>/2021/01/15/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort/</url>
-    <content><![CDATA[<p>Python 排序算法</p>
-<a id="more"></a>
-
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><ol>
-<li><p>树（节点）， 子节点（孩子） 左节点，右节点</p>
-</li>
-<li><p>满二叉树    全都是满的</p>
-</li>
-<li><p>完全二叉树    最后一层可以不满  但集中在左侧</p>
-</li>
-<li><p>堆  小顶（根）堆    大顶（根）堆</p>
-</li>
-</ol>
-<ul>
-<li>在二叉树中，第i层的节点总数不超过2^(i-1)</li>
-<li>对于任意一棵二叉树，如果其叶子节点数为n0，而度数为2的节点总数为n2， 则n0=n2+1</li>
-<li>具有n个节点的完全二叉树的深度为int(log2n) +1</li>
-</ul>
-<p><img src="http://qny.jkraise.top/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort.assets/1610506218125.png~01style" alt="1610506218125"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 从小到大 排序 那么就把树调整为大根堆</span><br><span class="line"># 从大到小 排序 那么就把树调整为小根堆</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def adjustHeap(li, i, length):</span><br><span class="line">    # 定义左孩子 下标</span><br><span class="line">    j &#x3D; 2 * i + 1  # 左孩子节点位置</span><br><span class="line">    # 把i位置保存下来</span><br><span class="line">    temp &#x3D; li[i]</span><br><span class="line">    # 列表的长度</span><br><span class="line"></span><br><span class="line">    while j &lt; length:</span><br><span class="line">        # 判断右孩子 是否存在 并且右孩子是否比左孩子大</span><br><span class="line">        if j + 1 &lt; length and li[j + 1] &gt; li[j]:</span><br><span class="line">            j &#x3D; j + 1</span><br><span class="line">        if li[j] &gt; temp:</span><br><span class="line">        	# 交换位置</span><br><span class="line">            li[i] &#x3D; li[j]</span><br><span class="line">            # 把i的位置移动到j   对i进行大根堆调整</span><br><span class="line">            i &#x3D; j</span><br><span class="line">            j &#x3D; 2 * i + 1  # 重新计算左孩子的位置</span><br><span class="line"></span><br><span class="line">        else:  # temp 更大 比较结束</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    li[i] &#x3D; temp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heap_sort(li):</span><br><span class="line">    length &#x3D; len(li)</span><br><span class="line">    # range(4,-1,-1)</span><br><span class="line">    # 从最后一个非叶节点开始 循环构造大根堆</span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        adjustHeap(li, i, length)</span><br><span class="line"></span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        li[0], li[i] &#x3D; li[i], li[0]</span><br><span class="line"></span><br><span class="line">        adjustHeap(li, 0, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    lista &#x3D; [22, 15, 18, 17, 14, 2, 12, 1, 23, 10, 33]</span><br><span class="line"></span><br><span class="line">    a &#x3D; int(time.time() * 1000)</span><br><span class="line">    heap_sort(lista)</span><br><span class="line">    b &#x3D; int(time.time() * 1000)</span><br><span class="line">    print(b - a)</span><br><span class="line">    print(&quot;--------------&quot;)</span><br><span class="line">    print(lista)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h4><p> 每次能够排除掉一半的数据，查找的效率非常高，但是局限性比较大。<br>必须是有序序列才可以使用二分查找。 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def binary_search(lis,right, left,item):</span><br><span class="line">	# lis 有序列表</span><br><span class="line">	# left 左指针 0</span><br><span class="line">	# right 右指针 len(lis)-1</span><br><span class="line">	# item  查找元素 </span><br><span class="line">    while left &lt;&#x3D;right :  </span><br><span class="line">        mid &#x3D; (right + left) &#x2F;&#x2F;2    # 获取中间位置，数字的索引</span><br><span class="line">        if item &lt; lis[mid]:			#如果查询的数字比中间值小，就去二分之后的左边找</span><br><span class="line">            right &#x3D; mid -1			# 来到左边之后 右边边界 mid -1</span><br><span class="line"></span><br><span class="line">        elif item &gt; lis[mid]:		#如果查询的数字比中间值大，就去二分之后的右边找</span><br><span class="line">            left &#x3D; mid +1			# 来到右边之后 右边边界 mid +1</span><br><span class="line">        else:</span><br><span class="line">            return mid # 返回中间值的下标</span><br><span class="line">	return -1 # 如果 循环结束，左边大于右边 没有找到元素  </span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">    print(lis)</span><br><span class="line">    lis.sort()</span><br><span class="line">    print(lis)    </span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis)-1,0,num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)  </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"># 2 ，递归算法</span><br><span class="line">def binary_search(lis, right, left, item):</span><br><span class="line">    # 结束条件</span><br><span class="line">    if left &gt; right:</span><br><span class="line">        return -1  # 结束递归</span><br><span class="line">    mid &#x3D; (left + right) &#x2F;&#x2F; 2</span><br><span class="line">    if item &lt; lis[mid]:</span><br><span class="line">        right &#x3D; mid - 1</span><br><span class="line">    elif item &gt; lis[mid]:</span><br><span class="line">        left &#x3D; mid + 1</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        return mid</span><br><span class="line">    return binary_search(lis, right, left, item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">print(lis)</span><br><span class="line">lis.sort()</span><br><span class="line">print(lis)</span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis) - 1, 0, num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_list</span>(<span class="params">list01</span>):</span></span><br><span class="line">	<span class="comment"># list01  一个列表</span></span><br><span class="line">	n = len(list01)</span><br><span class="line">	<span class="comment"># 递归结束条件</span></span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">		<span class="keyword">return</span> list01 </span><br><span class="line"></span><br><span class="line">	<span class="comment"># 取个中间值</span></span><br><span class="line">	mid = n //<span class="number">2</span></span><br><span class="line">	<span class="comment"># 分成左右两个列表 </span></span><br><span class="line">	<span class="comment"># left 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	left_li = merge_list(list01[:mid])</span><br><span class="line">	<span class="comment"># right 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	right_li = merge_list(list01[mid:])</span><br><span class="line">	left_pointer, right_pointer =<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">	ret=[]</span><br><span class="line">	<span class="keyword">while</span> left_pointer &lt; len(left_li) <span class="keyword">and</span> right_pointer &lt; len(right_li):</span><br><span class="line">		<span class="keyword">if</span> left_li[left_pointer] &lt;= right_li[right_pointer]:</span><br><span class="line">			ret.append(left_li[left_pointer])</span><br><span class="line">			left_pointer +=<span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ret.append(right_li[right_pointer])</span><br><span class="line">			right_pointer +=<span class="number">1</span></span><br><span class="line">	ret += left_li[left_pointer:]</span><br><span class="line">	ret += right_li[right_pointer:]</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__mian__&quot;</span>:</span><br><span class="line">    ret = merge_list([<span class="number">12</span>, <span class="number">32321</span>, <span class="number">3211</span>, <span class="number">212</span>, <span class="number">3343</span>, <span class="number">222</span>, <span class="number">112</span>, <span class="number">121</span>])</span><br><span class="line">    print(ret)</span><br></pre></td></tr></table></figure>
-
-<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def insert_sort(mylist):</span><br><span class="line">    for i in range(1,len(mylist)):</span><br><span class="line">        pre &#x3D; i - 1</span><br><span class="line">        current &#x3D; mylist[i]</span><br><span class="line"></span><br><span class="line">        while pre &gt;&#x3D; 0 and mylist[pre] &gt; current:</span><br><span class="line">            mylist[pre + 1] &#x3D; mylist[pre]</span><br><span class="line">            pre -&#x3D; 1</span><br><span class="line">        mylist[pre + 1] &#x3D; current</span><br><span class="line">    return mylist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    ret &#x3D; insert_sort([12, 2323, 123, 2123, 321, 23, 3232, 1123, 11233])</span><br><span class="line">    print(ret)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="快排排序"><a href="#快排排序" class="headerlink" title="快排排序"></a>快排排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kuaipai</span>(<span class="params">lis,left,right</span>):</span></span><br><span class="line">    <span class="comment"># 递归结束条件</span></span><br><span class="line">    <span class="keyword">if</span> left&gt; right:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="comment"># 定义基准数</span></span><br><span class="line">    base = lis[left]</span><br><span class="line">    <span class="keyword">while</span> j &gt;i:</span><br><span class="line">        <span class="keyword">while</span> lis[j] &gt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            j -=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> lis[i] &lt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            i +=<span class="number">1</span></span><br><span class="line">        lis[i].lis[j] = lis[j],lis[i]</span><br><span class="line">    lis[left] = lis[i]</span><br><span class="line">    lis[i] = base</span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>排序算法</category>
-        <category>Python排序算法</category>
-        <category>数据算法</category>
-      </categories>
-      <tags>
-        <tag>Python排序算法</tag>
-        <tag>排序算法</tag>
-        <tag>数据算法</tag>
       </tags>
   </entry>
   <entry>
@@ -1381,6 +1238,149 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
       <tags>
         <tag>短信验证码</tag>
         <tag>网站验证方式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 排序算法</title>
+    <url>/2021/01/15/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort/</url>
+    <content><![CDATA[<p>Python 排序算法</p>
+<a id="more"></a>
+
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><ol>
+<li><p>树（节点）， 子节点（孩子） 左节点，右节点</p>
+</li>
+<li><p>满二叉树    全都是满的</p>
+</li>
+<li><p>完全二叉树    最后一层可以不满  但集中在左侧</p>
+</li>
+<li><p>堆  小顶（根）堆    大顶（根）堆</p>
+</li>
+</ol>
+<ul>
+<li>在二叉树中，第i层的节点总数不超过2^(i-1)</li>
+<li>对于任意一棵二叉树，如果其叶子节点数为n0，而度数为2的节点总数为n2， 则n0=n2+1</li>
+<li>具有n个节点的完全二叉树的深度为int(log2n) +1</li>
+</ul>
+<p><img src="http://qny.jkraise.top/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort.assets/1610506218125.png~01style" alt="1610506218125"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 从小到大 排序 那么就把树调整为大根堆</span><br><span class="line"># 从大到小 排序 那么就把树调整为小根堆</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def adjustHeap(li, i, length):</span><br><span class="line">    # 定义左孩子 下标</span><br><span class="line">    j &#x3D; 2 * i + 1  # 左孩子节点位置</span><br><span class="line">    # 把i位置保存下来</span><br><span class="line">    temp &#x3D; li[i]</span><br><span class="line">    # 列表的长度</span><br><span class="line"></span><br><span class="line">    while j &lt; length:</span><br><span class="line">        # 判断右孩子 是否存在 并且右孩子是否比左孩子大</span><br><span class="line">        if j + 1 &lt; length and li[j + 1] &gt; li[j]:</span><br><span class="line">            j &#x3D; j + 1</span><br><span class="line">        if li[j] &gt; temp:</span><br><span class="line">        	# 交换位置</span><br><span class="line">            li[i] &#x3D; li[j]</span><br><span class="line">            # 把i的位置移动到j   对i进行大根堆调整</span><br><span class="line">            i &#x3D; j</span><br><span class="line">            j &#x3D; 2 * i + 1  # 重新计算左孩子的位置</span><br><span class="line"></span><br><span class="line">        else:  # temp 更大 比较结束</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    li[i] &#x3D; temp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heap_sort(li):</span><br><span class="line">    length &#x3D; len(li)</span><br><span class="line">    # range(4,-1,-1)</span><br><span class="line">    # 从最后一个非叶节点开始 循环构造大根堆</span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        adjustHeap(li, i, length)</span><br><span class="line"></span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        li[0], li[i] &#x3D; li[i], li[0]</span><br><span class="line"></span><br><span class="line">        adjustHeap(li, 0, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    lista &#x3D; [22, 15, 18, 17, 14, 2, 12, 1, 23, 10, 33]</span><br><span class="line"></span><br><span class="line">    a &#x3D; int(time.time() * 1000)</span><br><span class="line">    heap_sort(lista)</span><br><span class="line">    b &#x3D; int(time.time() * 1000)</span><br><span class="line">    print(b - a)</span><br><span class="line">    print(&quot;--------------&quot;)</span><br><span class="line">    print(lista)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h4><p> 每次能够排除掉一半的数据，查找的效率非常高，但是局限性比较大。<br>必须是有序序列才可以使用二分查找。 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def binary_search(lis,right, left,item):</span><br><span class="line">	# lis 有序列表</span><br><span class="line">	# left 左指针 0</span><br><span class="line">	# right 右指针 len(lis)-1</span><br><span class="line">	# item  查找元素 </span><br><span class="line">    while left &lt;&#x3D;right :  </span><br><span class="line">        mid &#x3D; (right + left) &#x2F;&#x2F;2    # 获取中间位置，数字的索引</span><br><span class="line">        if item &lt; lis[mid]:			#如果查询的数字比中间值小，就去二分之后的左边找</span><br><span class="line">            right &#x3D; mid -1			# 来到左边之后 右边边界 mid -1</span><br><span class="line"></span><br><span class="line">        elif item &gt; lis[mid]:		#如果查询的数字比中间值大，就去二分之后的右边找</span><br><span class="line">            left &#x3D; mid +1			# 来到右边之后 右边边界 mid +1</span><br><span class="line">        else:</span><br><span class="line">            return mid # 返回中间值的下标</span><br><span class="line">	return -1 # 如果 循环结束，左边大于右边 没有找到元素  </span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">    print(lis)</span><br><span class="line">    lis.sort()</span><br><span class="line">    print(lis)    </span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis)-1,0,num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)  </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"># 2 ，递归算法</span><br><span class="line">def binary_search(lis, right, left, item):</span><br><span class="line">    # 结束条件</span><br><span class="line">    if left &gt; right:</span><br><span class="line">        return -1  # 结束递归</span><br><span class="line">    mid &#x3D; (left + right) &#x2F;&#x2F; 2</span><br><span class="line">    if item &lt; lis[mid]:</span><br><span class="line">        right &#x3D; mid - 1</span><br><span class="line">    elif item &gt; lis[mid]:</span><br><span class="line">        left &#x3D; mid + 1</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        return mid</span><br><span class="line">    return binary_search(lis, right, left, item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">print(lis)</span><br><span class="line">lis.sort()</span><br><span class="line">print(lis)</span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis) - 1, 0, num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_list</span>(<span class="params">list01</span>):</span></span><br><span class="line">	<span class="comment"># list01  一个列表</span></span><br><span class="line">	n = len(list01)</span><br><span class="line">	<span class="comment"># 递归结束条件</span></span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">		<span class="keyword">return</span> list01 </span><br><span class="line"></span><br><span class="line">	<span class="comment"># 取个中间值</span></span><br><span class="line">	mid = n //<span class="number">2</span></span><br><span class="line">	<span class="comment"># 分成左右两个列表 </span></span><br><span class="line">	<span class="comment"># left 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	left_li = merge_list(list01[:mid])</span><br><span class="line">	<span class="comment"># right 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	right_li = merge_list(list01[mid:])</span><br><span class="line">	left_pointer, right_pointer =<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">	ret=[]</span><br><span class="line">	<span class="keyword">while</span> left_pointer &lt; len(left_li) <span class="keyword">and</span> right_pointer &lt; len(right_li):</span><br><span class="line">		<span class="keyword">if</span> left_li[left_pointer] &lt;= right_li[right_pointer]:</span><br><span class="line">			ret.append(left_li[left_pointer])</span><br><span class="line">			left_pointer +=<span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ret.append(right_li[right_pointer])</span><br><span class="line">			right_pointer +=<span class="number">1</span></span><br><span class="line">	ret += left_li[left_pointer:]</span><br><span class="line">	ret += right_li[right_pointer:]</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__mian__&quot;</span>:</span><br><span class="line">    ret = merge_list([<span class="number">12</span>, <span class="number">32321</span>, <span class="number">3211</span>, <span class="number">212</span>, <span class="number">3343</span>, <span class="number">222</span>, <span class="number">112</span>, <span class="number">121</span>])</span><br><span class="line">    print(ret)</span><br></pre></td></tr></table></figure>
+
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def insert_sort(mylist):</span><br><span class="line">    for i in range(1,len(mylist)):</span><br><span class="line">        pre &#x3D; i - 1</span><br><span class="line">        current &#x3D; mylist[i]</span><br><span class="line"></span><br><span class="line">        while pre &gt;&#x3D; 0 and mylist[pre] &gt; current:</span><br><span class="line">            mylist[pre + 1] &#x3D; mylist[pre]</span><br><span class="line">            pre -&#x3D; 1</span><br><span class="line">        mylist[pre + 1] &#x3D; current</span><br><span class="line">    return mylist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    ret &#x3D; insert_sort([12, 2323, 123, 2123, 321, 23, 3232, 1123, 11233])</span><br><span class="line">    print(ret)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="快排排序"><a href="#快排排序" class="headerlink" title="快排排序"></a>快排排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kuaipai</span>(<span class="params">lis,left,right</span>):</span></span><br><span class="line">    <span class="comment"># 递归结束条件</span></span><br><span class="line">    <span class="keyword">if</span> left&gt; right:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="comment"># 定义基准数</span></span><br><span class="line">    base = lis[left]</span><br><span class="line">    <span class="keyword">while</span> j &gt;i:</span><br><span class="line">        <span class="keyword">while</span> lis[j] &gt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            j -=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> lis[i] &lt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            i +=<span class="number">1</span></span><br><span class="line">        lis[i].lis[j] = lis[j],lis[i]</span><br><span class="line">    lis[left] = lis[i]</span><br><span class="line">    lis[i] = base</span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>排序算法</category>
+        <category>Python排序算法</category>
+        <category>数据算法</category>
+      </categories>
+      <tags>
+        <tag>Python排序算法</tag>
+        <tag>排序算法</tag>
+        <tag>数据算法</tag>
       </tags>
   </entry>
   <entry>

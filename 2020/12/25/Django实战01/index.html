@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jkraise.top","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="实战01 login">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识 django project">
+<meta property="og:url" content="http://jkraise.top/2020/12/25/Django%E5%AE%9E%E6%88%9801/index.html">
+<meta property="og:site_name" content="ZK&#96;s Blog">
+<meta property="og:description" content="实战01 login">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/setTime.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/setTime2.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/03.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/04.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/05.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/06.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/07.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/08.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/09.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/10.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/11.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/12.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/13.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/14.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/15.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/16.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/17.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/18.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/19.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/20.png~01style">
+<meta property="og:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/21.png~01style">
+<meta property="article:published_time" content="2020-12-25T12:36:20.000Z">
+<meta property="article:modified_time" content="2021-04-11T10:10:49.608Z">
+<meta property="article:author" content="zhaokui">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="Django 项目实战">
+<meta property="article:tag" content="web基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/setTime.png~01style">
+
+<link rel="canonical" href="http://jkraise.top/2020/12/25/Django%E5%AE%9E%E6%88%9801/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>初识 django project | ZK`s Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZK`s Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/joinik?tab=repositories" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZK`s Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">zhaokui</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="friend fa-fw"></i>friends</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://jkraise.top/2020/12/25/Django%E5%AE%9E%E6%88%9801/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="zhaokui">
+      <meta itemprop="description" content="There is something inside ,that they can'tgetto,that they can't touch. hat's yours.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZK`s Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初识 django project
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-25 20:36:20" itemprop="dateCreated datePublished" datetime="2020-12-25T20:36:20+08:00">2020-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-11 18:10:49" itemprop="dateModified" datetime="2021-04-11T18:10:49+08:00">2021-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">web框架</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E6%A1%86%E6%9E%B6/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E6%A1%86%E6%9E%B6/Django/Django%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">Django项目实战</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/25/Django%E5%AE%9E%E6%88%9801/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/25/Django%E5%AE%9E%E6%88%9801/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>实战01 login</p>
+<a id="more"></a>
+
+<h3 id="实战01-login"><a href="#实战01-login" class="headerlink" title="实战01 login"></a>实战01 login</h3><h4 id="一，首先进行"><a href="#一，首先进行" class="headerlink" title="一，首先进行"></a>一，首先进行</h4><ol>
+<li>项目搭建， </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv -p python3 py3_django_bj  <span class="comment"># 创建虚拟环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入虚拟环境后</span></span><br><span class="line">pip3 install django</span><br><span class="line"><span class="comment"># 创建文件</span></span><br><span class="line">mkdir test_django</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>项目创建</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject test_django . <span class="comment"># 注意这个点</span></span><br><span class="line"><span class="comment"># 创建app子应用</span></span><br><span class="line">python manage.py startapp app  </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>设置 时区</p>
+<p>在项目的settings文件中，如下所示</p>
+</li>
+</ol>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/setTime.png~01style"></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/setTime2.png~01style"></p>
+<ol start="4">
+<li><h4 id="设计数据模型"><a href="#设计数据模型" class="headerlink" title="设计数据模型"></a>设计数据模型</h4></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your models here.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    gender = (</span><br><span class="line">        (<span class="string">&#x27;male&#x27;</span>, <span class="string">&quot;男&quot;</span>),</span><br><span class="line">        (<span class="string">&#x27;female&#x27;</span>, <span class="string">&quot;女&quot;</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    name = models.CharField(max_length=<span class="number">128</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    password = models.CharField(max_length=<span class="number">256</span>)</span><br><span class="line">    email = models.EmailField(unique=<span class="literal">True</span>)</span><br><span class="line">    sex = models.CharField(max_length=<span class="number">32</span>, choices=gender, default=<span class="string">&quot;男&quot;</span>)</span><br><span class="line">    c_time = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        ordering = [<span class="string">&quot;-c_time&quot;</span>]</span><br><span class="line">        verbose_name = <span class="string">&quot;用户&quot;</span></span><br><span class="line">        verbose_name_plural = <span class="string">&quot;用户&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>设置数据库后端</p>
+<p>默认是sqlite数据库， </p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Database</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.sqlite3&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: os.path.join(BASE_DIR, <span class="string">&#x27;db.sqlite3&#x27;</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MySQL的配置如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,   <span class="comment"># 数据库引擎</span></span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;mysite&#x27;</span>,  <span class="comment"># 数据库名，先前创建的</span></span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;root&#x27;</span>,     <span class="comment"># 用户名，可以自己创建用户</span></span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;****&#x27;</span>,  <span class="comment"># 密码</span></span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;192.168.1.123&#x27;</span>,  <span class="comment"># mysql服务所在的主机ip</span></span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="string">&#x27;3306&#x27;</span>,         <span class="comment"># mysql服务端口</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>注册app</li>
+</ol>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/03.png~01style" alt="注册app"></p>
+<ol start="7">
+<li><p>创建记录和数据表</p>
+<p>进入pycharm 的terminal终端， 执行以下命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/04.png~01style" alt="model"></p>
+<p> Django自动为我们创建了<code>app\migrations\0001_initial.py</code>文件，保存了我们的第一次数据迁移工作，也就是创建了User模型。 </p>
+<p>接着执行下面的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<h4 id="二-admin后台"><a href="#二-admin后台" class="headerlink" title="二. admin后台"></a>二. admin后台</h4><hr>
+<p>在我们开发的初期，没有真实的用户数据，也没有完整的测试环境，为了测试和开发的方便，通常我们会频繁地使用Django给我们提供的Admin后台管理界面，创建测试用例，观察模型效果等等</p>
+<ol>
+<li><p>因为admin 已经注册了， 所以无需再次注册，</p>
+</li>
+<li><p>进入app/admin.py 文件， 代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Register your models here.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line">admin.site.register(models.User)</span><br></pre></td></tr></table></figure>
+
+<p>暂时简单点， 直接注册就好了</p>
+</li>
+</ol>
+<h4 id="创建超级管理员"><a href="#创建超级管理员" class="headerlink" title="创建超级管理员"></a>创建超级管理员</h4><p>Django的admin后台拥有完整的较为安全的用户认证和授权机制，防护等级还算可以。</p>
+<p>要进入该后台，需要创建超级管理员，该管理员和我们先前创建的User用户不是一个概念，要注意区别对待。</p>
+<p>同样在Pycharm的终端中，执行下面的命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/05.png~01style"></p>
+<h4 id="三，使用Admin后台"><a href="#三，使用Admin后台" class="headerlink" title="三，使用Admin后台"></a>三，使用Admin后台</h4><p>创建好超级管理员后，就可以启动我们的开发服务器了，然后在浏览器中访问<code>http://127.0.0.1:8000/admin/</code>地址，可以看到如下的登录界面：   </p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/06.png~01style" alt="1611027106282"></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/07.png~01style" alt="1611027127248"></p>
+<p>注意，图中下方的<code>认证和授权</code>是admin应用自身的账户管理，上面的app栏目才是我们创建的login应用所对应的User模型。</p>
+<p>点击app栏目中的用户链接，进入用户列表界面，发现是空的，因为我们当前没有任何用户。点击右上方的增加用户按钮，我们创建几个测试用户试试：</p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/08.png~01style" alt="1611027421214"></p>
+<p> 但是，实际上这里还有点小问题，那就是密码相关。密码不能保存为明文，这个问题我们后面再解决；其次，不可以这么随意的修改和设置密码，为了展示的方便性，我们先这样 </p>
+<p>添加了3个用户</p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/09.png~01style" alt="1611027618523"></p>
+<p> admin的使用和配置博大精深，但在本实战项目里，我们暂时把它当做一个数据库管理后台使用 </p>
+<h4 id="url路由和视图"><a href="#url路由和视图" class="headerlink" title="url路由和视图"></a>url路由和视图</h4><p> 前面我们已经创建好数据模型了，并且在admin后台中添加了一些测试用户。下面我们就要设计好站点的url路由、对应的处理视图函数以及使用的前端模板了。 </p>
+<ol>
+<li><p>路由设计</p>
+<p>我们初步设想需要下面的四个URL：</p>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>视图</th>
+<th>模板</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/index/</td>
+<td>login.views.index</td>
+<td>index.html</td>
+<td>主页</td>
+</tr>
+<tr>
+<td>/login/</td>
+<td>login.views.login</td>
+<td>login.html</td>
+<td>登录</td>
+</tr>
+<tr>
+<td>/register/</td>
+<td>login.views.register</td>
+<td>register.html</td>
+<td>注册</td>
+</tr>
+<tr>
+<td>/logout/</td>
+<td>login.views.logout</td>
+<td>无需专门的页面</td>
+<td>退出</td>
+</tr>
+</tbody></table>
+<p>重要说明：由于本项目目的是打造一个针对管理系统、应用程序等需求下的可重用的登录/注册app，而不是门户网站、免费博客等无需登录即可访问的网站，所以在url路由、跳转策略和文件结构的设计上都是尽量自成体系。具体访问的策略如下</p>
+<ul>
+<li>未登录人员，不论是访问index还是login和logout，全部跳转到login界面</li>
+<li>已登录人员，访问login会自动跳转到index页面</li>
+<li>已登录人员，不允许直接访问register页面，需先logout</li>
+<li>登出后，自动跳转到login界面</li>
+</ul>
+<p>考虑到登录注册系统属于站点的一级功能，为了直观和更易于接受，这里没有采用二级路由的方式，而是在根路由下直接编写路由条目，同样也没有使用反向解析名（name参数）。所以，在重用本app的时候，一定要按照app使用说明，加入相应的url路由。</p>
+</li>
+</ol>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/10.png~01style" alt="1611028151106"></p>
+<h4 id="四，编写-视图函数"><a href="#四，编写-视图函数" class="headerlink" title="四，编写 视图函数"></a>四，编写 视图函数</h4><p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/11.png~01style" alt="1611063774388"></p>
+<p><strong>现在我们的工作目录</strong></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/12.png~01style" alt="1611063822972"></p>
+<p><strong>访问主页</strong></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/13.png~01style" alt="1611063870554"></p>
+<p><strong>1.login</strong> <strong>页面编写</strong></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/14.png~01style" alt="1611064067731"></p>
+<p><strong>2. 引入Bootstrap 4</strong></p>
+<p>Bootstrap4就是最好的CSS框架之一！</p>
+<p>想要在HTML页面中使用Bootstrap4，最方便的方法就是使用国内外的免费CDN（如果app的使用环境不可以使用外部网络，也可以使用内部的CDN，或者静态文件）。</p>
+<p>这里推荐BootCDN：<a target="_blank" rel="noopener" href="https://www.bootcdn.cn/%EF%BC%8C%E9%80%9F%E5%BA%A6%E6%AF%94%E8%BE%83%E5%BF%AB%EF%BC%8C%E6%9C%89%E5%A4%A7%E9%87%8F%E7%9A%84%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84CDN%E3%80%82">https://www.bootcdn.cn/，速度比较快，有大量的不同版本的CDN。</a></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/15.png~01style" alt="1611064272802"></p>
+<p>jQuery</p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/16.png~01style" alt="1611064538948"></p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/17.png~01style" alt="1611064489803"></p>
+<p>五，静态文件的引入</p>
+<p> 继续在<code>/login/static/login</code>目录下创建一个css和一个image目录，css中添加我们为登录视图写的css文件，这里是<code>login.cs![17](/17.png)![17](/17.png)s</code>，image目录中，拷贝进来你想要的背景图片，这里是<code>bg.jpg</code>。最终目录结构如下： </p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/18.png~01style" alt="1611065555604"></p>
+<p> 主要是引入了login.css文件，注意最开头的<code>&#123;% load static %&#125;</code>，表示我们要加载静态文件。 </p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/19.png~01style" alt="1611065927558"></p>
+<p><strong>登录视图</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def login(request):</span><br><span class="line">    if request.method &#x3D;&#x3D; &quot;POST&quot;:</span><br><span class="line">        username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">        password &#x3D; request.POST.get(&#39;password&#39;)</span><br><span class="line">        print(username, password)</span><br><span class="line">        return redirect(&#39;&#x2F;index&#x2F;&#39;)</span><br><span class="line">    return render(request, &#39;login&#x2F;login.html&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><p>每个视图函数都至少接收一个参数，并且是第一位置参数，该参数封装了当前请求的所有数据；</p>
+</li>
+<li><p>通常将第一参数命名为request，当然也可以是别的；</p>
+</li>
+<li><p><code>request.method</code>中封装了数据请求的方法，如果是“POST”（全大写），将执行if语句的内容，如果不是，直接返回最后的render()结果，也就是正常的登录页面；</p>
+</li>
+<li><p><code>request.POST</code>封装了所有POST请求中的数据，这是一个字典类型，可以通过get方法获取具体的值。</p>
+</li>
+<li><p>类似<code>get(&#39;username&#39;)</code>中的键‘username’是HTML模板中表单的input元素里‘name’属性定义的值。所以在编写form表单的时候一定不能忘记添加name属性。</p>
+</li>
+<li><p>利用print函数在开发环境中验证数据；</p>
+</li>
+<li><p>利用redirect方法，将页面重定向到index页。</p>
+<p>启动服务器，然后在<code>http://127.0.0.1:8000/login/</code>的表单中随便填入用户名和密码，然后点击提交。然而，页面却出现了错误提示，如下图所示： </p>
+</li>
+</ul>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/20.png~01style" alt="1611066293446"></p>
+<p> 解决这个问题的办法其实在Django的Debug错误页面已经给出了，我们需要在前端页面的form表单内添加一个<code>&#123;% csrf_token %&#125;</code>标签： </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;form-login&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/login/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">                 &#123;% csrf_token %&#125;</span><br><span class="line">                 <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;text-center&quot;</span>&gt;</span>欢迎登录<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_username&quot;</span>&gt;</span>用户名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&#x27;username&#x27;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_username&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;Username&quot;</span> <span class="attr">autofocus</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_password&quot;</span>&gt;</span>密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&#x27;password&#x27;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_password&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;Password&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/register/&quot;</span> <span class="attr">class</span>=<span class="string">&quot;text-success &quot;</span> &gt;</span><span class="tag">&lt;<span class="name">ins</span>&gt;</span>新用户注册<span class="tag">&lt;/<span class="name">ins</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary float-right&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                 <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> <strong>数据验证</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> username.strip() <span class="keyword">and</span> password:  <span class="comment"># 确保用户名和密码都不为空      </span></span><br><span class="line">            <span class="comment"># 用户名字符合法性验证</span></span><br><span class="line">            <span class="comment"># 密码长度验证</span></span><br><span class="line">            <span class="comment"># 更多的其它验证.....</span></span><br><span class="line">            <span class="keyword">return</span> redirect(<span class="string">&#x27;/index/&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>get方法是Python字典类型的内置方法，它能够保证在没有指定键的情况下，返回一个None，从而确保当数据请求中没有username或password键时不会抛出异常；</li>
+<li>通过<code>if username and password:</code>确保用户名和密码都不为空；</li>
+<li>通过strip方法，将用户名前后无效的空格剪除；</li>
+<li>更多的数据验证需要根据实际情况增加，原则是以最低的信任度对待发送过来的数据。</li>
+</ul>
+<p><strong>账户密码</strong> <strong>验证</strong></p>
+<p> 注意其中添加了一句<code>from . import models</code>，导入我们先前编写好的model模型。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> username.strip() <span class="keyword">and</span> password:  <span class="comment"># 确保用户名和密码都不为空</span></span><br><span class="line">            <span class="comment"># 用户名字符合法性验证</span></span><br><span class="line">            <span class="comment"># 密码长度验证</span></span><br><span class="line">            <span class="comment"># 更多的其它验证.....</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                user = models.User.objects.get(name=username)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> user.password == password:</span><br><span class="line">                <span class="keyword">return</span> redirect(<span class="string">&#x27;/index/&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加提示信息</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&#x27;请检查填写的内容！&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> username.strip() <span class="keyword">and</span> password:</span><br><span class="line">            <span class="comment"># 用户名字符合法性验证</span></span><br><span class="line">            <span class="comment"># 密码长度验证</span></span><br><span class="line">            <span class="comment"># 更多的其它验证.....</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                user = models.User.objects.get(name=username)</span><br><span class="line">            <span class="keyword">except</span> :</span><br><span class="line">                message = <span class="string">&#x27;用户不存在！&#x27;</span></span><br><span class="line">                <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, &#123;<span class="string">&#x27;message&#x27;</span>: message&#125;)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> user.password == password:</span><br><span class="line">                print(username, password)</span><br><span class="line">                <span class="keyword">return</span> redirect(<span class="string">&#x27;/index/&#x27;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                message = <span class="string">&#x27;密码不正确！&#x27;</span></span><br><span class="line">                <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, &#123;<span class="string">&#x27;message&#x27;</span>: message&#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, &#123;<span class="string">&#x27;message&#x27;</span>: message&#125;)</span><br></pre></td></tr></table></figure>
+
+<p> <strong>说明</strong>： 这里增加了message变量，用于保存提示信息。当有错误信息的时候，将错误信息打包成一个字典，然后作为第三个参数提供给render方法。这个数据字典在渲染模板的时候会传递到模板里供你调用。 </p>
+<p> <strong>为了在前端页面显示信息，还需要对<code>login.html</code>进行修改：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;form class&#x3D;&quot;form-login&quot; action&#x3D;&quot;&#x2F;login&#x2F;&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">                  &#123;% if message %&#125;</span><br><span class="line">                    &lt;div class&#x3D;&quot;alert alert-warning&quot;&gt;&#123;&#123; message &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">                  &#123;% endif %&#125;</span><br><span class="line">                  &#123;% csrf_token %&#125;</span><br><span class="line">                  &lt;h3 class&#x3D;&quot;text-center&quot;&gt;欢迎登录&lt;&#x2F;h3&gt;</span><br><span class="line">                  &lt;div class&#x3D;&quot;form-group&quot;&gt;</span><br><span class="line">                    &lt;label for&#x3D;&quot;id_username&quot;&gt;用户名：&lt;&#x2F;label&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;text&quot; name&#x3D;&#39;username&#39; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;id_username&quot; placeholder&#x3D;&quot;Username&quot; autofocus required&gt;</span><br><span class="line">                  &lt;&#x2F;div&gt;</span><br><span class="line">                  &lt;div class&#x3D;&quot;form-group&quot;&gt;</span><br><span class="line">                    &lt;label for&#x3D;&quot;id_password&quot;&gt;密码：&lt;&#x2F;label&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;password&quot; name&#x3D;&#39;password&#39; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;id_password&quot; placeholder&#x3D;&quot;Password&quot; required&gt;</span><br><span class="line">                  &lt;&#x2F;div&gt;</span><br><span class="line">                  &lt;div&gt;</span><br><span class="line">                  &lt;a href&#x3D;&quot;&#x2F;register&#x2F;&quot; class&#x3D;&quot;text-success &quot; &gt;&lt;ins&gt;新用户注册&lt;&#x2F;ins&gt;&lt;&#x2F;a&gt;</span><br><span class="line">                  &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary float-right&quot;&gt;登录&lt;&#x2F;button&gt;</span><br><span class="line">                  &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;&#x2F;form&gt;</span><br></pre></td></tr></table></figure>
+
+<p> Django的模板语言<code>&#123;% if xxx %&#125;&#123;% endif %&#125;</code>非常类似Python的if语句，也可以添加<code>&#123;% else %&#125;</code>分句。例子中，通过判断message变量是否为空，也就是是否有错误提示信息，如果有，就显示出来！这里使用了Bootstrap的警示信息类alert，你也可以自定义CSS或者JS。 </p>
+<p><img src="http://qny.jkraise.top/Django%E5%AE%9E%E6%88%9801.assets/21.png~01style" alt="1611067107437"></p>
+<h4 id="Django表单"><a href="#Django表单" class="headerlink" title="Django表单"></a>Django表单</h4><ol>
+<li>创建表单模型</li>
+</ol>
+<p>在app/创建forms.py 文件进行 表单模型创建</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserForm</span>(<span class="params">forms.Form</span>):</span></span><br><span class="line">    username = forms.CharField(label=<span class="string">&#x27;用户名&#x27;</span>,max_length=<span class="number">128</span>)</span><br><span class="line">    password = forms.CharField(label=<span class="string">&#x27;用户名&#x27;</span>,max_length=<span class="number">256</span>,widget=forms.PasswordInput)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>顶部要先导入forms模块</li>
+<li>所有的表单类都要继承forms.Form类</li>
+<li>每个表单字段都有自己的字段类型比如CharField，它们分别对应一种HTML语言中``内的一个input元素。这一点和Django模型系统的设计非常相似。</li>
+<li>label参数用于设置``标签</li>
+<li><code>max_length</code>限制字段输入的最大长度。它同时起到两个作用，一是在浏览器页面限制用户输入不可超过字符数，二是在后端服务器验证用户输入的长度也不可超过。</li>
+<li><code>widget=forms.PasswordInput</code>用于指定该字段在form表单里表现为``，也就是密码输入框。</li>
+</ul>
+<ol start="2">
+<li>修改视图函数</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        login_form = forms.UserForm(request.POST)</span><br><span class="line">        message = <span class="string">&#x27;请检查填写的内容！&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> login_form.is_valid():</span><br><span class="line">            <span class="comment"># 用户名字符合法性验证</span></span><br><span class="line">            <span class="comment"># 密码长度验证</span></span><br><span class="line">            <span class="comment"># 更多的其它验证.....</span></span><br><span class="line">            username = login_form.cleaned_data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">            password = login_form.cleaned_data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                user = models.User.objects.get(name=username)</span><br><span class="line">            <span class="keyword">except</span> :</span><br><span class="line">                message = <span class="string">&#x27;用户不存在！&#x27;</span></span><br><span class="line">                <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, locals())</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> user.password == password:</span><br><span class="line">                print(username, password)</span><br><span class="line">                <span class="keyword">return</span> redirect(<span class="string">&#x27;/index/&#x27;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                message = <span class="string">&#x27;密码不正确！&#x27;</span></span><br><span class="line">                <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, locals())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, locals())</span><br><span class="line">    login_form = forms.UserForm()</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;login/login.html&#x27;</span>, locals())</span><br><span class="line">    <span class="comment"># locals()  会自动构造成字典， 不需要在自己去构造， 但是也会传入一些多余的变量数据，造成数据冗余降低效率</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>修改login页面</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load static %&#125;</span><br><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Required meta tags --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Bootstrap CSS --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;&#123;% static &#x27;login/css/login.css&#x27; %&#125;&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;form-login&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/login/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">                  &#123;% if message %&#125;</span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;alert alert-warning&quot;</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                  &#123;% endif %&#125;</span><br><span class="line">                  &#123;% csrf_token %&#125;</span><br><span class="line">                  <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;text-center&quot;</span>&gt;</span>欢迎登录<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                  &#123;&#123; login_form &#125;&#125;</span><br><span class="line"></span><br><span class="line">                  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/register/&quot;</span> <span class="attr">class</span>=<span class="string">&quot;text-success &quot;</span> &gt;</span><span class="tag">&lt;<span class="name">ins</span>&gt;</span>新用户注册<span class="tag">&lt;/<span class="name">ins</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary float-right&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- /container --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Optional JavaScript --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- jQuery first, then Popper.js, then Bootstrap JS --&gt;</span></span><br><span class="line">    &#123;#    以下三者的引用顺序是固定的#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/jquery/3.3.1/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<p>​     一个<code>&#123;&#123; login_form &#125;&#125;</code>就直接完成了表单内容的生成工作！<code>login_form</code>这个名称来自你在视图函数中生成的form实例的变量名！ </p>
+<p>实际上除了通过<code>&#123;&#123; login_form &#125;&#125;</code>简单地将表单渲染到HTML页面中了，还有下面几种方式：</p>
+<ul>
+<li><code>&#123;&#123; login_form.as_table &#125;&#125;</code> 将表单渲染成一个表格元素，每个输入框作为一个标签</li>
+<li><code>&#123;&#123; login_form.as_p &#125;&#125;</code> 将表单的每个输入框包裹在一个<code>标签内</code></li>
+<li>```` 将表单渲染成一个列表元素，每个输入框作为一个``标签</li>
+</ul>
+
+    </div>
+    <div>    
+    
+      <div>    
+	        
+		<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------		</div>    
+	
+</div>    
+     
+    </div>
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\12\25\Jobwebproject知识点\" rel="bookmark">jobweb项目中所遇到知识点</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>zhaokui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://jkraise.top/2020/12/25/Django%E5%AE%9E%E6%88%9801/" title="初识 django project">http://jkraise.top/2020/12/25/Django实战01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+              <a href="/tags/Django-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" rel="tag"># Django 项目实战</a>
+              <a href="/tags/web%E5%9F%BA%E7%A1%80/" rel="tag"># web基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/25/58fangchanFont/" rel="prev" title="58同城 房产字体 反爬">
+      <i class="fa fa-chevron-left"></i> 58同城 房产字体 反爬
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/28/pandas02/" rel="next" title="pandas 数据处理02  groupby">
+      pandas 数据处理02  groupby <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%88%9801-login"><span class="nav-number">1.</span> <span class="nav-text">实战01 login</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E9%A6%96%E5%85%88%E8%BF%9B%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">一，首先进行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">设计数据模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C-admin%E5%90%8E%E5%8F%B0"><span class="nav-number">1.3.</span> <span class="nav-text">二. admin后台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-number">1.4.</span> <span class="nav-text">创建超级管理员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E4%BD%BF%E7%94%A8Admin%E5%90%8E%E5%8F%B0"><span class="nav-number">1.5.</span> <span class="nav-text">三，使用Admin后台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#url%E8%B7%AF%E7%94%B1%E5%92%8C%E8%A7%86%E5%9B%BE"><span class="nav-number">1.6.</span> <span class="nav-text">url路由和视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E7%BC%96%E5%86%99-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">四，编写 视图函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Django%E8%A1%A8%E5%8D%95"><span class="nav-number">1.8.</span> <span class="nav-text">Django表单</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhaokui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">zhaokui</p>
+  <div class="site-description" itemprop="description">There is something inside ,that they can'tgetto,that they can't touch. hat's yours.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/joinik" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;joinik" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyun4779@gmail.com" title="E-Mail → mailto:wyun4779@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaokui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:15</span>
+</div>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">滇ICP备2020008246号</a>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='120,120,120' opacity='0.5' zIndex='-1' count='180' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://jkraise.top/2020/12/25/Django%E5%AE%9E%E6%88%9801/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wWb2h4bVCBn9NieF9oqmmE5s-gzGzoHsz',
+      appKey     : 'bXN3qe3YfOw2f8gOgbO0JA8R',
+      placeholder: "你的言论将上交国家,请注意文明用言,否则可能被拒收或查水表 ヾﾉ≧∀≦)o 来呀！吐槽一番吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"react":{"opacity":0.8},"log":false});</script></body>
+</html>

@@ -205,6 +205,104 @@
 ]]></content>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/04/15/Python%E5%8D%95%E4%BE%8B/</url>
+    <content><![CDATA[<h3 id="Python-单例方法"><a href="#Python-单例方法" class="headerlink" title="Python 单例方法"></a>Python 单例方法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式1  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    _instance = <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls._instance:</span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">a = A()</span><br><span class="line">print(id(a))  <span class="comment">#2641366741704</span></span><br><span class="line">b = A()</span><br><span class="line">print(id(b))  <span class="comment">#2641366741704</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 方式2  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(A, <span class="string">&quot;_instance&quot;</span>):  <span class="comment"># 是否有_instance属性</span></span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)            </span><br></pre></td></tr></table></figure>
+
+<h3 id="使用单例-控制-只有一个短信发送对象"><a href="#使用单例-控制-只有一个短信发送对象" class="headerlink" title="使用单例 控制 只有一个短信发送对象"></a>使用单例 控制 只有一个短信发送对象</h3><p>内存优化，减少内存消耗</p>
+<h3 id="使用pipline-操作redis"><a href="#使用pipline-操作redis" class="headerlink" title="使用pipline 操作redis"></a>使用pipline 操作redis</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pl &#x3D; redis.cli.pipeline()</span><br><span class="line">pl.setex(&quot;send_flag_%s&quot; % mobile, 60, 1)</span><br><span class="line">pl.setex(&quot;sms_%s&quot; % mobile, 300, sms_code)</span><br><span class="line"></span><br><span class="line"># 5. 保存短信验证码到redis</span><br><span class="line"># redis_cli.setex()</span><br><span class="line"># 执行请求</span><br><span class="line">pl.execute()	#一次执行，减少内存消耗</span><br></pre></td></tr></table></figure>
+
+<h3 id="异步方案-celery-发短信"><a href="#异步方案-celery-发短信" class="headerlink" title="异步方案 celery 发短信"></a>异步方案 celery 发短信</h3><p><strong>生产消费者模式</strong></p>
+<ul>
+<li><p>安装celery创建sms 包，并添加异步</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install -U celery</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>在根目录下 创建celery的包 </p>
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539278351.png" alt="1618539278351"></p>
+</li>
+<li><p>main.py</p>
+<ul>
+<li>1 设置django环境<br>2 创建celery对象<br>3 设置 broker<br>4 celery自动检测任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line"># 1 设置django环境</span><br><span class="line"># set the default Django settings module for the &#39;celery&#39; program.</span><br><span class="line">from celery import Celery</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&#39;DJANGO_SETTINGS_MODULE&#39;, &#39;meiduo.settings&#39;)</span><br><span class="line"></span><br><span class="line"># 2 创建celery对象</span><br><span class="line">app &#x3D; Celery(&#39;celery_tasks&#39;)</span><br><span class="line"></span><br><span class="line"># 3 设置 broker</span><br><span class="line">app.config_from_object(&quot;celery_tasks.config&quot;)</span><br><span class="line"></span><br><span class="line"># 4celery自动检测任务  这里会自动去celery_tasks.sms下找tasks.py</span><br><span class="line">app.autodiscover_tasks([&#39;celery_tasks.sms&#39;])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 作为队列  </p>
+<ul>
+<li>config.py </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 把redis 作为队列</span><br><span class="line">broker_url &#x3D; &quot;redis:&#x2F;&#x2F;127.0.0.1&#x2F;15&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sms的tasks.py里添加任务</p>
+<ul>
+<li>tasks.py文件名不可改变</li>
+</ul>
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539600277.png" alt="1618539600277"></p>
+</li>
+</ul>
+<h4 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a>启动celery</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br></pre></td></tr></table></figure>
+
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618540420762.png" alt="1618540420762"></p>
+<h4 id="win10-遇到的小bug"><a href="#win10-遇到的小bug" class="headerlink" title="win10 遇到的小bug"></a>win10 遇到的小bug</h4><p>开启服务发现，任务并未执行  上网查资料后发现，celery 对win10  支持并不是很好</p>
+<p>解决此方案的</p>
+<ul>
+<li><p>方案1</p>
+</li>
+<li><p>添加–pool=solo参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">celery -A celery_tasks.main worker --pool&#x3D;solo -l info</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案2</p>
+</li>
+<li><p>先安装gevent，然后在启动celery的时候添加gevent参数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install gevent</span><br><span class="line">celery -A celery_tasks.main worker -l info -P gevent</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>参考资料：<a href="https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows">https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows</a></p>
+<h3 id="Django-地址设计"><a href="#Django-地址设计" class="headerlink" title="Django 地址设计"></a>Django 地址设计</h3><h4 id="省市区三级联动"><a href="#省市区三级联动" class="headerlink" title="省市区三级联动"></a>省市区三级联动</h4><ul>
+<li><h5 id="缓存省市区数据"><a href="#缓存省市区数据" class="headerlink" title="缓存省市区数据"></a>缓存省市区数据</h5><blockquote>
+<p>提示：</p>
+</blockquote>
+<ul>
+<li>省市区数据是我们动态查询的结果。</li>
+<li>但是省市区数据不是频繁变化的数据，所以没有必要每次都重新查询。</li>
+<li>所以我们可以选择对省市区数据进行缓存处理。</li>
+</ul>
+</li>
+<li><p>缓存方式</p>
+<ul>
+<li><code>from django.core.cache import cache</code></li>
+<li>存储缓存数据：<code>cache.set(&#39;key&#39;, 内容, 有效期)</code></li>
+<li>读取缓存数据：<code>cache.get(&#39;key&#39;)</code></li>
+<li>删除缓存数据：<code>cache.delete(&#39;key&#39;)</code></li>
+<li><strong>注意：存储进去和读取出来的数据类型相同，所以读取出来后可以直接使用。</strong></li>
+</ul>
+</li>
+<li><p><strong>缓存逻辑实现</strong></p>
+<ul>
+<li>省份缓存数据<ul>
+<li><code>cache.set(&#39;province_list&#39;, province_list, 3600)</code></li>
+</ul>
+</li>
+<li>市或区缓存数据<ul>
+<li><code>cache.set(&#39;sub_area_&#39; + area_id, sub_data, 3600)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="省级三联orm"><a href="#省级三联orm" class="headerlink" title="省级三联orm"></a>省级三联orm</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询所有省份</span><br><span class="line">select * from tb_areas where parent_id is Null;</span><br><span class="line"></span><br><span class="line">area_list &#x3D; Area.objects.filter(parent&#x3D;None)</span><br><span class="line">Area.objects.filter(parent__isnull &#x3D; True)</span><br></pre></td></tr></table></figure>
+
+<p>查询市级</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from tb_areas where parent_id&#x3D;130000; # 市</span><br><span class="line">Area.objects.filter(parent_id &#x3D; 130000)</span><br><span class="line"></span><br><span class="line">area_hebei &#x3D; Area.objects.get(id &#x3D; 130000) 河北省</span><br><span class="line">area_hebei.subs.all() 河北省所有的市</span><br><span class="line"></span><br><span class="line">select * from tb_areas where parent_id&#x3D;130200; #  区县</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
     <title>Ubuntu18.04 从零搭建(python开发环境)</title>
     <url>/2021/04/11/Ubuntu18.04%E4%BB%8E0%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<pre><code>1. install  Python 3.8
@@ -335,104 +433,6 @@
   </entry>
   <entry>
     <title></title>
-    <url>/2021/04/15/Python%E5%8D%95%E4%BE%8B/</url>
-    <content><![CDATA[<h3 id="Python-单例方法"><a href="#Python-单例方法" class="headerlink" title="Python 单例方法"></a>Python 单例方法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式1  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    _instance = <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls._instance:</span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">a = A()</span><br><span class="line">print(id(a))  <span class="comment">#2641366741704</span></span><br><span class="line">b = A()</span><br><span class="line">print(id(b))  <span class="comment">#2641366741704</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 方式2  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(A, <span class="string">&quot;_instance&quot;</span>):  <span class="comment"># 是否有_instance属性</span></span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)            </span><br></pre></td></tr></table></figure>
-
-<h3 id="使用单例-控制-只有一个短信发送对象"><a href="#使用单例-控制-只有一个短信发送对象" class="headerlink" title="使用单例 控制 只有一个短信发送对象"></a>使用单例 控制 只有一个短信发送对象</h3><p>内存优化，减少内存消耗</p>
-<h3 id="使用pipline-操作redis"><a href="#使用pipline-操作redis" class="headerlink" title="使用pipline 操作redis"></a>使用pipline 操作redis</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pl &#x3D; redis.cli.pipeline()</span><br><span class="line">pl.setex(&quot;send_flag_%s&quot; % mobile, 60, 1)</span><br><span class="line">pl.setex(&quot;sms_%s&quot; % mobile, 300, sms_code)</span><br><span class="line"></span><br><span class="line"># 5. 保存短信验证码到redis</span><br><span class="line"># redis_cli.setex()</span><br><span class="line"># 执行请求</span><br><span class="line">pl.execute()	#一次执行，减少内存消耗</span><br></pre></td></tr></table></figure>
-
-<h3 id="异步方案-celery-发短信"><a href="#异步方案-celery-发短信" class="headerlink" title="异步方案 celery 发短信"></a>异步方案 celery 发短信</h3><p><strong>生产消费者模式</strong></p>
-<ul>
-<li><p>安装celery创建sms 包，并添加异步</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install -U celery</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p>在根目录下 创建celery的包 </p>
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539278351.png" alt="1618539278351"></p>
-</li>
-<li><p>main.py</p>
-<ul>
-<li>1 设置django环境<br>2 创建celery对象<br>3 设置 broker<br>4 celery自动检测任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line"># 1 设置django环境</span><br><span class="line"># set the default Django settings module for the &#39;celery&#39; program.</span><br><span class="line">from celery import Celery</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&#39;DJANGO_SETTINGS_MODULE&#39;, &#39;meiduo.settings&#39;)</span><br><span class="line"></span><br><span class="line"># 2 创建celery对象</span><br><span class="line">app &#x3D; Celery(&#39;celery_tasks&#39;)</span><br><span class="line"></span><br><span class="line"># 3 设置 broker</span><br><span class="line">app.config_from_object(&quot;celery_tasks.config&quot;)</span><br><span class="line"></span><br><span class="line"># 4celery自动检测任务  这里会自动去celery_tasks.sms下找tasks.py</span><br><span class="line">app.autodiscover_tasks([&#39;celery_tasks.sms&#39;])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>redis 作为队列  </p>
-<ul>
-<li>config.py </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 把redis 作为队列</span><br><span class="line">broker_url &#x3D; &quot;redis:&#x2F;&#x2F;127.0.0.1&#x2F;15&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>sms的tasks.py里添加任务</p>
-<ul>
-<li>tasks.py文件名不可改变</li>
-</ul>
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539600277.png" alt="1618539600277"></p>
-</li>
-</ul>
-<h4 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a>启动celery</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br></pre></td></tr></table></figure>
-
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618540420762.png" alt="1618540420762"></p>
-<h4 id="win10-遇到的小bug"><a href="#win10-遇到的小bug" class="headerlink" title="win10 遇到的小bug"></a>win10 遇到的小bug</h4><p>开启服务发现，任务并未执行  上网查资料后发现，celery 对win10  支持并不是很好</p>
-<p>解决此方案的</p>
-<ul>
-<li><p>方案1</p>
-</li>
-<li><p>添加–pool=solo参数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">celery -A celery_tasks.main worker --pool&#x3D;solo -l info</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方案2</p>
-</li>
-<li><p>先安装gevent，然后在启动celery的时候添加gevent参数</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install gevent</span><br><span class="line">celery -A celery_tasks.main worker -l info -P gevent</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>参考资料：<a href="https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows">https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows</a></p>
-<h3 id="Django-地址设计"><a href="#Django-地址设计" class="headerlink" title="Django 地址设计"></a>Django 地址设计</h3><h4 id="省市区三级联动"><a href="#省市区三级联动" class="headerlink" title="省市区三级联动"></a>省市区三级联动</h4><ul>
-<li><h5 id="缓存省市区数据"><a href="#缓存省市区数据" class="headerlink" title="缓存省市区数据"></a>缓存省市区数据</h5><blockquote>
-<p>提示：</p>
-</blockquote>
-<ul>
-<li>省市区数据是我们动态查询的结果。</li>
-<li>但是省市区数据不是频繁变化的数据，所以没有必要每次都重新查询。</li>
-<li>所以我们可以选择对省市区数据进行缓存处理。</li>
-</ul>
-</li>
-<li><p>缓存方式</p>
-<ul>
-<li><code>from django.core.cache import cache</code></li>
-<li>存储缓存数据：<code>cache.set(&#39;key&#39;, 内容, 有效期)</code></li>
-<li>读取缓存数据：<code>cache.get(&#39;key&#39;)</code></li>
-<li>删除缓存数据：<code>cache.delete(&#39;key&#39;)</code></li>
-<li><strong>注意：存储进去和读取出来的数据类型相同，所以读取出来后可以直接使用。</strong></li>
-</ul>
-</li>
-<li><p><strong>缓存逻辑实现</strong></p>
-<ul>
-<li>省份缓存数据<ul>
-<li><code>cache.set(&#39;province_list&#39;, province_list, 3600)</code></li>
-</ul>
-</li>
-<li>市或区缓存数据<ul>
-<li><code>cache.set(&#39;sub_area_&#39; + area_id, sub_data, 3600)</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="省级三联orm"><a href="#省级三联orm" class="headerlink" title="省级三联orm"></a>省级三联orm</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询所有省份</span><br><span class="line">select * from tb_areas where parent_id is Null;</span><br><span class="line"></span><br><span class="line">area_list &#x3D; Area.objects.filter(parent&#x3D;None)</span><br><span class="line">Area.objects.filter(parent__isnull &#x3D; True)</span><br></pre></td></tr></table></figure>
-
-<p>查询市级</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from tb_areas where parent_id&#x3D;130000; # 市</span><br><span class="line">Area.objects.filter(parent_id &#x3D; 130000)</span><br><span class="line"></span><br><span class="line">area_hebei &#x3D; Area.objects.get(id &#x3D; 130000) 河北省</span><br><span class="line">area_hebei.subs.all() 河北省所有的市</span><br><span class="line"></span><br><span class="line">select * from tb_areas where parent_id&#x3D;130200; #  区县</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>/2021/04/23/docker02/</url>
     <content><![CDATA[<h4 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h4><ol>
 <li>下载一个基本的镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu:16.04</span><br></pre></td></tr></table></figure></li>
@@ -543,6 +543,19 @@
   </entry>
   <entry>
     <title></title>
+    <url>/2021/04/27/javaInterface/</url>
+    <content><![CDATA[<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
+<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
+</li>
+<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
+<p><img src="javaInterface.assets/1619488312119.png" alt="1619488312119"></p>
+</li>
+</ul>
+<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="javaInterface.assets/1619489768318.png" alt="1619489768318"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>/2021/04/14/javaday02/</url>
     <content><![CDATA[<h3 id="java-跨包使用"><a href="#java-跨包使用" class="headerlink" title="java 跨包使用"></a>java 跨包使用</h3><p><img src="javaday02.assets/1618281252388.png" alt="1618281252388"></p>
 <h3 id="集合与数组的区别"><a href="#集合与数组的区别" class="headerlink" title="集合与数组的区别"></a>集合与数组的区别</h3><p>数组 长度不能修改</p>
@@ -575,19 +588,6 @@
 
 </li>
 </ul>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/04/27/javaInterface/</url>
-    <content><![CDATA[<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
-<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
-</li>
-<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
-<p><img src="javaInterface.assets/1619488312119.png" alt="1619488312119"></p>
-</li>
-</ul>
-<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="javaInterface.assets/1619489768318.png" alt="1619489768318"></p>
 ]]></content>
   </entry>
   <entry>
@@ -693,6 +693,30 @@
 ]]></content>
   </entry>
   <entry>
+    <title>数据库的导出命令</title>
+    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
+    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<a id="more"></a>
+<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
+<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
+<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
+<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
+<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
+<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
+<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
+<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
+<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
+      <categories>
+        <category>MySQL数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pandas 数据处理02  groupby</title>
     <url>/2020/12/28/pandas02/</url>
     <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
@@ -727,35 +751,6 @@
       </categories>
       <tags>
         <tag>pandas 数据处理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/06/20/vue3.0/</url>
-    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
-  </entry>
-  <entry>
-    <title>数据库的导出命令</title>
-    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
-    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<a id="more"></a>
-<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
-<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
-<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
-<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
-<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
-<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
-<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
-<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
-<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
-      <categories>
-        <category>MySQL数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -902,6 +897,31 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/06/20/vue3.0/</url>
+    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
+  </entry>
+  <entry>
+    <title>flask 项目使用redis数据库的原因</title>
+    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
+<a id="more"></a>
+
+<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
+<p>不用则会降低响应，影响用户体验，</p>
+<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
+<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
+]]></content>
+      <categories>
+        <category>redis</category>
+        <category>redis的子目录</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>xpath 语法</title>
     <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<p> xpath 语法</p>
@@ -962,26 +982,6 @@
       <tags>
         <tag>xpath 语法</tag>
         <tag>爬虫必备-语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>flask 项目使用redis数据库的原因</title>
-    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
-<a id="more"></a>
-
-<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
-<p>不用则会降低响应，影响用户体验，</p>
-<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
-<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
-]]></content>
-      <categories>
-        <category>redis</category>
-        <category>redis的子目录</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -1071,6 +1071,149 @@
       </categories>
       <tags>
         <tag>微信小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 排序算法</title>
+    <url>/2021/01/15/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort/</url>
+    <content><![CDATA[<p>Python 排序算法</p>
+<a id="more"></a>
+
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><ol>
+<li><p>树（节点）， 子节点（孩子） 左节点，右节点</p>
+</li>
+<li><p>满二叉树    全都是满的</p>
+</li>
+<li><p>完全二叉树    最后一层可以不满  但集中在左侧</p>
+</li>
+<li><p>堆  小顶（根）堆    大顶（根）堆</p>
+</li>
+</ol>
+<ul>
+<li>在二叉树中，第i层的节点总数不超过2^(i-1)</li>
+<li>对于任意一棵二叉树，如果其叶子节点数为n0，而度数为2的节点总数为n2， 则n0=n2+1</li>
+<li>具有n个节点的完全二叉树的深度为int(log2n) +1</li>
+</ul>
+<p><img src="http://qny.jkraise.top/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort.assets/1610506218125.png~01style" alt="1610506218125"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 从小到大 排序 那么就把树调整为大根堆</span><br><span class="line"># 从大到小 排序 那么就把树调整为小根堆</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def adjustHeap(li, i, length):</span><br><span class="line">    # 定义左孩子 下标</span><br><span class="line">    j &#x3D; 2 * i + 1  # 左孩子节点位置</span><br><span class="line">    # 把i位置保存下来</span><br><span class="line">    temp &#x3D; li[i]</span><br><span class="line">    # 列表的长度</span><br><span class="line"></span><br><span class="line">    while j &lt; length:</span><br><span class="line">        # 判断右孩子 是否存在 并且右孩子是否比左孩子大</span><br><span class="line">        if j + 1 &lt; length and li[j + 1] &gt; li[j]:</span><br><span class="line">            j &#x3D; j + 1</span><br><span class="line">        if li[j] &gt; temp:</span><br><span class="line">        	# 交换位置</span><br><span class="line">            li[i] &#x3D; li[j]</span><br><span class="line">            # 把i的位置移动到j   对i进行大根堆调整</span><br><span class="line">            i &#x3D; j</span><br><span class="line">            j &#x3D; 2 * i + 1  # 重新计算左孩子的位置</span><br><span class="line"></span><br><span class="line">        else:  # temp 更大 比较结束</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    li[i] &#x3D; temp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heap_sort(li):</span><br><span class="line">    length &#x3D; len(li)</span><br><span class="line">    # range(4,-1,-1)</span><br><span class="line">    # 从最后一个非叶节点开始 循环构造大根堆</span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        adjustHeap(li, i, length)</span><br><span class="line"></span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        li[0], li[i] &#x3D; li[i], li[0]</span><br><span class="line"></span><br><span class="line">        adjustHeap(li, 0, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    lista &#x3D; [22, 15, 18, 17, 14, 2, 12, 1, 23, 10, 33]</span><br><span class="line"></span><br><span class="line">    a &#x3D; int(time.time() * 1000)</span><br><span class="line">    heap_sort(lista)</span><br><span class="line">    b &#x3D; int(time.time() * 1000)</span><br><span class="line">    print(b - a)</span><br><span class="line">    print(&quot;--------------&quot;)</span><br><span class="line">    print(lista)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h4><p> 每次能够排除掉一半的数据，查找的效率非常高，但是局限性比较大。<br>必须是有序序列才可以使用二分查找。 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def binary_search(lis,right, left,item):</span><br><span class="line">	# lis 有序列表</span><br><span class="line">	# left 左指针 0</span><br><span class="line">	# right 右指针 len(lis)-1</span><br><span class="line">	# item  查找元素 </span><br><span class="line">    while left &lt;&#x3D;right :  </span><br><span class="line">        mid &#x3D; (right + left) &#x2F;&#x2F;2    # 获取中间位置，数字的索引</span><br><span class="line">        if item &lt; lis[mid]:			#如果查询的数字比中间值小，就去二分之后的左边找</span><br><span class="line">            right &#x3D; mid -1			# 来到左边之后 右边边界 mid -1</span><br><span class="line"></span><br><span class="line">        elif item &gt; lis[mid]:		#如果查询的数字比中间值大，就去二分之后的右边找</span><br><span class="line">            left &#x3D; mid +1			# 来到右边之后 右边边界 mid +1</span><br><span class="line">        else:</span><br><span class="line">            return mid # 返回中间值的下标</span><br><span class="line">	return -1 # 如果 循环结束，左边大于右边 没有找到元素  </span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">    print(lis)</span><br><span class="line">    lis.sort()</span><br><span class="line">    print(lis)    </span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis)-1,0,num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)  </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"># 2 ，递归算法</span><br><span class="line">def binary_search(lis, right, left, item):</span><br><span class="line">    # 结束条件</span><br><span class="line">    if left &gt; right:</span><br><span class="line">        return -1  # 结束递归</span><br><span class="line">    mid &#x3D; (left + right) &#x2F;&#x2F; 2</span><br><span class="line">    if item &lt; lis[mid]:</span><br><span class="line">        right &#x3D; mid - 1</span><br><span class="line">    elif item &gt; lis[mid]:</span><br><span class="line">        left &#x3D; mid + 1</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        return mid</span><br><span class="line">    return binary_search(lis, right, left, item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">print(lis)</span><br><span class="line">lis.sort()</span><br><span class="line">print(lis)</span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis) - 1, 0, num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_list</span>(<span class="params">list01</span>):</span></span><br><span class="line">	<span class="comment"># list01  一个列表</span></span><br><span class="line">	n = len(list01)</span><br><span class="line">	<span class="comment"># 递归结束条件</span></span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">		<span class="keyword">return</span> list01 </span><br><span class="line"></span><br><span class="line">	<span class="comment"># 取个中间值</span></span><br><span class="line">	mid = n //<span class="number">2</span></span><br><span class="line">	<span class="comment"># 分成左右两个列表 </span></span><br><span class="line">	<span class="comment"># left 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	left_li = merge_list(list01[:mid])</span><br><span class="line">	<span class="comment"># right 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	right_li = merge_list(list01[mid:])</span><br><span class="line">	left_pointer, right_pointer =<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">	ret=[]</span><br><span class="line">	<span class="keyword">while</span> left_pointer &lt; len(left_li) <span class="keyword">and</span> right_pointer &lt; len(right_li):</span><br><span class="line">		<span class="keyword">if</span> left_li[left_pointer] &lt;= right_li[right_pointer]:</span><br><span class="line">			ret.append(left_li[left_pointer])</span><br><span class="line">			left_pointer +=<span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ret.append(right_li[right_pointer])</span><br><span class="line">			right_pointer +=<span class="number">1</span></span><br><span class="line">	ret += left_li[left_pointer:]</span><br><span class="line">	ret += right_li[right_pointer:]</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__mian__&quot;</span>:</span><br><span class="line">    ret = merge_list([<span class="number">12</span>, <span class="number">32321</span>, <span class="number">3211</span>, <span class="number">212</span>, <span class="number">3343</span>, <span class="number">222</span>, <span class="number">112</span>, <span class="number">121</span>])</span><br><span class="line">    print(ret)</span><br></pre></td></tr></table></figure>
+
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def insert_sort(mylist):</span><br><span class="line">    for i in range(1,len(mylist)):</span><br><span class="line">        pre &#x3D; i - 1</span><br><span class="line">        current &#x3D; mylist[i]</span><br><span class="line"></span><br><span class="line">        while pre &gt;&#x3D; 0 and mylist[pre] &gt; current:</span><br><span class="line">            mylist[pre + 1] &#x3D; mylist[pre]</span><br><span class="line">            pre -&#x3D; 1</span><br><span class="line">        mylist[pre + 1] &#x3D; current</span><br><span class="line">    return mylist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    ret &#x3D; insert_sort([12, 2323, 123, 2123, 321, 23, 3232, 1123, 11233])</span><br><span class="line">    print(ret)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="快排排序"><a href="#快排排序" class="headerlink" title="快排排序"></a>快排排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kuaipai</span>(<span class="params">lis,left,right</span>):</span></span><br><span class="line">    <span class="comment"># 递归结束条件</span></span><br><span class="line">    <span class="keyword">if</span> left&gt; right:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="comment"># 定义基准数</span></span><br><span class="line">    base = lis[left]</span><br><span class="line">    <span class="keyword">while</span> j &gt;i:</span><br><span class="line">        <span class="keyword">while</span> lis[j] &gt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            j -=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> lis[i] &lt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            i +=<span class="number">1</span></span><br><span class="line">        lis[i].lis[j] = lis[j],lis[i]</span><br><span class="line">    lis[left] = lis[i]</span><br><span class="line">    lis[i] = base</span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>排序算法</category>
+        <category>Python排序算法</category>
+        <category>数据算法</category>
+      </categories>
+      <tags>
+        <tag>Python排序算法</tag>
+        <tag>排序算法</tag>
+        <tag>数据算法</tag>
       </tags>
   </entry>
   <entry>
@@ -1238,149 +1381,6 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
       <tags>
         <tag>短信验证码</tag>
         <tag>网站验证方式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 排序算法</title>
-    <url>/2021/01/15/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort/</url>
-    <content><![CDATA[<p>Python 排序算法</p>
-<a id="more"></a>
-
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><ol>
-<li><p>树（节点）， 子节点（孩子） 左节点，右节点</p>
-</li>
-<li><p>满二叉树    全都是满的</p>
-</li>
-<li><p>完全二叉树    最后一层可以不满  但集中在左侧</p>
-</li>
-<li><p>堆  小顶（根）堆    大顶（根）堆</p>
-</li>
-</ol>
-<ul>
-<li>在二叉树中，第i层的节点总数不超过2^(i-1)</li>
-<li>对于任意一棵二叉树，如果其叶子节点数为n0，而度数为2的节点总数为n2， 则n0=n2+1</li>
-<li>具有n个节点的完全二叉树的深度为int(log2n) +1</li>
-</ul>
-<p><img src="http://qny.jkraise.top/%E6%95%B0%E6%8D%AE%E7%AE%97%E6%B3%95sort.assets/1610506218125.png~01style" alt="1610506218125"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 从小到大 排序 那么就把树调整为大根堆</span><br><span class="line"># 从大到小 排序 那么就把树调整为小根堆</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def adjustHeap(li, i, length):</span><br><span class="line">    # 定义左孩子 下标</span><br><span class="line">    j &#x3D; 2 * i + 1  # 左孩子节点位置</span><br><span class="line">    # 把i位置保存下来</span><br><span class="line">    temp &#x3D; li[i]</span><br><span class="line">    # 列表的长度</span><br><span class="line"></span><br><span class="line">    while j &lt; length:</span><br><span class="line">        # 判断右孩子 是否存在 并且右孩子是否比左孩子大</span><br><span class="line">        if j + 1 &lt; length and li[j + 1] &gt; li[j]:</span><br><span class="line">            j &#x3D; j + 1</span><br><span class="line">        if li[j] &gt; temp:</span><br><span class="line">        	# 交换位置</span><br><span class="line">            li[i] &#x3D; li[j]</span><br><span class="line">            # 把i的位置移动到j   对i进行大根堆调整</span><br><span class="line">            i &#x3D; j</span><br><span class="line">            j &#x3D; 2 * i + 1  # 重新计算左孩子的位置</span><br><span class="line"></span><br><span class="line">        else:  # temp 更大 比较结束</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    li[i] &#x3D; temp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heap_sort(li):</span><br><span class="line">    length &#x3D; len(li)</span><br><span class="line">    # range(4,-1,-1)</span><br><span class="line">    # 从最后一个非叶节点开始 循环构造大根堆</span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        adjustHeap(li, i, length)</span><br><span class="line"></span><br><span class="line">    for i in range(length - 1, -1, -1):</span><br><span class="line">        li[0], li[i] &#x3D; li[i], li[0]</span><br><span class="line"></span><br><span class="line">        adjustHeap(li, 0, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    lista &#x3D; [22, 15, 18, 17, 14, 2, 12, 1, 23, 10, 33]</span><br><span class="line"></span><br><span class="line">    a &#x3D; int(time.time() * 1000)</span><br><span class="line">    heap_sort(lista)</span><br><span class="line">    b &#x3D; int(time.time() * 1000)</span><br><span class="line">    print(b - a)</span><br><span class="line">    print(&quot;--------------&quot;)</span><br><span class="line">    print(lista)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h4><p> 每次能够排除掉一半的数据，查找的效率非常高，但是局限性比较大。<br>必须是有序序列才可以使用二分查找。 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def binary_search(lis,right, left,item):</span><br><span class="line">	# lis 有序列表</span><br><span class="line">	# left 左指针 0</span><br><span class="line">	# right 右指针 len(lis)-1</span><br><span class="line">	# item  查找元素 </span><br><span class="line">    while left &lt;&#x3D;right :  </span><br><span class="line">        mid &#x3D; (right + left) &#x2F;&#x2F;2    # 获取中间位置，数字的索引</span><br><span class="line">        if item &lt; lis[mid]:			#如果查询的数字比中间值小，就去二分之后的左边找</span><br><span class="line">            right &#x3D; mid -1			# 来到左边之后 右边边界 mid -1</span><br><span class="line"></span><br><span class="line">        elif item &gt; lis[mid]:		#如果查询的数字比中间值大，就去二分之后的右边找</span><br><span class="line">            left &#x3D; mid +1			# 来到右边之后 右边边界 mid +1</span><br><span class="line">        else:</span><br><span class="line">            return mid # 返回中间值的下标</span><br><span class="line">	return -1 # 如果 循环结束，左边大于右边 没有找到元素  </span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">    print(lis)</span><br><span class="line">    lis.sort()</span><br><span class="line">    print(lis)    </span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis)-1,0,num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)  </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"># 2 ，递归算法</span><br><span class="line">def binary_search(lis, right, left, item):</span><br><span class="line">    # 结束条件</span><br><span class="line">    if left &gt; right:</span><br><span class="line">        return -1  # 结束递归</span><br><span class="line">    mid &#x3D; (left + right) &#x2F;&#x2F; 2</span><br><span class="line">    if item &lt; lis[mid]:</span><br><span class="line">        right &#x3D; mid - 1</span><br><span class="line">    elif item &gt; lis[mid]:</span><br><span class="line">        left &#x3D; mid + 1</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        return mid</span><br><span class="line">    return binary_search(lis, right, left, item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lis &#x3D; [11, 32, 51, 21, 42, 9, 5, 6, 7, 8]</span><br><span class="line">print(lis)</span><br><span class="line">lis.sort()</span><br><span class="line">print(lis)</span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">    num &#x3D; int(input(&#39;输入要查找的数：&#39;))</span><br><span class="line">    res &#x3D; binary_search(lis, len(lis) - 1, 0, num)</span><br><span class="line">    print(res)</span><br><span class="line">    if res &#x3D;&#x3D; -1:</span><br><span class="line">        print(&#39;未找到！&#39;)</span><br><span class="line">    else:</span><br><span class="line">        print(&#39;找到！&#39;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_list</span>(<span class="params">list01</span>):</span></span><br><span class="line">	<span class="comment"># list01  一个列表</span></span><br><span class="line">	n = len(list01)</span><br><span class="line">	<span class="comment"># 递归结束条件</span></span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">		<span class="keyword">return</span> list01 </span><br><span class="line"></span><br><span class="line">	<span class="comment"># 取个中间值</span></span><br><span class="line">	mid = n //<span class="number">2</span></span><br><span class="line">	<span class="comment"># 分成左右两个列表 </span></span><br><span class="line">	<span class="comment"># left 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	left_li = merge_list(list01[:mid])</span><br><span class="line">	<span class="comment"># right 采用归并排序后形成新的有序的列表</span></span><br><span class="line">	right_li = merge_list(list01[mid:])</span><br><span class="line">	left_pointer, right_pointer =<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">	ret=[]</span><br><span class="line">	<span class="keyword">while</span> left_pointer &lt; len(left_li) <span class="keyword">and</span> right_pointer &lt; len(right_li):</span><br><span class="line">		<span class="keyword">if</span> left_li[left_pointer] &lt;= right_li[right_pointer]:</span><br><span class="line">			ret.append(left_li[left_pointer])</span><br><span class="line">			left_pointer +=<span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ret.append(right_li[right_pointer])</span><br><span class="line">			right_pointer +=<span class="number">1</span></span><br><span class="line">	ret += left_li[left_pointer:]</span><br><span class="line">	ret += right_li[right_pointer:]</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__mian__&quot;</span>:</span><br><span class="line">    ret = merge_list([<span class="number">12</span>, <span class="number">32321</span>, <span class="number">3211</span>, <span class="number">212</span>, <span class="number">3343</span>, <span class="number">222</span>, <span class="number">112</span>, <span class="number">121</span>])</span><br><span class="line">    print(ret)</span><br></pre></td></tr></table></figure>
-
-<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def insert_sort(mylist):</span><br><span class="line">    for i in range(1,len(mylist)):</span><br><span class="line">        pre &#x3D; i - 1</span><br><span class="line">        current &#x3D; mylist[i]</span><br><span class="line"></span><br><span class="line">        while pre &gt;&#x3D; 0 and mylist[pre] &gt; current:</span><br><span class="line">            mylist[pre + 1] &#x3D; mylist[pre]</span><br><span class="line">            pre -&#x3D; 1</span><br><span class="line">        mylist[pre + 1] &#x3D; current</span><br><span class="line">    return mylist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    ret &#x3D; insert_sort([12, 2323, 123, 2123, 321, 23, 3232, 1123, 11233])</span><br><span class="line">    print(ret)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="快排排序"><a href="#快排排序" class="headerlink" title="快排排序"></a>快排排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kuaipai</span>(<span class="params">lis,left,right</span>):</span></span><br><span class="line">    <span class="comment"># 递归结束条件</span></span><br><span class="line">    <span class="keyword">if</span> left&gt; right:</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    i,j = left,right</span><br><span class="line">    <span class="comment"># 定义基准数</span></span><br><span class="line">    base = lis[left]</span><br><span class="line">    <span class="keyword">while</span> j &gt;i:</span><br><span class="line">        <span class="keyword">while</span> lis[j] &gt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            j -=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> lis[i] &lt;= base <span class="keyword">and</span> j &gt;i:</span><br><span class="line">            i +=<span class="number">1</span></span><br><span class="line">        lis[i].lis[j] = lis[j],lis[i]</span><br><span class="line">    lis[left] = lis[i]</span><br><span class="line">    lis[i] = base</span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>排序算法</category>
-        <category>Python排序算法</category>
-        <category>数据算法</category>
-      </categories>
-      <tags>
-        <tag>Python排序算法</tag>
-        <tag>排序算法</tag>
-        <tag>数据算法</tag>
       </tags>
   </entry>
   <entry>

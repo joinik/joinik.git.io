@@ -205,104 +205,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/04/15/Python%E5%8D%95%E4%BE%8B/</url>
-    <content><![CDATA[<h3 id="Python-单例方法"><a href="#Python-单例方法" class="headerlink" title="Python 单例方法"></a>Python 单例方法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式1  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    _instance = <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls._instance:</span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">a = A()</span><br><span class="line">print(id(a))  <span class="comment">#2641366741704</span></span><br><span class="line">b = A()</span><br><span class="line">print(id(b))  <span class="comment">#2641366741704</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 方式2  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(A, <span class="string">&quot;_instance&quot;</span>):  <span class="comment"># 是否有_instance属性</span></span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)            </span><br></pre></td></tr></table></figure>
-
-<h3 id="使用单例-控制-只有一个短信发送对象"><a href="#使用单例-控制-只有一个短信发送对象" class="headerlink" title="使用单例 控制 只有一个短信发送对象"></a>使用单例 控制 只有一个短信发送对象</h3><p>内存优化，减少内存消耗</p>
-<h3 id="使用pipline-操作redis"><a href="#使用pipline-操作redis" class="headerlink" title="使用pipline 操作redis"></a>使用pipline 操作redis</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pl &#x3D; redis.cli.pipeline()</span><br><span class="line">pl.setex(&quot;send_flag_%s&quot; % mobile, 60, 1)</span><br><span class="line">pl.setex(&quot;sms_%s&quot; % mobile, 300, sms_code)</span><br><span class="line"></span><br><span class="line"># 5. 保存短信验证码到redis</span><br><span class="line"># redis_cli.setex()</span><br><span class="line"># 执行请求</span><br><span class="line">pl.execute()	#一次执行，减少内存消耗</span><br></pre></td></tr></table></figure>
-
-<h3 id="异步方案-celery-发短信"><a href="#异步方案-celery-发短信" class="headerlink" title="异步方案 celery 发短信"></a>异步方案 celery 发短信</h3><p><strong>生产消费者模式</strong></p>
-<ul>
-<li><p>安装celery创建sms 包，并添加异步</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install -U celery</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p>在根目录下 创建celery的包 </p>
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539278351.png" alt="1618539278351"></p>
-</li>
-<li><p>main.py</p>
-<ul>
-<li>1 设置django环境<br>2 创建celery对象<br>3 设置 broker<br>4 celery自动检测任务</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line"># 1 设置django环境</span><br><span class="line"># set the default Django settings module for the &#39;celery&#39; program.</span><br><span class="line">from celery import Celery</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&#39;DJANGO_SETTINGS_MODULE&#39;, &#39;meiduo.settings&#39;)</span><br><span class="line"></span><br><span class="line"># 2 创建celery对象</span><br><span class="line">app &#x3D; Celery(&#39;celery_tasks&#39;)</span><br><span class="line"></span><br><span class="line"># 3 设置 broker</span><br><span class="line">app.config_from_object(&quot;celery_tasks.config&quot;)</span><br><span class="line"></span><br><span class="line"># 4celery自动检测任务  这里会自动去celery_tasks.sms下找tasks.py</span><br><span class="line">app.autodiscover_tasks([&#39;celery_tasks.sms&#39;])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>redis 作为队列  </p>
-<ul>
-<li>config.py </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 把redis 作为队列</span><br><span class="line">broker_url &#x3D; &quot;redis:&#x2F;&#x2F;127.0.0.1&#x2F;15&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>sms的tasks.py里添加任务</p>
-<ul>
-<li>tasks.py文件名不可改变</li>
-</ul>
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539600277.png" alt="1618539600277"></p>
-</li>
-</ul>
-<h4 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a>启动celery</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br></pre></td></tr></table></figure>
-
-<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618540420762.png" alt="1618540420762"></p>
-<h4 id="win10-遇到的小bug"><a href="#win10-遇到的小bug" class="headerlink" title="win10 遇到的小bug"></a>win10 遇到的小bug</h4><p>开启服务发现，任务并未执行  上网查资料后发现，celery 对win10  支持并不是很好</p>
-<p>解决此方案的</p>
-<ul>
-<li><p>方案1</p>
-</li>
-<li><p>添加–pool=solo参数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">celery -A celery_tasks.main worker --pool&#x3D;solo -l info</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方案2</p>
-</li>
-<li><p>先安装gevent，然后在启动celery的时候添加gevent参数</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install gevent</span><br><span class="line">celery -A celery_tasks.main worker -l info -P gevent</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>参考资料：<a href="https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows">https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows</a></p>
-<h3 id="Django-地址设计"><a href="#Django-地址设计" class="headerlink" title="Django 地址设计"></a>Django 地址设计</h3><h4 id="省市区三级联动"><a href="#省市区三级联动" class="headerlink" title="省市区三级联动"></a>省市区三级联动</h4><ul>
-<li><h5 id="缓存省市区数据"><a href="#缓存省市区数据" class="headerlink" title="缓存省市区数据"></a>缓存省市区数据</h5><blockquote>
-<p>提示：</p>
-</blockquote>
-<ul>
-<li>省市区数据是我们动态查询的结果。</li>
-<li>但是省市区数据不是频繁变化的数据，所以没有必要每次都重新查询。</li>
-<li>所以我们可以选择对省市区数据进行缓存处理。</li>
-</ul>
-</li>
-<li><p>缓存方式</p>
-<ul>
-<li><code>from django.core.cache import cache</code></li>
-<li>存储缓存数据：<code>cache.set(&#39;key&#39;, 内容, 有效期)</code></li>
-<li>读取缓存数据：<code>cache.get(&#39;key&#39;)</code></li>
-<li>删除缓存数据：<code>cache.delete(&#39;key&#39;)</code></li>
-<li><strong>注意：存储进去和读取出来的数据类型相同，所以读取出来后可以直接使用。</strong></li>
-</ul>
-</li>
-<li><p><strong>缓存逻辑实现</strong></p>
-<ul>
-<li>省份缓存数据<ul>
-<li><code>cache.set(&#39;province_list&#39;, province_list, 3600)</code></li>
-</ul>
-</li>
-<li>市或区缓存数据<ul>
-<li><code>cache.set(&#39;sub_area_&#39; + area_id, sub_data, 3600)</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="省级三联orm"><a href="#省级三联orm" class="headerlink" title="省级三联orm"></a>省级三联orm</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询所有省份</span><br><span class="line">select * from tb_areas where parent_id is Null;</span><br><span class="line"></span><br><span class="line">area_list &#x3D; Area.objects.filter(parent&#x3D;None)</span><br><span class="line">Area.objects.filter(parent__isnull &#x3D; True)</span><br></pre></td></tr></table></figure>
-
-<p>查询市级</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from tb_areas where parent_id&#x3D;130000; # 市</span><br><span class="line">Area.objects.filter(parent_id &#x3D; 130000)</span><br><span class="line"></span><br><span class="line">area_hebei &#x3D; Area.objects.get(id &#x3D; 130000) 河北省</span><br><span class="line">area_hebei.subs.all() 河北省所有的市</span><br><span class="line"></span><br><span class="line">select * from tb_areas where parent_id&#x3D;130200; #  区县</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
     <title>Ubuntu18.04 从零搭建(python开发环境)</title>
     <url>/2021/04/11/Ubuntu18.04%E4%BB%8E0%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<pre><code>1. install  Python 3.8
@@ -433,6 +335,104 @@
   </entry>
   <entry>
     <title></title>
+    <url>/2021/04/15/Python%E5%8D%95%E4%BE%8B/</url>
+    <content><![CDATA[<h3 id="Python-单例方法"><a href="#Python-单例方法" class="headerlink" title="Python 单例方法"></a>Python 单例方法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式1  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    _instance = <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls._instance:</span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">a = A()</span><br><span class="line">print(id(a))  <span class="comment">#2641366741704</span></span><br><span class="line">b = A()</span><br><span class="line">print(id(b))  <span class="comment">#2641366741704</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 方式2  创建单例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(A, <span class="string">&quot;_instance&quot;</span>):  <span class="comment"># 是否有_instance属性</span></span><br><span class="line">            cls._instance = super().__new__(cls, *args, **kwargs)</span><br><span class="line">            </span><br><span class="line">     	<span class="keyword">return</span> cls._instance</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">goto</span>(<span class="params">self,</span>):</span></span><br><span class="line">        print(<span class="string">&quot;cj&gt;&gt;&gt;&gt;&gt;&quot;</span>)            </span><br></pre></td></tr></table></figure>
+
+<h3 id="使用单例-控制-只有一个短信发送对象"><a href="#使用单例-控制-只有一个短信发送对象" class="headerlink" title="使用单例 控制 只有一个短信发送对象"></a>使用单例 控制 只有一个短信发送对象</h3><p>内存优化，减少内存消耗</p>
+<h3 id="使用pipline-操作redis"><a href="#使用pipline-操作redis" class="headerlink" title="使用pipline 操作redis"></a>使用pipline 操作redis</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pl &#x3D; redis.cli.pipeline()</span><br><span class="line">pl.setex(&quot;send_flag_%s&quot; % mobile, 60, 1)</span><br><span class="line">pl.setex(&quot;sms_%s&quot; % mobile, 300, sms_code)</span><br><span class="line"></span><br><span class="line"># 5. 保存短信验证码到redis</span><br><span class="line"># redis_cli.setex()</span><br><span class="line"># 执行请求</span><br><span class="line">pl.execute()	#一次执行，减少内存消耗</span><br></pre></td></tr></table></figure>
+
+<h3 id="异步方案-celery-发短信"><a href="#异步方案-celery-发短信" class="headerlink" title="异步方案 celery 发短信"></a>异步方案 celery 发短信</h3><p><strong>生产消费者模式</strong></p>
+<ul>
+<li><p>安装celery创建sms 包，并添加异步</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install -U celery</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>在根目录下 创建celery的包 </p>
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539278351.png" alt="1618539278351"></p>
+</li>
+<li><p>main.py</p>
+<ul>
+<li>1 设置django环境<br>2 创建celery对象<br>3 设置 broker<br>4 celery自动检测任务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line"># 1 设置django环境</span><br><span class="line"># set the default Django settings module for the &#39;celery&#39; program.</span><br><span class="line">from celery import Celery</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&#39;DJANGO_SETTINGS_MODULE&#39;, &#39;meiduo.settings&#39;)</span><br><span class="line"></span><br><span class="line"># 2 创建celery对象</span><br><span class="line">app &#x3D; Celery(&#39;celery_tasks&#39;)</span><br><span class="line"></span><br><span class="line"># 3 设置 broker</span><br><span class="line">app.config_from_object(&quot;celery_tasks.config&quot;)</span><br><span class="line"></span><br><span class="line"># 4celery自动检测任务  这里会自动去celery_tasks.sms下找tasks.py</span><br><span class="line">app.autodiscover_tasks([&#39;celery_tasks.sms&#39;])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 作为队列  </p>
+<ul>
+<li>config.py </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 把redis 作为队列</span><br><span class="line">broker_url &#x3D; &quot;redis:&#x2F;&#x2F;127.0.0.1&#x2F;15&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sms的tasks.py里添加任务</p>
+<ul>
+<li>tasks.py文件名不可改变</li>
+</ul>
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618539600277.png" alt="1618539600277"></p>
+</li>
+</ul>
+<h4 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a>启动celery</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br></pre></td></tr></table></figure>
+
+<p><img src="Python%E5%8D%95%E4%BE%8B.assets/1618540420762.png" alt="1618540420762"></p>
+<h4 id="win10-遇到的小bug"><a href="#win10-遇到的小bug" class="headerlink" title="win10 遇到的小bug"></a>win10 遇到的小bug</h4><p>开启服务发现，任务并未执行  上网查资料后发现，celery 对win10  支持并不是很好</p>
+<p>解决此方案的</p>
+<ul>
+<li><p>方案1</p>
+</li>
+<li><p>添加–pool=solo参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">celery -A celery_tasks.main worker --pool&#x3D;solo -l info</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案2</p>
+</li>
+<li><p>先安装gevent，然后在启动celery的时候添加gevent参数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install gevent</span><br><span class="line">celery -A celery_tasks.main worker -l info -P gevent</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>参考资料：<a href="https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows">https://stackoverflow.com/questions/37255548/how-to-run-celery-on-windows</a></p>
+<h3 id="Django-地址设计"><a href="#Django-地址设计" class="headerlink" title="Django 地址设计"></a>Django 地址设计</h3><h4 id="省市区三级联动"><a href="#省市区三级联动" class="headerlink" title="省市区三级联动"></a>省市区三级联动</h4><ul>
+<li><h5 id="缓存省市区数据"><a href="#缓存省市区数据" class="headerlink" title="缓存省市区数据"></a>缓存省市区数据</h5><blockquote>
+<p>提示：</p>
+</blockquote>
+<ul>
+<li>省市区数据是我们动态查询的结果。</li>
+<li>但是省市区数据不是频繁变化的数据，所以没有必要每次都重新查询。</li>
+<li>所以我们可以选择对省市区数据进行缓存处理。</li>
+</ul>
+</li>
+<li><p>缓存方式</p>
+<ul>
+<li><code>from django.core.cache import cache</code></li>
+<li>存储缓存数据：<code>cache.set(&#39;key&#39;, 内容, 有效期)</code></li>
+<li>读取缓存数据：<code>cache.get(&#39;key&#39;)</code></li>
+<li>删除缓存数据：<code>cache.delete(&#39;key&#39;)</code></li>
+<li><strong>注意：存储进去和读取出来的数据类型相同，所以读取出来后可以直接使用。</strong></li>
+</ul>
+</li>
+<li><p><strong>缓存逻辑实现</strong></p>
+<ul>
+<li>省份缓存数据<ul>
+<li><code>cache.set(&#39;province_list&#39;, province_list, 3600)</code></li>
+</ul>
+</li>
+<li>市或区缓存数据<ul>
+<li><code>cache.set(&#39;sub_area_&#39; + area_id, sub_data, 3600)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="省级三联orm"><a href="#省级三联orm" class="headerlink" title="省级三联orm"></a>省级三联orm</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询所有省份</span><br><span class="line">select * from tb_areas where parent_id is Null;</span><br><span class="line"></span><br><span class="line">area_list &#x3D; Area.objects.filter(parent&#x3D;None)</span><br><span class="line">Area.objects.filter(parent__isnull &#x3D; True)</span><br></pre></td></tr></table></figure>
+
+<p>查询市级</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from tb_areas where parent_id&#x3D;130000; # 市</span><br><span class="line">Area.objects.filter(parent_id &#x3D; 130000)</span><br><span class="line"></span><br><span class="line">area_hebei &#x3D; Area.objects.get(id &#x3D; 130000) 河北省</span><br><span class="line">area_hebei.subs.all() 河北省所有的市</span><br><span class="line"></span><br><span class="line">select * from tb_areas where parent_id&#x3D;130200; #  区县</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>/2021/04/23/docker02/</url>
     <content><![CDATA[<h4 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h4><ol>
 <li>下载一个基本的镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu:16.04</span><br></pre></td></tr></table></figure></li>
@@ -543,19 +543,6 @@
   </entry>
   <entry>
     <title></title>
-    <url>/2021/04/27/javaInterface/</url>
-    <content><![CDATA[<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
-<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
-</li>
-<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
-<p><img src="javaInterface.assets/1619488312119.png" alt="1619488312119"></p>
-</li>
-</ul>
-<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="javaInterface.assets/1619489768318.png" alt="1619489768318"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>/2021/04/14/javaday02/</url>
     <content><![CDATA[<h3 id="java-跨包使用"><a href="#java-跨包使用" class="headerlink" title="java 跨包使用"></a>java 跨包使用</h3><p><img src="javaday02.assets/1618281252388.png" alt="1618281252388"></p>
 <h3 id="集合与数组的区别"><a href="#集合与数组的区别" class="headerlink" title="集合与数组的区别"></a>集合与数组的区别</h3><p>数组 长度不能修改</p>
@@ -588,6 +575,19 @@
 
 </li>
 </ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/04/27/javaInterface/</url>
+    <content><![CDATA[<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
+<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
+</li>
+<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
+<p><img src="javaInterface.assets/1619488312119.png" alt="1619488312119"></p>
+</li>
+</ul>
+<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="javaInterface.assets/1619489768318.png" alt="1619489768318"></p>
 ]]></content>
   </entry>
   <entry>
@@ -693,30 +693,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>数据库的导出命令</title>
-    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
-    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<a id="more"></a>
-<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
-<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
-<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
-<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
-<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
-<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
-<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
-<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
-<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
-      <categories>
-        <category>MySQL数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL数据库</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pandas 数据处理02  groupby</title>
     <url>/2020/12/28/pandas02/</url>
     <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
@@ -751,6 +727,35 @@
       </categories>
       <tags>
         <tag>pandas 数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/06/20/vue3.0/</url>
+    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
+  </entry>
+  <entry>
+    <title>数据库的导出命令</title>
+    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
+    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<a id="more"></a>
+<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
+<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
+<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
+<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
+<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
+<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
+<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
+<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
+<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
+      <categories>
+        <category>MySQL数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -897,11 +902,6 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/06/20/vue3.0/</url>
-    <content><![CDATA[<h2 id="vue3-0"><a href="#vue3-0" class="headerlink" title="vue3.0"></a>vue3.0</h2>]]></content>
-  </entry>
-  <entry>
     <title>xpath 语法</title>
     <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<p> xpath 语法</p>
@@ -985,6 +985,12 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/05/13/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>哈弗曼</p>
+]]></content>
+  </entry>
+  <entry>
     <title>分布式 爬虫 Scrapy项目 scrapyd</title>
     <url>/2020/12/25/%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%ABScrapy/</url>
     <content><![CDATA[<p>分布式 爬虫 Scrapy项目 scrapyd</p>
@@ -1040,12 +1046,6 @@
         <tag>爬虫</tag>
         <tag>爬虫框架scrapy</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/05/13/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
-    <content><![CDATA[<p>哈弗曼</p>
-]]></content>
   </entry>
   <entry>
     <title>微信小程序知识点 总结</title>
@@ -2006,7 +2006,7 @@ def viewfunc(request):
 <p>![1623854396821](Django-knowledge point.assets/1623854396821.png)</p>
 </li>
 </ol>
-<h4 id="序列化器"><a href="#序列化器" class="headerlink" title="序列化器"></a>序列化器</h4><h5 id="1-安装"><a href="#1-安装" class="headerlink" title="1.  安装"></a>1.  安装</h5><ol>
+<h2 id="序列化器"><a href="#序列化器" class="headerlink" title="序列化器"></a>序列化器</h2><h5 id="1-安装"><a href="#1-安装" class="headerlink" title="1.  安装"></a>1.  安装</h5><ol>
 <li><pre><code>pip install djangorestframework
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">##### 2. 注册序列化器</span><br><span class="line"></span><br><span class="line">   1. &#96;&#96;&#96;</span><br><span class="line">      INSTALLED_APPS &#x3D; [</span><br><span class="line">          ...</span><br><span class="line">          &#39;rest_framework&#39;,</span><br><span class="line">      ]</span><br></pre></td></tr></table></figure>
 </code></pre>
@@ -2143,7 +2143,26 @@ def viewfunc(request):
 </ul>
 </li>
 </ul>
-<h5 id="3-Mixin"><a href="#3-Mixin" class="headerlink" title="3. Mixin"></a>3. Mixin</h5><h5 id="4-子类视图"><a href="#4-子类视图" class="headerlink" title="4. 子类视图"></a>4. 子类视图</h5>]]></content>
+<h5 id="3-Mixin"><a href="#3-Mixin" class="headerlink" title="3. Mixin"></a>3. Mixin</h5><p><strong>注意Mixin  配合GenericAPIView</strong></p>
+<ul>
+<li><p>1）ListModelMixin</p>
+<p>列表视图扩展类，提供<code>list(request, *args, **kwargs)</code>方法快速实现列表视图，返回200状态码。</p>
+<p>该Mixin的list方法会对数据进行过滤和分页。</p>
+</li>
+<li><p>2）CreateModelMixin</p>
+<p>创建视图扩展类，提供<code>create(request, *args, **kwargs)</code>方法快速实现创建资源的视图，成功返回201状态码。</p>
+<p>如果序列化器对前端发送的数据验证失败，返回400错误</p>
+</li>
+<li><p><strong><a href="http://www.django-rest-framework.org/api-guide/generic-views/#mixins">详情文档</a></strong></p>
+</li>
+</ul>
+<h5 id="4-子类视图"><a href="#4-子类视图" class="headerlink" title="4. 子类视图"></a>4. 子类视图</h5><ul>
+<li><p>ListAPIView</p>
+<p>![1624326579016](Django-knowledge point.assets/1624326579016.png)</p>
+</li>
+<li></li>
+</ul>
+]]></content>
       <categories>
         <category>Django</category>
         <category>Web</category>

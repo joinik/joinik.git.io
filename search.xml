@@ -50,6 +50,73 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/05/14/MeiDuoProjectExplain/</url>
+    <content><![CDATA[<h3 id="网站首页广告分析（这里京东做分析）"><a href="#网站首页广告分析（这里京东做分析）" class="headerlink" title="网站首页广告分析（这里京东做分析）"></a>网站首页广告分析（这里京东做分析）</h3><h4 id="1-核心区"><a href="#1-核心区" class="headerlink" title="1.核心区"></a>1.核心区</h4><p><img src="MeiDuoProjectExplain.assets/1620994509496.png" alt="1620994509496"></p>
+<h4 id="2-楼层"><a href="#2-楼层" class="headerlink" title="2.楼层"></a>2.楼层</h4><p><img src="MeiDuoProjectExplain.assets/1620994571806.png" alt="1620994571806"></p>
+<p><img src="MeiDuoProjectExplain.assets/1620994592226.png" alt="1620994592226"></p>
+<h3 id="SPU-和SKU"><a href="#SPU-和SKU" class="headerlink" title="SPU 和SKU"></a>SPU 和SKU</h3><ul>
+<li>SPU 可以理解为一个类 ， 拥有相同属性， 相同方法， 比如 iPhone x   <ul>
+<li>如手机-&gt;苹果手机-&gt;苹果6，苹果6就是SPU     </li>
+</ul>
+</li>
+<li>SKU  可以理解为一个实例对象， 比如  iPhone x  全网通 黑色 256g  </li>
+</ul>
+<h3 id="Nginx部署静态"><a href="#Nginx部署静态" class="headerlink" title="Nginx部署静态"></a>Nginx部署静态</h3><ol>
+<li><p><code>settings.py文件</code> 设置静态文件目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STATIC_ROOT &#x3D; os.path.join(os.path.dirname(os.path.dirname(BAse_DIR)), &quot;front_end_pc&#x2F;static&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们要把静态文件收集到<code>front_end_pc/static</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="ubuntu-提前装好Nginx服务器"><a href="#ubuntu-提前装好Nginx服务器" class="headerlink" title="ubuntu 提前装好Nginx服务器"></a>ubuntu 提前装好Nginx服务器</h5><ul>
+<li><p>1.配置Nginx服务器</p>
+<p><strong>静态业务</strong></p>
+</li>
+</ul>
+<p><img src="MeiDuoProjectExplain.assets/1623980357480.png" alt="1623980357480"></p>
+<p><strong>动态业务</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623980721048.png" alt="1623980721048"></p>
+<p><strong>server部分说明</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623982962155.png" alt="1623982962155"></p>
+<p><strong>指定wsgi.py 启动配置文件为prod.py</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623986502245.png" alt="1623986502245"></p>
+<p><strong>服务器地址</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keepalive_timeout  1000;</span><br><span class="line">upstream meiduo &#123;</span><br><span class="line">    server 1xx.1xx.27.77:8001;  # 此处为uwsgi运行的ip地址和端口号</span><br><span class="line">    # 如果有多台服务器，可以在此处继续添加服务器地址</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>uwsgi.ini</code>  放到  同<code>wsgi</code>同一路径下，做<code>uwsgi</code>服务器配置</p>
+<p><strong>uwsgi.ini</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">#使用nginx连接时使用，Django程序所在服务器地址</span><br><span class="line">socket&#x3D;192.168.x.xx:8001</span><br><span class="line">#直接做web服务器使用，Django程序所在服务器地址</span><br><span class="line"># http&#x3D;1xx.168.xxx.133:8001</span><br><span class="line">#项目目录</span><br><span class="line">chdir&#x3D;&#x2F;Users&#x2F;chao&#x2F;Desktop&#x2F;meiduo&#x2F;meiduo_mall</span><br><span class="line">#项目中wsgi.py文件的目录，相对于项目目录</span><br><span class="line">wsgi-file&#x3D;meiduo_mall&#x2F;wsgi.py</span><br><span class="line"># 进程数</span><br><span class="line">processes&#x3D;4</span><br><span class="line"># 线程数</span><br><span class="line">threads&#x3D;2</span><br><span class="line"># uwsgi服务器的角色   # True 为主，False 为从</span><br><span class="line">master&#x3D;True    </span><br><span class="line"># 存放进程编号的文件</span><br><span class="line">pidfile&#x3D;uwsgi.pid</span><br><span class="line"># 日志文件，因为uwsgi可以脱离终端在后台运行，日志看不见。我们以前的runserver是依赖终端的</span><br><span class="line">daemonize&#x3D;uwsgi.log</span><br><span class="line"># 指定依赖的虚拟环境</span><br><span class="line">virtualenv&#x3D;&#x2F;Users&#x2F;chao&#x2F;.virtualenvs&#x2F;django_20</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1624165971359.png" alt="1624165971359"></p>
+<p><strong>uwsgi 命令</strong></p>
+<ul>
+<li><p>启动</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --ini uwsgi.ini</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --stop uwsgi.ini</span><br><span class="line"># 或者 kill</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>jobweb项目中所遇到知识点</title>
     <url>/2020/12/25/Jobwebproject%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
     <content><![CDATA[<p> jobweb项目中所遇到知识点</p>
@@ -135,146 +202,6 @@
       <tags>
         <tag>web</tag>
         <tag>jobweb 项目 知识点</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/05/14/MeiDuoProjectExplain/</url>
-    <content><![CDATA[<h3 id="网站首页广告分析（这里京东做分析）"><a href="#网站首页广告分析（这里京东做分析）" class="headerlink" title="网站首页广告分析（这里京东做分析）"></a>网站首页广告分析（这里京东做分析）</h3><h4 id="1-核心区"><a href="#1-核心区" class="headerlink" title="1.核心区"></a>1.核心区</h4><p><img src="MeiDuoProjectExplain.assets/1620994509496.png" alt="1620994509496"></p>
-<h4 id="2-楼层"><a href="#2-楼层" class="headerlink" title="2.楼层"></a>2.楼层</h4><p><img src="MeiDuoProjectExplain.assets/1620994571806.png" alt="1620994571806"></p>
-<p><img src="MeiDuoProjectExplain.assets/1620994592226.png" alt="1620994592226"></p>
-<h3 id="SPU-和SKU"><a href="#SPU-和SKU" class="headerlink" title="SPU 和SKU"></a>SPU 和SKU</h3><ul>
-<li>SPU 可以理解为一个类 ， 拥有相同属性， 相同方法， 比如 iPhone x   <ul>
-<li>如手机-&gt;苹果手机-&gt;苹果6，苹果6就是SPU     </li>
-</ul>
-</li>
-<li>SKU  可以理解为一个实例对象， 比如  iPhone x  全网通 黑色 256g  </li>
-</ul>
-<h3 id="Nginx部署静态"><a href="#Nginx部署静态" class="headerlink" title="Nginx部署静态"></a>Nginx部署静态</h3><ol>
-<li><p><code>settings.py文件</code> 设置静态文件目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STATIC_ROOT &#x3D; os.path.join(os.path.dirname(os.path.dirname(BAse_DIR)), &quot;front_end_pc&#x2F;static&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>我们要把静态文件收集到<code>front_end_pc/static</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h5 id="ubuntu-提前装好Nginx服务器"><a href="#ubuntu-提前装好Nginx服务器" class="headerlink" title="ubuntu 提前装好Nginx服务器"></a>ubuntu 提前装好Nginx服务器</h5><ul>
-<li><p>1.配置Nginx服务器</p>
-<p><strong>静态业务</strong></p>
-</li>
-</ul>
-<p><img src="MeiDuoProjectExplain.assets/1623980357480.png" alt="1623980357480"></p>
-<p><strong>动态业务</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623980721048.png" alt="1623980721048"></p>
-<p><strong>server部分说明</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623982962155.png" alt="1623982962155"></p>
-<p><strong>指定wsgi.py 启动配置文件为prod.py</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623986502245.png" alt="1623986502245"></p>
-<p><strong>服务器地址</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keepalive_timeout  1000;</span><br><span class="line">upstream meiduo &#123;</span><br><span class="line">    server 1xx.1xx.27.77:8001;  # 此处为uwsgi运行的ip地址和端口号</span><br><span class="line">    # 如果有多台服务器，可以在此处继续添加服务器地址</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><code>uwsgi.ini</code>  放到  同<code>wsgi</code>同一路径下，做<code>uwsgi</code>服务器配置</p>
-<p><strong>uwsgi.ini</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">#使用nginx连接时使用，Django程序所在服务器地址</span><br><span class="line">socket&#x3D;192.168.x.xx:8001</span><br><span class="line">#直接做web服务器使用，Django程序所在服务器地址</span><br><span class="line"># http&#x3D;1xx.168.xxx.133:8001</span><br><span class="line">#项目目录</span><br><span class="line">chdir&#x3D;&#x2F;Users&#x2F;chao&#x2F;Desktop&#x2F;meiduo&#x2F;meiduo_mall</span><br><span class="line">#项目中wsgi.py文件的目录，相对于项目目录</span><br><span class="line">wsgi-file&#x3D;meiduo_mall&#x2F;wsgi.py</span><br><span class="line"># 进程数</span><br><span class="line">processes&#x3D;4</span><br><span class="line"># 线程数</span><br><span class="line">threads&#x3D;2</span><br><span class="line"># uwsgi服务器的角色   # True 为主，False 为从</span><br><span class="line">master&#x3D;True    </span><br><span class="line"># 存放进程编号的文件</span><br><span class="line">pidfile&#x3D;uwsgi.pid</span><br><span class="line"># 日志文件，因为uwsgi可以脱离终端在后台运行，日志看不见。我们以前的runserver是依赖终端的</span><br><span class="line">daemonize&#x3D;uwsgi.log</span><br><span class="line"># 指定依赖的虚拟环境</span><br><span class="line">virtualenv&#x3D;&#x2F;Users&#x2F;chao&#x2F;.virtualenvs&#x2F;django_20</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1624165971359.png" alt="1624165971359"></p>
-<p><strong>uwsgi 命令</strong></p>
-<ul>
-<li><p>启动</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --ini uwsgi.ini</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>停止</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --stop uwsgi.ini</span><br><span class="line"># 或者 kill</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>Ubuntu18.04 从零搭建(python开发环境)</title>
-    <url>/2021/04/11/Ubuntu18.04%E4%BB%8E0%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<pre><code>1. install  Python 3.8
- 2. install  virtualenv  &amp; virtualenvwrapper
- 3. install   MySQL
- 4. install   Redis
- 5. install    MongoDB
- 6. install    Pycharm</code></pre>
-<a id="more"></a>
-<h2 id="Ubuntu18-04-从零搭建-python开发环境"><a href="#Ubuntu18-04-从零搭建-python开发环境" class="headerlink" title="Ubuntu18.04 从零搭建(python开发环境)"></a>Ubuntu18.04 从零搭建(python开发环境)</h2><h3 id="环境说明："><a href="#环境说明：" class="headerlink" title="环境说明："></a>环境说明：</h3><pre><code> 1. install  Python 3.8
- 2. install  virtualenv  &amp; virtualenvwrapper
- 3. install   MySQL
- 4. install   Redis
- 5. install    MongoDB
- 6. install    Pycharm</code></pre>
-<h3 id="1-修改-apt源-加快安装速度"><a href="#1-修改-apt源-加快安装速度" class="headerlink" title="1.修改 apt源( 加快安装速度)"></a>1.修改 apt源( 加快安装速度)</h3><ol>
-<li><p>复制源文件备份， 以防万一</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo cp &#x2F;etc&#x2F;apt&#x2F;sources.list &#x2F;etc&#x2F;apt&#x2F;sources.list.bak</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑源文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vi &#x2F;etc&#x2F;apt&#x2F;sources.list</span><br></pre></td></tr></table></figure>
-
-<p>在文件的最前面 添加阿里云镜像源</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  阿里源</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>刷新列表</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://zhuanlan.zhihu.com/p/61228593">详情请到此篇知乎 </a></p>
-</li>
-</ol>
-<h3 id="1-1-修改pip源"><a href="#1-1-修改pip源" class="headerlink" title="1.1 修改pip源"></a>1.1 修改pip源</h3><p>常用的国内源<br>阿里云 <a href="http://mirrors.aliyun.com/pypi/simple/">http://mirrors.aliyun.com/pypi/simple/</a><br>中国科技大学 <a href="https://pypi.mirrors.ustc.edu.cn/simple/">https://pypi.mirrors.ustc.edu.cn/simple/</a><br>豆瓣 <a href="http://pypi.douban.com/simple/">http://pypi.douban.com/simple/</a><br>清华大学 <a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a><br>中国科技大学 <a href="http://pypi.mirrors.ustc.edu.cn/simple/">http://pypi.mirrors.ustc.edu.cn/simple/</a><br>————————————————<br>版权声明：本文为CSDN博主「qyhaill」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/qyhaill/article/details/98472936">https://blog.csdn.net/qyhaill/article/details/98472936</a></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 临时使用</span><br><span class="line">	pip install scrapy -i  http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 永久修改</span><br><span class="line">  <span class="number">2.1</span> 创建 ~/.pip/pip.conf</span><br><span class="line">  <span class="number">2.2</span>  将下面 内容添加进去</span><br><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-install-Python3-8"><a href="#2-install-Python3-8" class="headerlink" title="2.install Python3.8"></a>2.install Python3.8</h3><p>参照，搬过来<a href="https://ywnz.com/linux/6041.html">云网牛站—-Python3.8 安装</a></p>
-<p><strong>a.  从Deadsnakes PPA 安装deb软件包</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install software-properties-common</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 将Deadsnakes PPA添加到系统的来源列表中：</span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line">    </span><br><span class="line">出现提示时，按Enter继续：</span><br><span class="line">Press [ENTER] to <span class="keyword">continue</span> <span class="keyword">or</span> Ctrl-c to cancel adding it.</span><br><span class="line">注：意思是按[ENTER]继续，或按Ctrl-c取消添加。</span><br><span class="line">    </span><br><span class="line">sudo apt install python3<span class="number">.8</span>  </span><br><span class="line">python3<span class="number">.8</span> -V</span><br><span class="line"></span><br><span class="line">返回信息：</span><br><span class="line">Python <span class="number">3.8</span><span class="number">.0</span></span><br><span class="line">至此，Python <span class="number">3.8</span>已安装在Ubuntu <span class="number">18.04</span>系统上，你可以开始使用它了。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>**b.  从源代码在Ubuntu 18.04上安装Python 3.8 **</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>、更新软件包列表并安装构建Python所需的软件包：</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line">sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、使用wget从Python下载页面下载最新版本的源代码，或者访问 https://www.python.org/ 网站下载：</span><br><span class="line">wget https://www.python.org/ftp/python/<span class="number">3.8</span><span class="number">.0</span>/Python<span class="number">-3.8</span><span class="number">.0</span>.tgz</span><br><span class="line">   </span><br><span class="line"><span class="number">3.</span> 解压压缩文件</span><br><span class="line">tar -xf Python<span class="number">-3.8</span><span class="number">.0</span>.tgz  </span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 切换到Python原目录并执行 configure脚本， </span><br><span class="line">cd Python<span class="number">-3.8</span><span class="number">.0</span></span><br><span class="line">./configure --enable-optimizations</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 启动构建Python3<span class="number">.8</span></span><br><span class="line">make -j <span class="number">8</span></span><br><span class="line">为了加快构建时间，请修改-j以使其对应于处理器中的内核数，你可以通过键入nproc查找编号。</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 构建过程完成后，输入一下命令安装Python二进制文件</span><br><span class="line">sudo make altinstall</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span> 验证</span><br><span class="line">python3<span class="number">.8</span> -V</span><br><span class="line">输出应显示Python版本：</span><br><span class="line">Python <span class="number">3.8</span><span class="number">.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-安装并配置virtualenv-和virtualenvwrapper"><a href="#3-安装并配置virtualenv-和virtualenvwrapper" class="headerlink" title="3.安装并配置virtualenv 和virtualenvwrapper"></a>3.安装并配置virtualenv 和virtualenvwrapper</h3><ol>
-<li><p>安装并配置virtualenv 和virtualenvwrapper</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install virtualenv</span><br><span class="line">pip install virtualenvwrapper</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建文件夹</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mkdir $HOME/.virtualenvs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在~/.bashrc中加入</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">export WORKON_HOME=$HOME/.virtualenvs</span><br><span class="line">export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3</span><br><span class="line">source /usr/local/bin/virtualenvwrapper.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中virtualenvwrapper.sh的位置视情况而定，可能在<code>\usr\local\bin</code>中，也可能在<code>~/.local/bin</code>中。 </p>
-</li>
-<li><p>激活. bashrc文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
-
-<p>注： 如果出现 ERROR: virtualenvwrapper could not find virtualenv in your path, 可以在<del>/.bashrc中加入PATH=$PATH:</del>/.local/bin 或者 PATH=$PATH:/usr/local/bin。<br>————————————————<br>版权声明：本文为CSDN博主「qyhaill」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/qyhaill/article/details/98472936">https://blog.csdn.net/qyhaill/article/details/98472936</a></p>
-</li>
-</ol>
-<p>​      <a href="https://blog.csdn.net/qyhaill/article/details/98472936">virtualenv常用命令</a></p>
-<h4 id="一些个人遇到问题-❤❤❤❤感谢以下博主❤❤❤❤❤"><a href="#一些个人遇到问题-❤❤❤❤感谢以下博主❤❤❤❤❤" class="headerlink" title="一些个人遇到问题(❤❤❤❤感谢以下博主❤❤❤❤❤)"></a>一些个人遇到问题(❤❤❤❤感谢以下博主❤❤❤❤❤)</h4><p><a href="https://blog.csdn.net/u011092188/article/details/64123561">pip安装软件时出现Command “python setup.py egg_info” failed with error code 1 in /tmp/pip-build*的解决方案</a></p>
-]]></content>
-      <categories>
-        <category>Ubuntu18.04</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Ubuntu18.04</tag>
-        <tag>python 开发</tag>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -374,6 +301,79 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from tb_areas where parent_id&#x3D;130000; # 市</span><br><span class="line">Area.objects.filter(parent_id &#x3D; 130000)</span><br><span class="line"></span><br><span class="line">area_hebei &#x3D; Area.objects.get(id &#x3D; 130000) 河北省</span><br><span class="line">area_hebei.subs.all() 河北省所有的市</span><br><span class="line"></span><br><span class="line">select * from tb_areas where parent_id&#x3D;130200; #  区县</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>Ubuntu18.04 从零搭建(python开发环境)</title>
+    <url>/2021/04/11/Ubuntu18.04%E4%BB%8E0%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<pre><code>1. install  Python 3.8
+ 2. install  virtualenv  &amp; virtualenvwrapper
+ 3. install   MySQL
+ 4. install   Redis
+ 5. install    MongoDB
+ 6. install    Pycharm</code></pre>
+<a id="more"></a>
+<h2 id="Ubuntu18-04-从零搭建-python开发环境"><a href="#Ubuntu18-04-从零搭建-python开发环境" class="headerlink" title="Ubuntu18.04 从零搭建(python开发环境)"></a>Ubuntu18.04 从零搭建(python开发环境)</h2><h3 id="环境说明："><a href="#环境说明：" class="headerlink" title="环境说明："></a>环境说明：</h3><pre><code> 1. install  Python 3.8
+ 2. install  virtualenv  &amp; virtualenvwrapper
+ 3. install   MySQL
+ 4. install   Redis
+ 5. install    MongoDB
+ 6. install    Pycharm</code></pre>
+<h3 id="1-修改-apt源-加快安装速度"><a href="#1-修改-apt源-加快安装速度" class="headerlink" title="1.修改 apt源( 加快安装速度)"></a>1.修改 apt源( 加快安装速度)</h3><ol>
+<li><p>复制源文件备份， 以防万一</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo cp &#x2F;etc&#x2F;apt&#x2F;sources.list &#x2F;etc&#x2F;apt&#x2F;sources.list.bak</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑源文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vi &#x2F;etc&#x2F;apt&#x2F;sources.list</span><br></pre></td></tr></table></figure>
+
+<p>在文件的最前面 添加阿里云镜像源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  阿里源</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>刷新列表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://zhuanlan.zhihu.com/p/61228593">详情请到此篇知乎 </a></p>
+</li>
+</ol>
+<h3 id="1-1-修改pip源"><a href="#1-1-修改pip源" class="headerlink" title="1.1 修改pip源"></a>1.1 修改pip源</h3><p>常用的国内源<br>阿里云 <a href="http://mirrors.aliyun.com/pypi/simple/">http://mirrors.aliyun.com/pypi/simple/</a><br>中国科技大学 <a href="https://pypi.mirrors.ustc.edu.cn/simple/">https://pypi.mirrors.ustc.edu.cn/simple/</a><br>豆瓣 <a href="http://pypi.douban.com/simple/">http://pypi.douban.com/simple/</a><br>清华大学 <a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a><br>中国科技大学 <a href="http://pypi.mirrors.ustc.edu.cn/simple/">http://pypi.mirrors.ustc.edu.cn/simple/</a><br>————————————————<br>版权声明：本文为CSDN博主「qyhaill」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/qyhaill/article/details/98472936">https://blog.csdn.net/qyhaill/article/details/98472936</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 临时使用</span><br><span class="line">	pip install scrapy -i  http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 永久修改</span><br><span class="line">  <span class="number">2.1</span> 创建 ~/.pip/pip.conf</span><br><span class="line">  <span class="number">2.2</span>  将下面 内容添加进去</span><br><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-install-Python3-8"><a href="#2-install-Python3-8" class="headerlink" title="2.install Python3.8"></a>2.install Python3.8</h3><p>参照，搬过来<a href="https://ywnz.com/linux/6041.html">云网牛站—-Python3.8 安装</a></p>
+<p><strong>a.  从Deadsnakes PPA 安装deb软件包</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install software-properties-common</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 将Deadsnakes PPA添加到系统的来源列表中：</span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line">    </span><br><span class="line">出现提示时，按Enter继续：</span><br><span class="line">Press [ENTER] to <span class="keyword">continue</span> <span class="keyword">or</span> Ctrl-c to cancel adding it.</span><br><span class="line">注：意思是按[ENTER]继续，或按Ctrl-c取消添加。</span><br><span class="line">    </span><br><span class="line">sudo apt install python3<span class="number">.8</span>  </span><br><span class="line">python3<span class="number">.8</span> -V</span><br><span class="line"></span><br><span class="line">返回信息：</span><br><span class="line">Python <span class="number">3.8</span><span class="number">.0</span></span><br><span class="line">至此，Python <span class="number">3.8</span>已安装在Ubuntu <span class="number">18.04</span>系统上，你可以开始使用它了。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>**b.  从源代码在Ubuntu 18.04上安装Python 3.8 **</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>、更新软件包列表并安装构建Python所需的软件包：</span><br><span class="line">sudo apt update</span><br><span class="line"></span><br><span class="line">sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、使用wget从Python下载页面下载最新版本的源代码，或者访问 https://www.python.org/ 网站下载：</span><br><span class="line">wget https://www.python.org/ftp/python/<span class="number">3.8</span><span class="number">.0</span>/Python<span class="number">-3.8</span><span class="number">.0</span>.tgz</span><br><span class="line">   </span><br><span class="line"><span class="number">3.</span> 解压压缩文件</span><br><span class="line">tar -xf Python<span class="number">-3.8</span><span class="number">.0</span>.tgz  </span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 切换到Python原目录并执行 configure脚本， </span><br><span class="line">cd Python<span class="number">-3.8</span><span class="number">.0</span></span><br><span class="line">./configure --enable-optimizations</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 启动构建Python3<span class="number">.8</span></span><br><span class="line">make -j <span class="number">8</span></span><br><span class="line">为了加快构建时间，请修改-j以使其对应于处理器中的内核数，你可以通过键入nproc查找编号。</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 构建过程完成后，输入一下命令安装Python二进制文件</span><br><span class="line">sudo make altinstall</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span> 验证</span><br><span class="line">python3<span class="number">.8</span> -V</span><br><span class="line">输出应显示Python版本：</span><br><span class="line">Python <span class="number">3.8</span><span class="number">.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安装并配置virtualenv-和virtualenvwrapper"><a href="#3-安装并配置virtualenv-和virtualenvwrapper" class="headerlink" title="3.安装并配置virtualenv 和virtualenvwrapper"></a>3.安装并配置virtualenv 和virtualenvwrapper</h3><ol>
+<li><p>安装并配置virtualenv 和virtualenvwrapper</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install virtualenv</span><br><span class="line">pip install virtualenvwrapper</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建文件夹</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mkdir $HOME/.virtualenvs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在~/.bashrc中加入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">export WORKON_HOME=$HOME/.virtualenvs</span><br><span class="line">export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3</span><br><span class="line">source /usr/local/bin/virtualenvwrapper.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中virtualenvwrapper.sh的位置视情况而定，可能在<code>\usr\local\bin</code>中，也可能在<code>~/.local/bin</code>中。 </p>
+</li>
+<li><p>激活. bashrc文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
+
+<p>注： 如果出现 ERROR: virtualenvwrapper could not find virtualenv in your path, 可以在<del>/.bashrc中加入PATH=$PATH:</del>/.local/bin 或者 PATH=$PATH:/usr/local/bin。<br>————————————————<br>版权声明：本文为CSDN博主「qyhaill」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/qyhaill/article/details/98472936">https://blog.csdn.net/qyhaill/article/details/98472936</a></p>
+</li>
+</ol>
+<p>​      <a href="https://blog.csdn.net/qyhaill/article/details/98472936">virtualenv常用命令</a></p>
+<h4 id="一些个人遇到问题-❤❤❤❤感谢以下博主❤❤❤❤❤"><a href="#一些个人遇到问题-❤❤❤❤感谢以下博主❤❤❤❤❤" class="headerlink" title="一些个人遇到问题(❤❤❤❤感谢以下博主❤❤❤❤❤)"></a>一些个人遇到问题(❤❤❤❤感谢以下博主❤❤❤❤❤)</h4><p><a href="https://blog.csdn.net/u011092188/article/details/64123561">pip安装软件时出现Command “python setup.py egg_info” failed with error code 1 in /tmp/pip-build*的解决方案</a></p>
+]]></content>
+      <categories>
+        <category>Ubuntu18.04</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu18.04</tag>
+        <tag>python 开发</tag>
+        <tag>Linux</tag>
+      </tags>
   </entry>
   <entry>
     <title>c++教程</title>
@@ -509,6 +509,39 @@
 ]]></content>
   </entry>
   <entry>
+    <title>git-命令</title>
+    <url>/2020/10/09/git-%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>Git 基础 命令</p>
+<a id="more"></a>
+
+
+
+<h3 id="Git-基础-命令"><a href="#Git-基础-命令" class="headerlink" title="Git 基础 命令"></a>Git 基础 命令</h3><h5 id="一-git-仓库"><a href="#一-git-仓库" class="headerlink" title="一. git 仓库"></a>一. git 仓库</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">git init xxx <span class="comment"># 初始化仓库xxx</span></span><br><span class="line"></span><br><span class="line">git clone 	 <span class="comment"># git克隆 + 远程仓库地址</span></span><br><span class="line"></span><br><span class="line">git remote -v <span class="comment"># 查看远程地址 fetch  push</span></span><br><span class="line">origin  https://github.com/joinik/xinjingzixun_2020 (fetch)</span><br><span class="line">origin  https://github.com/joinik/xinjingzixun_2020 (push)</span><br><span class="line">========</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line">git remote remove origin  <span class="comment"># </span></span><br><span class="line">$ git remote -v       	<span class="comment"># 查看远程仓库：</span></span><br><span class="line">$ git remote add [name] [url]	<span class="comment">#添加远程仓库：</span></span><br><span class="line">$ git remote rm [name]	<span class="comment">#删除远程仓库：</span></span><br><span class="line">$ git remote set-url --push [name] [newUrl]		<span class="comment">#修改远程仓库：</span></span><br><span class="line">$ git pull [remoteName] [localBranchName]	<span class="comment">#拉取远程仓库：</span></span><br><span class="line">$ git push [remoteName] [localBranchName]	<span class="comment">#推送远程仓库：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分支（branch）</span></span><br><span class="line">git branch 	<span class="comment">#查看本地分支</span></span><br><span class="line">git branch -r <span class="comment"># 查看远程分支</span></span><br><span class="line">git branch [name] -- 注意新分支创建后， 不会切换到新分支</span><br><span class="line">git branch -a <span class="comment"># 查看本地，远程所有分支</span></span><br><span class="line">git checkout [name] <span class="comment"># 切换分支</span></span><br><span class="line">git checkout -b [name] <span class="comment"># 创建并切换到新分支</span></span><br><span class="line">git branch -d <span class="comment"># 删除分支  选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立追踪关系，在现有分支与指定的远程分支之间</span></span><br><span class="line">$ git branch --set-upstream [branch] [remote-branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并指定分支到当前分支</span></span><br><span class="line">$ git merge [branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择一个commit，合并进当前分支</span></span><br><span class="line">$ git cherry-pick [commit]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">$ git push origin --delete [branch-name]</span><br><span class="line">$ git branch -dr [remote/branch]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="二-配置"><a href="#二-配置" class="headerlink" title="二. 配置"></a>二. 配置</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示当前的Git配置</span></span><br><span class="line">$ git config --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑Git配置文件</span></span><br><span class="line">$ git config -e [--<span class="keyword">global</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置提交代码时的用户信息</span></span><br><span class="line">$ git config [--<span class="keyword">global</span>] user.name <span class="string">&quot;[name]&quot;</span></span><br><span class="line">$ git config [--<span class="keyword">global</span>] user.email <span class="string">&quot;[email address]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="三，增加、删除文件"><a href="#三，增加、删除文件" class="headerlink" title="三，增加、删除文件"></a>三，增加、删除文件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 查看当前 文件变化</span><br><span class="line">git status -s</span><br><span class="line"></span><br><span class="line"># 添加指定文件到暂存区</span><br><span class="line">$ git add [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 添加指定目录到暂存区，包括子目录</span><br><span class="line">$ git add [dir]</span><br><span class="line"></span><br><span class="line"># 添加当前目录的所有文件到暂存区</span><br><span class="line">$ git add .</span><br><span class="line"></span><br><span class="line"># 添加每个变化前，都会要求确认</span><br><span class="line"># 对于同一个文件的多处变化，可以实现分次提交</span><br><span class="line">$ git add -p</span><br><span class="line"></span><br><span class="line"># 删除工作区文件，并且将这次删除放入暂存区</span><br><span class="line">$ git rm [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 停止追踪指定文件，但该文件会保留在工作区</span><br><span class="line">$ git rm --cached [file]</span><br><span class="line"></span><br><span class="line"># 改名文件，并且将这个改名放入暂存区</span><br><span class="line">$ git mv [file-original] [file-renamed]</span><br></pre></td></tr></table></figure>
+
+<h5 id="四，代码提交"><a href="#四，代码提交" class="headerlink" title="四，代码提交"></a>四，代码提交</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 附注标签</span><br><span class="line">$ git tag -a v1.4 -m &quot;my version 1.4&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 提交暂存区到仓库区</span><br><span class="line">$ git commit -m [message]</span><br><span class="line"></span><br><span class="line"># 提交暂存区的指定文件到仓库区</span><br><span class="line">$ git commit [file1] [file2] ... -m [message]</span><br><span class="line"></span><br><span class="line"># 提交工作区自上次commit之后的变化，直接到仓库区</span><br><span class="line">$ git commit -a</span><br><span class="line"></span><br><span class="line"># 提交时显示所有diff信息</span><br><span class="line">$ git commit -v</span><br><span class="line"></span><br><span class="line"># 使用一次新的commit，替代上一次提交</span><br><span class="line"># 如果代码没有任何新变化，则用来改写上一次commit的提交信息</span><br><span class="line">$ git commit --amend -m [message]</span><br><span class="line"></span><br><span class="line"># 重做上一次commit，并包括指定文件的新变化</span><br><span class="line">$ git commit --amend [file1] [file2] ...</span><br></pre></td></tr></table></figure>
+
+<h5 id="六，标签"><a href="#六，标签" class="headerlink" title="六，标签"></a>六，标签</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 列出所有tag</span><br><span class="line">$ git tag</span><br><span class="line"></span><br><span class="line"># 新建一个tag在当前commit</span><br><span class="line">$ git tag [tag]</span><br><span class="line"></span><br><span class="line"># 新建一个tag在指定commit</span><br><span class="line">$ git tag [tag] [commit]</span><br><span class="line"></span><br><span class="line"># 删除本地tag</span><br><span class="line">$ git tag -d [tag]</span><br><span class="line"></span><br><span class="line"># 删除远程tag</span><br><span class="line">$ git push origin :refs&#x2F;tags&#x2F;[tagName]</span><br><span class="line"></span><br><span class="line"># 查看tag信息</span><br><span class="line">$ git show [tag]</span><br><span class="line"></span><br><span class="line"># 提交指定tag</span><br><span class="line">$ git push [remote] [tag]</span><br><span class="line"></span><br><span class="line"># 提交所有tag</span><br><span class="line">$ git push [remote] --tags</span><br><span class="line"></span><br><span class="line"># 新建一个分支，指向某个tag</span><br><span class="line">$ git checkout -b [branch] [tag]</span><br></pre></td></tr></table></figure>
+
+<h5 id="七，远程同步"><a href="#七，远程同步" class="headerlink" title="七，远程同步"></a>七，远程同步</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 下载远程仓库的所有变动</span><br><span class="line">$ git fetch [remote]</span><br><span class="line"></span><br><span class="line"># 显示所有远程仓库</span><br><span class="line">$ git remote -v</span><br><span class="line"></span><br><span class="line"># 显示某个远程仓库的信息</span><br><span class="line">$ git remote show [remote]</span><br><span class="line"></span><br><span class="line"># 增加一个新的远程仓库，并命名</span><br><span class="line">$ git remote add [shortname] [url]</span><br><span class="line"></span><br><span class="line"># 取回远程仓库的变化，并与本地分支合并</span><br><span class="line">$ git pull [remote] [branch]</span><br><span class="line"></span><br><span class="line"># 上传本地指定分支到远程仓库</span><br><span class="line">$ git push [remote] [branch]</span><br><span class="line"></span><br><span class="line"># 强行推送当前分支到远程仓库，即使有冲突</span><br><span class="line">$ git push [remote] --force</span><br><span class="line"></span><br><span class="line"># 推送所有分支到远程仓库</span><br><span class="line">$ git push [remote] --all</span><br></pre></td></tr></table></figure>
+
+<h5 id="八，撤销"><a href="#八，撤销" class="headerlink" title="八，撤销"></a>八，撤销</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 恢复暂存区的指定文件到工作区</span><br><span class="line">$ git checkout [file]</span><br><span class="line"></span><br><span class="line"># 恢复某个commit的指定文件到暂存区和工作区</span><br><span class="line">$ git checkout [commit] [file]</span><br><span class="line"></span><br><span class="line"># 恢复暂存区的所有文件到工作区</span><br><span class="line">$ git checkout .</span><br><span class="line"></span><br><span class="line"># 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变</span><br><span class="line">$ git reset [file]</span><br><span class="line"></span><br><span class="line"># 重置暂存区与工作区，与上一次commit保持一致</span><br><span class="line">$ git reset --hard</span><br><span class="line"></span><br><span class="line"># 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</span><br><span class="line">$ git reset [commit]</span><br><span class="line"></span><br><span class="line"># 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致</span><br><span class="line">$ git reset --hard [commit]</span><br><span class="line"></span><br><span class="line"># 重置当前HEAD为指定commit，但保持暂存区和工作区不变</span><br><span class="line">$ git reset --keep [commit]</span><br><span class="line"></span><br><span class="line"># 新建一个commit，用来撤销指定commit</span><br><span class="line"># 后者的所有变化都将被前者抵消，并且应用到当前分支</span><br><span class="line">$ git revert [commit]</span><br><span class="line"></span><br><span class="line"># 暂时将未提交的变化移除，稍后再移入</span><br><span class="line">$ git stash</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
+
+<h5 id="十，其他"><a href="#十，其他" class="headerlink" title="十，其他"></a>十，其他</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 生成一个可供发布的压缩包</span><br><span class="line">$ git archive</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Git</category>
+        <category>Git的git基础命令</category>
+      </categories>
+      <tags>
+        <tag>git 命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title></title>
     <url>/2021/04/27/javaInterface/</url>
     <content><![CDATA[<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
@@ -522,28 +555,40 @@
 ]]></content>
   </entry>
   <entry>
-    <title>数据库的导出命令</title>
-    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
-    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<a id="more"></a>
-<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
-<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
-<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
-<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
-<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
-<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
-<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
-<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
-<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
-      <categories>
-        <category>MySQL数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL数据库</tag>
-      </tags>
+    <title></title>
+    <url>/2021/04/14/javaday02/</url>
+    <content><![CDATA[<h3 id="java-跨包使用"><a href="#java-跨包使用" class="headerlink" title="java 跨包使用"></a>java 跨包使用</h3><p><img src="javaday02.assets/1618281252388.png" alt="1618281252388"></p>
+<h3 id="集合与数组的区别"><a href="#集合与数组的区别" class="headerlink" title="集合与数组的区别"></a>集合与数组的区别</h3><p>数组 长度不能修改</p>
+<p>list   长度可以改变</p>
+<h3 id="Arraylist"><a href="#Arraylist" class="headerlink" title="Arraylist"></a>Arraylist</h3><h3 id="泛型-作为约束集合里的类型"><a href="#泛型-作为约束集合里的类型" class="headerlink" title="泛型 作为约束集合里的类型"></a>泛型 作为约束集合里的类型</h3><p><img src="javaday02.assets/1618303552657.png" alt="1618303552657"></p>
+<h4 id="ArrayList-方法"><a href="#ArrayList-方法" class="headerlink" title="ArrayList 方法"></a>ArrayList 方法</h4><ul>
+<li><p>增 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">arrLi02.add(&quot;content&quot;);</span><br><span class="line">arrLi02.add(3,&quot;conge&quot;); &#x2F;&#x2F; 根据下标 添加</span><br></pre></td></tr></table></figure>
+
+<p><strong>不能跨界添加</strong></p>
+</li>
+<li><p>删</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.remove(&quot;2&quot;); &#x2F;&#x2F; 根据元素</span><br><span class="line">addLi02.remove(0,&quot;2&quot;); &#x2F;&#x2F; 根据下标 删除元素</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.set(0,&quot;改&quot;); &#x2F;&#x2F; 参数1 下标， 参数2 元素</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.get(0); &#x2F;&#x2F; 参数1 下标，</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 循环打印</span><br><span class="line">for (int i &#x3D; 0; i &lt; addLi02.size() ; i++) &#123;</span><br><span class="line">	System.out.println(addLi02.get(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java ArrayList forEach() 方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line">class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 创建一个数组</span><br><span class="line">        ArrayList&lt;Integer&gt; numbers &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 往数组中添加元素</span><br><span class="line">        numbers.add(1);</span><br><span class="line">        numbers.add(2);</span><br><span class="line">        numbers.add(3);</span><br><span class="line">        numbers.add(4);</span><br><span class="line">        System.out.println(&quot;ArrayList: &quot; + numbers);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; forEach 循环打印</span><br><span class="line">         for (Integer integer : numbers) &#123;</span><br><span class="line">            System.out.println(integer);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 所有元素乘以 10</span><br><span class="line">        System.out.print(&quot;更新 ArrayList: &quot;);</span><br><span class="line">       </span><br><span class="line">        &#x2F;&#x2F; 将 lambda 表达式传递给 forEach</span><br><span class="line">        numbers.forEach((e) -&gt; &#123;</span><br><span class="line">            e &#x3D; e * 10;</span><br><span class="line">            System.out.print(e + &quot; &quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArrayList: [1, 2, 3, 4]</span><br><span class="line">更新 ArrayList: 10 20 30 40 </span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>js 逆向 项目 剖析</title>
@@ -621,6 +666,30 @@
       </tags>
   </entry>
   <entry>
+    <title>数据库的导出命令</title>
+    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
+    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<a id="more"></a>
+<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
+<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
+<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
+<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
+<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
+<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
+<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
+<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
+<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
+      <categories>
+        <category>MySQL数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title></title>
     <url>/2021/04/13/jvm%E5%A0%86%E6%A0%88%E7%90%86%E8%A7%A3/</url>
     <content><![CDATA[<h2 id="Jvm-堆-amp-栈的理解"><a href="#Jvm-堆-amp-栈的理解" class="headerlink" title="Jvm 堆&amp;栈的理解"></a>Jvm 堆&amp;栈的理解</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> JVM里的“堆”（heap）特指用于存放Java对象的内存区域 </p>
@@ -683,63 +752,6 @@
       <tags>
         <tag>pandas 数据处理</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/04/14/javaday02/</url>
-    <content><![CDATA[<h3 id="java-跨包使用"><a href="#java-跨包使用" class="headerlink" title="java 跨包使用"></a>java 跨包使用</h3><p><img src="javaday02.assets/1618281252388.png" alt="1618281252388"></p>
-<h3 id="集合与数组的区别"><a href="#集合与数组的区别" class="headerlink" title="集合与数组的区别"></a>集合与数组的区别</h3><p>数组 长度不能修改</p>
-<p>list   长度可以改变</p>
-<h3 id="Arraylist"><a href="#Arraylist" class="headerlink" title="Arraylist"></a>Arraylist</h3><h3 id="泛型-作为约束集合里的类型"><a href="#泛型-作为约束集合里的类型" class="headerlink" title="泛型 作为约束集合里的类型"></a>泛型 作为约束集合里的类型</h3><p><img src="javaday02.assets/1618303552657.png" alt="1618303552657"></p>
-<h4 id="ArrayList-方法"><a href="#ArrayList-方法" class="headerlink" title="ArrayList 方法"></a>ArrayList 方法</h4><ul>
-<li><p>增 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">arrLi02.add(&quot;content&quot;);</span><br><span class="line">arrLi02.add(3,&quot;conge&quot;); &#x2F;&#x2F; 根据下标 添加</span><br></pre></td></tr></table></figure>
-
-<p><strong>不能跨界添加</strong></p>
-</li>
-<li><p>删</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.remove(&quot;2&quot;); &#x2F;&#x2F; 根据元素</span><br><span class="line">addLi02.remove(0,&quot;2&quot;); &#x2F;&#x2F; 根据下标 删除元素</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p>改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.set(0,&quot;改&quot;); &#x2F;&#x2F; 参数1 下标， 参数2 元素</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">addLi02.get(0); &#x2F;&#x2F; 参数1 下标，</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 循环打印</span><br><span class="line">for (int i &#x3D; 0; i &lt; addLi02.size() ; i++) &#123;</span><br><span class="line">	System.out.println(addLi02.get(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Java ArrayList forEach() 方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line">class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 创建一个数组</span><br><span class="line">        ArrayList&lt;Integer&gt; numbers &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 往数组中添加元素</span><br><span class="line">        numbers.add(1);</span><br><span class="line">        numbers.add(2);</span><br><span class="line">        numbers.add(3);</span><br><span class="line">        numbers.add(4);</span><br><span class="line">        System.out.println(&quot;ArrayList: &quot; + numbers);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; forEach 循环打印</span><br><span class="line">         for (Integer integer : numbers) &#123;</span><br><span class="line">            System.out.println(integer);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 所有元素乘以 10</span><br><span class="line">        System.out.print(&quot;更新 ArrayList: &quot;);</span><br><span class="line">       </span><br><span class="line">        &#x2F;&#x2F; 将 lambda 表达式传递给 forEach</span><br><span class="line">        numbers.forEach((e) -&gt; &#123;</span><br><span class="line">            e &#x3D; e * 10;</span><br><span class="line">            System.out.print(e + &quot; &quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ArrayList: [1, 2, 3, 4]</span><br><span class="line">更新 ArrayList: 10 20 30 40 </span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/06/20/vue3.0/</url>
-    <content><![CDATA[<h2 id="vue3-0-项目"><a href="#vue3-0-项目" class="headerlink" title="vue3.0  项目"></a>vue3.0  项目</h2><h3 id="一，前端项目初始化步骤"><a href="#一，前端项目初始化步骤" class="headerlink" title="一，前端项目初始化步骤"></a>一，前端项目初始化步骤</h3><p>①  安装Vue脚手架<br>②  通过vue脚手架创建项目<br>③  配置vue路由<br>④  配置E1ement-UI组件库<br>⑤  配置axios库<br>⑥  初始化git 远程仓库<br>⑦  将本地项目托管到Github或码云中</p>
-<ul>
-<li><p>install vue 脚手架</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install @vue&#x2F;cli -g</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 可视化创建</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue ui</span><br><span class="line">🚀  Starting GUI...</span><br><span class="line">🌠  Ready on http:&#x2F;&#x2F;localhost:8000</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>使用命令行创建</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">###模板下载好后的交互选项</span><br><span class="line">1.Project name vue-demo # 项目名称，直接回车，按照括号中默认名字</span><br><span class="line">（注意这里的名字不能有大写字母，如果有会报错Sorry, name can no longer contain capital letters）</span><br><span class="line">2. Project description A Vue.js project # 项目描述,直接回车</span><br><span class="line">3. Author # 作者名称，默认直接回车</span><br><span class="line">4. Vue build standalone # 一般选择的Standalone(运行时 + 编译器)模式</span><br><span class="line">    Runtime + Compiler: recommended for most users；</span><br><span class="line">Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specificHTML) </span><br><span class="line">areONLY allowed in .vue files - render functions arerequired elsewhere</span><br><span class="line">（一般都选这个Runtime + Compiler: recommended for most users）</span><br><span class="line">5. Install vue-router? Yes # 是否需要 vue-router，路由，一般都需要，输入y敲回车</span><br><span class="line">6.Use ESLint to lint your code? Yes # 是否使用 ESLint 作为代码规范.</span><br><span class="line">7. Pick an ESLint preset Standard # 一样的ESlint 相关</span><br><span class="line">8. Set up unit tests Yes # 是否安装单元测试</span><br><span class="line">9. Pick a test runner 按需选择 # 测试模块</span><br><span class="line">10. Setup e2e tests with Nightwatch? 安装选择 # e2e 测试</span><br><span class="line">11. Should we run &#96;npm install&#96; for you after the project has been created? (recommended) npm # </span><br><span class="line">包管理器，一般用NPM</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>pandas 数据清洗</title>
@@ -885,6 +897,47 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/06/20/vue3.0/</url>
+    <content><![CDATA[<h2 id="vue3-0-项目"><a href="#vue3-0-项目" class="headerlink" title="vue3.0  项目"></a>vue3.0  项目</h2><h3 id="一，前端项目初始化步骤"><a href="#一，前端项目初始化步骤" class="headerlink" title="一，前端项目初始化步骤"></a>一，前端项目初始化步骤</h3><p>①  安装Vue脚手架<br>②  通过vue脚手架创建项目<br>③  配置vue路由<br>④  配置E1ement-UI组件库<br>⑤  配置axios库<br>⑥  初始化git 远程仓库<br>⑦  将本地项目托管到Github或码云中</p>
+<ul>
+<li><p>install vue 脚手架</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install @vue&#x2F;cli -g</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 可视化创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue ui</span><br><span class="line">🚀  Starting GUI...</span><br><span class="line">🌠  Ready on http:&#x2F;&#x2F;localhost:8000</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用命令行创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">###模板下载好后的交互选项</span><br><span class="line">1.Project name vue-demo # 项目名称，直接回车，按照括号中默认名字</span><br><span class="line">（注意这里的名字不能有大写字母，如果有会报错Sorry, name can no longer contain capital letters）</span><br><span class="line">2. Project description A Vue.js project # 项目描述,直接回车</span><br><span class="line">3. Author # 作者名称，默认直接回车</span><br><span class="line">4. Vue build standalone # 一般选择的Standalone(运行时 + 编译器)模式</span><br><span class="line">    Runtime + Compiler: recommended for most users；</span><br><span class="line">Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specificHTML) </span><br><span class="line">areONLY allowed in .vue files - render functions arerequired elsewhere</span><br><span class="line">（一般都选这个Runtime + Compiler: recommended for most users）</span><br><span class="line">5. Install vue-router? Yes # 是否需要 vue-router，路由，一般都需要，输入y敲回车</span><br><span class="line">6.Use ESLint to lint your code? Yes # 是否使用 ESLint 作为代码规范.</span><br><span class="line">7. Pick an ESLint preset Standard # 一样的ESlint 相关</span><br><span class="line">8. Set up unit tests Yes # 是否安装单元测试</span><br><span class="line">9. Pick a test runner 按需选择 # 测试模块</span><br><span class="line">10. Setup e2e tests with Nightwatch? 安装选择 # e2e 测试</span><br><span class="line">11. Should we run &#96;npm install&#96; for you after the project has been created? (recommended) npm # </span><br><span class="line">包管理器，一般用NPM</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>flask 项目使用redis数据库的原因</title>
+    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
+<a id="more"></a>
+
+<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
+<p>不用则会降低响应，影响用户体验，</p>
+<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
+<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
+]]></content>
+      <categories>
+        <category>redis</category>
+        <category>redis的子目录</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>xpath 语法</title>
     <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<p> xpath 语法</p>
@@ -948,23 +1001,35 @@
       </tags>
   </entry>
   <entry>
-    <title>flask 项目使用redis数据库的原因</title>
-    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
+    <title></title>
+    <url>/2021/05/13/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>哈弗曼</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>微信小程序知识点 总结</title>
+    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
 <a id="more"></a>
+<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
+<ol>
+<li>开搞  按思路来</li>
+</ol>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
+<p>2，web 与小程序的不同</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
+<p>3，最后利用 判断时间戳</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
-<p>不用则会降低响应，影响用户体验，</p>
-<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
-<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
 ]]></content>
       <categories>
-        <category>redis</category>
-        <category>redis的子目录</category>
+        <category>微信小程序</category>
       </categories>
       <tags>
-        <tag>redis</tag>
-        <tag>数据库</tag>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -1023,38 +1088,6 @@
         <tag>爬虫</tag>
         <tag>爬虫框架scrapy</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>微信小程序知识点 总结</title>
-    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<a id="more"></a>
-<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<ol>
-<li>开搞  按思路来</li>
-</ol>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
-<p>2，web 与小程序的不同</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
-<p>3，最后利用 判断时间戳</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>微信小程序</category>
-      </categories>
-      <tags>
-        <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/05/13/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
-    <content><![CDATA[<p>哈弗曼</p>
-]]></content>
   </entry>
   <entry>
     <title>快速部署 Scrapy项目 scrapyd</title>
@@ -1166,94 +1199,6 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
       <tags>
         <tag>爬虫</tag>
         <tag>爬虫框架scrapy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git-命令</title>
-    <url>/2020/10/09/git-%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>Git 基础 命令</p>
-<a id="more"></a>
-
-
-
-<h3 id="Git-基础-命令"><a href="#Git-基础-命令" class="headerlink" title="Git 基础 命令"></a>Git 基础 命令</h3><h5 id="一-git-仓库"><a href="#一-git-仓库" class="headerlink" title="一. git 仓库"></a>一. git 仓库</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">git init xxx <span class="comment"># 初始化仓库xxx</span></span><br><span class="line"></span><br><span class="line">git clone 	 <span class="comment"># git克隆 + 远程仓库地址</span></span><br><span class="line"></span><br><span class="line">git remote -v <span class="comment"># 查看远程地址 fetch  push</span></span><br><span class="line">origin  https://github.com/joinik/xinjingzixun_2020 (fetch)</span><br><span class="line">origin  https://github.com/joinik/xinjingzixun_2020 (push)</span><br><span class="line">========</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line">git remote remove origin  <span class="comment"># </span></span><br><span class="line">$ git remote -v       	<span class="comment"># 查看远程仓库：</span></span><br><span class="line">$ git remote add [name] [url]	<span class="comment">#添加远程仓库：</span></span><br><span class="line">$ git remote rm [name]	<span class="comment">#删除远程仓库：</span></span><br><span class="line">$ git remote set-url --push [name] [newUrl]		<span class="comment">#修改远程仓库：</span></span><br><span class="line">$ git pull [remoteName] [localBranchName]	<span class="comment">#拉取远程仓库：</span></span><br><span class="line">$ git push [remoteName] [localBranchName]	<span class="comment">#推送远程仓库：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分支（branch）</span></span><br><span class="line">git branch 	<span class="comment">#查看本地分支</span></span><br><span class="line">git branch -r <span class="comment"># 查看远程分支</span></span><br><span class="line">git branch [name] -- 注意新分支创建后， 不会切换到新分支</span><br><span class="line">git branch -a <span class="comment"># 查看本地，远程所有分支</span></span><br><span class="line">git checkout [name] <span class="comment"># 切换分支</span></span><br><span class="line">git checkout -b [name] <span class="comment"># 创建并切换到新分支</span></span><br><span class="line">git branch -d <span class="comment"># 删除分支  选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立追踪关系，在现有分支与指定的远程分支之间</span></span><br><span class="line">$ git branch --set-upstream [branch] [remote-branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并指定分支到当前分支</span></span><br><span class="line">$ git merge [branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择一个commit，合并进当前分支</span></span><br><span class="line">$ git cherry-pick [commit]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">$ git push origin --delete [branch-name]</span><br><span class="line">$ git branch -dr [remote/branch]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h5 id="二-配置"><a href="#二-配置" class="headerlink" title="二. 配置"></a>二. 配置</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示当前的Git配置</span></span><br><span class="line">$ git config --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑Git配置文件</span></span><br><span class="line">$ git config -e [--<span class="keyword">global</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置提交代码时的用户信息</span></span><br><span class="line">$ git config [--<span class="keyword">global</span>] user.name <span class="string">&quot;[name]&quot;</span></span><br><span class="line">$ git config [--<span class="keyword">global</span>] user.email <span class="string">&quot;[email address]&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="三，增加、删除文件"><a href="#三，增加、删除文件" class="headerlink" title="三，增加、删除文件"></a>三，增加、删除文件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 查看当前 文件变化</span><br><span class="line">git status -s</span><br><span class="line"></span><br><span class="line"># 添加指定文件到暂存区</span><br><span class="line">$ git add [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 添加指定目录到暂存区，包括子目录</span><br><span class="line">$ git add [dir]</span><br><span class="line"></span><br><span class="line"># 添加当前目录的所有文件到暂存区</span><br><span class="line">$ git add .</span><br><span class="line"></span><br><span class="line"># 添加每个变化前，都会要求确认</span><br><span class="line"># 对于同一个文件的多处变化，可以实现分次提交</span><br><span class="line">$ git add -p</span><br><span class="line"></span><br><span class="line"># 删除工作区文件，并且将这次删除放入暂存区</span><br><span class="line">$ git rm [file1] [file2] ...</span><br><span class="line"></span><br><span class="line"># 停止追踪指定文件，但该文件会保留在工作区</span><br><span class="line">$ git rm --cached [file]</span><br><span class="line"></span><br><span class="line"># 改名文件，并且将这个改名放入暂存区</span><br><span class="line">$ git mv [file-original] [file-renamed]</span><br></pre></td></tr></table></figure>
-
-<h5 id="四，代码提交"><a href="#四，代码提交" class="headerlink" title="四，代码提交"></a>四，代码提交</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 附注标签</span><br><span class="line">$ git tag -a v1.4 -m &quot;my version 1.4&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 提交暂存区到仓库区</span><br><span class="line">$ git commit -m [message]</span><br><span class="line"></span><br><span class="line"># 提交暂存区的指定文件到仓库区</span><br><span class="line">$ git commit [file1] [file2] ... -m [message]</span><br><span class="line"></span><br><span class="line"># 提交工作区自上次commit之后的变化，直接到仓库区</span><br><span class="line">$ git commit -a</span><br><span class="line"></span><br><span class="line"># 提交时显示所有diff信息</span><br><span class="line">$ git commit -v</span><br><span class="line"></span><br><span class="line"># 使用一次新的commit，替代上一次提交</span><br><span class="line"># 如果代码没有任何新变化，则用来改写上一次commit的提交信息</span><br><span class="line">$ git commit --amend -m [message]</span><br><span class="line"></span><br><span class="line"># 重做上一次commit，并包括指定文件的新变化</span><br><span class="line">$ git commit --amend [file1] [file2] ...</span><br></pre></td></tr></table></figure>
-
-<h5 id="六，标签"><a href="#六，标签" class="headerlink" title="六，标签"></a>六，标签</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 列出所有tag</span><br><span class="line">$ git tag</span><br><span class="line"></span><br><span class="line"># 新建一个tag在当前commit</span><br><span class="line">$ git tag [tag]</span><br><span class="line"></span><br><span class="line"># 新建一个tag在指定commit</span><br><span class="line">$ git tag [tag] [commit]</span><br><span class="line"></span><br><span class="line"># 删除本地tag</span><br><span class="line">$ git tag -d [tag]</span><br><span class="line"></span><br><span class="line"># 删除远程tag</span><br><span class="line">$ git push origin :refs&#x2F;tags&#x2F;[tagName]</span><br><span class="line"></span><br><span class="line"># 查看tag信息</span><br><span class="line">$ git show [tag]</span><br><span class="line"></span><br><span class="line"># 提交指定tag</span><br><span class="line">$ git push [remote] [tag]</span><br><span class="line"></span><br><span class="line"># 提交所有tag</span><br><span class="line">$ git push [remote] --tags</span><br><span class="line"></span><br><span class="line"># 新建一个分支，指向某个tag</span><br><span class="line">$ git checkout -b [branch] [tag]</span><br></pre></td></tr></table></figure>
-
-<h5 id="七，远程同步"><a href="#七，远程同步" class="headerlink" title="七，远程同步"></a>七，远程同步</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 下载远程仓库的所有变动</span><br><span class="line">$ git fetch [remote]</span><br><span class="line"></span><br><span class="line"># 显示所有远程仓库</span><br><span class="line">$ git remote -v</span><br><span class="line"></span><br><span class="line"># 显示某个远程仓库的信息</span><br><span class="line">$ git remote show [remote]</span><br><span class="line"></span><br><span class="line"># 增加一个新的远程仓库，并命名</span><br><span class="line">$ git remote add [shortname] [url]</span><br><span class="line"></span><br><span class="line"># 取回远程仓库的变化，并与本地分支合并</span><br><span class="line">$ git pull [remote] [branch]</span><br><span class="line"></span><br><span class="line"># 上传本地指定分支到远程仓库</span><br><span class="line">$ git push [remote] [branch]</span><br><span class="line"></span><br><span class="line"># 强行推送当前分支到远程仓库，即使有冲突</span><br><span class="line">$ git push [remote] --force</span><br><span class="line"></span><br><span class="line"># 推送所有分支到远程仓库</span><br><span class="line">$ git push [remote] --all</span><br></pre></td></tr></table></figure>
-
-<h5 id="八，撤销"><a href="#八，撤销" class="headerlink" title="八，撤销"></a>八，撤销</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 恢复暂存区的指定文件到工作区</span><br><span class="line">$ git checkout [file]</span><br><span class="line"></span><br><span class="line"># 恢复某个commit的指定文件到暂存区和工作区</span><br><span class="line">$ git checkout [commit] [file]</span><br><span class="line"></span><br><span class="line"># 恢复暂存区的所有文件到工作区</span><br><span class="line">$ git checkout .</span><br><span class="line"></span><br><span class="line"># 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变</span><br><span class="line">$ git reset [file]</span><br><span class="line"></span><br><span class="line"># 重置暂存区与工作区，与上一次commit保持一致</span><br><span class="line">$ git reset --hard</span><br><span class="line"></span><br><span class="line"># 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</span><br><span class="line">$ git reset [commit]</span><br><span class="line"></span><br><span class="line"># 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致</span><br><span class="line">$ git reset --hard [commit]</span><br><span class="line"></span><br><span class="line"># 重置当前HEAD为指定commit，但保持暂存区和工作区不变</span><br><span class="line">$ git reset --keep [commit]</span><br><span class="line"></span><br><span class="line"># 新建一个commit，用来撤销指定commit</span><br><span class="line"># 后者的所有变化都将被前者抵消，并且应用到当前分支</span><br><span class="line">$ git revert [commit]</span><br><span class="line"></span><br><span class="line"># 暂时将未提交的变化移除，稍后再移入</span><br><span class="line">$ git stash</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
-
-<h5 id="十，其他"><a href="#十，其他" class="headerlink" title="十，其他"></a>十，其他</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 生成一个可供发布的压缩包</span><br><span class="line">$ git archive</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Git</category>
-        <category>Git的git基础命令</category>
-      </categories>
-      <tags>
-        <tag>git 命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>短信验证码</title>
-    <url>/2020/10/09/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/</url>
-    <content><![CDATA[<p> 短信验证码</p>
-<a id="more"></a>
-
-<p>当今网站，为了防止，机器人非法注册，出现了，图片验证码， 短信验证码，。。。</p>
-<p>今天就来讲一下，短信验证码的流程</p>
-<p>这里以 <strong>阿里云</strong>为例，很多网站，都提供<strong>短信服务，API,  只需要SDK</strong>， 就可使用，开通服务即可，</p>
-<h4 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h4><p>一, 注册并实名制</p>
-<p>1.1 创建一个阿里云账号，<a href="https://account.aliyun.com/register/register.htm?spm=a2c4e.11153940.0.0.40e954a1MwMU0J">点击这里</a></p>
-<p>1.2 实名认证：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击这里</a></p>
-<p>1.3 绑定企业支付宝：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击绑定企业支付宝</a></p>
-<p>二，开通短信服务</p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602497737358"></p>
-<p>2.1 子账户（使用） <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击看子账号页面</a></p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602504639969"></p>
-<p>2.2 进入控制台： <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击查看控制台</a></p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602504695477.png~01style" alt="1602504695477"></p>
-<p>进行购买短信包</p>
-<ol>
-<li><p>这里我们用python 为例， copy下来， 放到， demo中， 进行模块封装，方便进行调用，</p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推荐使用 pip 命令，安装阿里云SDK核心库：</span></span><br><span class="line"></span><br><span class="line">pip install aliyun-python-sdk-core</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.request <span class="keyword">import</span> CommonRequest</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_aliyun_msg</span>()</span></span><br><span class="line"><span class="function">	&quot;&quot;&quot;</span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">	:</span>param phone_num: 手机号</span><br><span class="line">	:param content: 短信码</span><br><span class="line">	:<span class="keyword">return</span>: </span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    client = AcsClient(&#x27;&lt;accessKeyId&gt;&#x27;, &#x27;&lt;accessSecret&gt;&#x27;, &#x27;cn-hangzhou&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request = CommonRequest(pthone_num, content)</span></span><br><span class="line"><span class="string">    request.set_accept_format(&#x27;json&#x27;)</span></span><br><span class="line"><span class="string">    request.set_domain(&#x27;dysmsapi.aliyuncs.com&#x27;)</span></span><br><span class="line"><span class="string">    request.set_method(&#x27;POST&#x27;)</span></span><br><span class="line"><span class="string">    request.set_protocol_type(&#x27;https&#x27;) # https | http</span></span><br><span class="line"><span class="string">    request.set_version(&#x27;2017-05-25&#x27;)</span></span><br><span class="line"><span class="string">    request.set_action_name(&#x27;SendSms&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request.add_query_param(&#x27;RegionId&#x27;, &quot;cn-hangzhou&quot;)</span></span><br><span class="line"><span class="string">    request.add_query_param (&#x27;PhoneNumbers&#x27;, &quot;%s&quot; %phone_num)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;SignName&#x27;, &quot;jk4716138&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateCode&#x27;, &quot;SMS_167532197&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateParam&#x27;, &quot;&#123;\&quot;code\&quot;:\&quot;%s\&quot;&#125;&quot; %content)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    response = client.do_action(request)</span></span><br><span class="line"><span class="string">    # python2:  print(response) </span></span><br><span class="line"><span class="string">    print(str(response, encoding = &#x27;utf-8&#x27;))</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="string">    send_aliyun_msg()</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<ol start="2">
-<li><p>在注册视图中， 我们进行调用，即可，</p>
-</li>
-<li><p>短信发送，属于，防止机器人非法注册，（短信一条 大约0.045元，自行测试即可）</p>
-</li>
-</ol>
-<h4 id="图片验证码"><a href="#图片验证码" class="headerlink" title="图片验证码"></a>图片验证码</h4><p>七牛云做图床，Python上传图片</p>
-<ol>
-<li><p>首先需要install 模块</p>
-<ol>
-<li><pre><code> pip3 install qiniu
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. &#96;&#96;&#96;python </span><br><span class="line">    # -*- coding: utf-8 -*-</span><br><span class="line">    # flake8: noqa</span><br><span class="line">    from qiniu import Auth, put_file, etag, urlsafe_base64_encode</span><br><span class="line">    import qiniu.config</span><br><span class="line">    import sys</span><br><span class="line">    import os</span><br><span class="line">    import time</span><br><span class="line">    import subprocess</span><br><span class="line">    </span><br><span class="line">    #-----------默认配置-----------</span><br><span class="line">    # accessKey和secretkey是七牛的秘钥</span><br><span class="line">    access_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    secret_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    # 存储空间</span><br><span class="line">    bucket_name &#x3D; &#39;noteimages&#39;</span><br><span class="line">    # 域名</span><br><span class="line">    bucket_url &#x3D; &#39;存储空间的外链域名&#39;</span><br><span class="line">    </span><br><span class="line">    # 格式</span><br><span class="line">    img_suffix &#x3D; [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;gif&quot;]</span><br><span class="line">    # 本地存放图片地址</span><br><span class="line">    oldPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdImage&#39;</span><br><span class="line">    # 修改名字后存放在的新地址</span><br><span class="line">    newPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdNewImage&#39;</span><br><span class="line">    # 生成结果文档</span><br><span class="line">    result_file &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;result_file.txt&#39;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    # 存放链接数组</span><br><span class="line">    dataArr &#x3D; []</span><br><span class="line">    </span><br><span class="line">    def rename(name):</span><br><span class="line">        count &#x3D; 0</span><br><span class="line">        fileList &#x3D; os.listdir(oldPath)# 该文件夹下所有的文件（包括文件夹）</span><br><span class="line">        for files in fileList: #遍历所有的文件</span><br><span class="line">            oldDir &#x3D; os.path.join(oldPath, files) #原来的文件路径</span><br><span class="line">            if os.path.isdir(oldDir): #如果是文件夹就跳过</span><br><span class="line">                continue</span><br><span class="line">            fileName &#x3D; os.path.splitext(files)[0]  #文件名</span><br><span class="line">            fileType &#x3D; os.path.splitext(files)[1]  #文件扩展名</span><br><span class="line">            if fileType &#x3D;&#x3D; &#39;.jpg&#39; or fileType &#x3D;&#x3D; &#39;&#39;:</span><br><span class="line">                fileType &#x3D; &#39;.png&#39;</span><br><span class="line">            timeString &#x3D; time.strftime(&quot;$%Y-%m-%d$&quot;, time.localtime())</span><br><span class="line">            #生成新的文件名字</span><br><span class="line">            dataName &#x3D; name + timeString + str(count) + fileType</span><br><span class="line">    </span><br><span class="line">            newDir &#x3D; os.path.join(newPath, dataName) # 新的文件路径</span><br><span class="line">            os.rename(oldDir, newDir)</span><br><span class="line">            count +&#x3D; 1</span><br><span class="line">            #链接添加到数组</span><br><span class="line">            dataArr.append(upload_data(dataName,newDir))</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    #上传文件到七牛, 返回链接地址</span><br><span class="line">    def upload_data(newName, localfilePath):</span><br><span class="line">        q &#x3D; Auth(access_key, secret_key)</span><br><span class="line">        # 上传到七牛后保存的文件名</span><br><span class="line">        key &#x3D; newName;</span><br><span class="line">        # 生成上传 Token，可以指定过期时间等</span><br><span class="line">        token &#x3D; q.upload_token(bucket_name, key, 3600)</span><br><span class="line">        # 要上传文件的本地路径</span><br><span class="line">        localfile &#x3D; localfilePath</span><br><span class="line">        ret, info &#x3D; put_file(token, key, localfile)</span><br><span class="line">        return bucket_url + key</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    def crateFile(dataList):</span><br><span class="line">        with open(result_file, &#39;w+&#39;) as f:</span><br><span class="line">            for data in dataList:</span><br><span class="line">                # 如果是图片则生成图片的markdown格式引用</span><br><span class="line">                if os.path.splitext(data)[1][1:] in img_suffix:</span><br><span class="line">                    f.write(&#39;![](&#39;+data+&#39;)&#39;+&#39;\n&#39;)</span><br><span class="line">    </span><br><span class="line">        f.close()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">        </span><br><span class="line">        #生成链接</span><br><span class="line">        rename(input(&#39;请输入md文章标题:  &#39;))</span><br><span class="line">        #写入文件</span><br><span class="line">        crateFile(dataArr)</span><br><span class="line">        #打开文件</span><br><span class="line">        os.system(&#39;open &#39;+ result_file)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>短信验证码</category>
-        <category>短信验证码的子目录</category>
-      </categories>
-      <tags>
-        <tag>短信验证码</tag>
-        <tag>网站验证方式</tag>
       </tags>
   </entry>
   <entry>
@@ -1397,6 +1342,61 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
         <tag>Python排序算法</tag>
         <tag>排序算法</tag>
         <tag>数据算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>短信验证码</title>
+    <url>/2020/10/09/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/</url>
+    <content><![CDATA[<p> 短信验证码</p>
+<a id="more"></a>
+
+<p>当今网站，为了防止，机器人非法注册，出现了，图片验证码， 短信验证码，。。。</p>
+<p>今天就来讲一下，短信验证码的流程</p>
+<p>这里以 <strong>阿里云</strong>为例，很多网站，都提供<strong>短信服务，API,  只需要SDK</strong>， 就可使用，开通服务即可，</p>
+<h4 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h4><p>一, 注册并实名制</p>
+<p>1.1 创建一个阿里云账号，<a href="https://account.aliyun.com/register/register.htm?spm=a2c4e.11153940.0.0.40e954a1MwMU0J">点击这里</a></p>
+<p>1.2 实名认证：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击这里</a></p>
+<p>1.3 绑定企业支付宝：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击绑定企业支付宝</a></p>
+<p>二，开通短信服务</p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602497737358"></p>
+<p>2.1 子账户（使用） <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击看子账号页面</a></p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602504639969"></p>
+<p>2.2 进入控制台： <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击查看控制台</a></p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602504695477.png~01style" alt="1602504695477"></p>
+<p>进行购买短信包</p>
+<ol>
+<li><p>这里我们用python 为例， copy下来， 放到， demo中， 进行模块封装，方便进行调用，</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推荐使用 pip 命令，安装阿里云SDK核心库：</span></span><br><span class="line"></span><br><span class="line">pip install aliyun-python-sdk-core</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.request <span class="keyword">import</span> CommonRequest</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_aliyun_msg</span>()</span></span><br><span class="line"><span class="function">	&quot;&quot;&quot;</span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">	:</span>param phone_num: 手机号</span><br><span class="line">	:param content: 短信码</span><br><span class="line">	:<span class="keyword">return</span>: </span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    client = AcsClient(&#x27;&lt;accessKeyId&gt;&#x27;, &#x27;&lt;accessSecret&gt;&#x27;, &#x27;cn-hangzhou&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request = CommonRequest(pthone_num, content)</span></span><br><span class="line"><span class="string">    request.set_accept_format(&#x27;json&#x27;)</span></span><br><span class="line"><span class="string">    request.set_domain(&#x27;dysmsapi.aliyuncs.com&#x27;)</span></span><br><span class="line"><span class="string">    request.set_method(&#x27;POST&#x27;)</span></span><br><span class="line"><span class="string">    request.set_protocol_type(&#x27;https&#x27;) # https | http</span></span><br><span class="line"><span class="string">    request.set_version(&#x27;2017-05-25&#x27;)</span></span><br><span class="line"><span class="string">    request.set_action_name(&#x27;SendSms&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request.add_query_param(&#x27;RegionId&#x27;, &quot;cn-hangzhou&quot;)</span></span><br><span class="line"><span class="string">    request.add_query_param (&#x27;PhoneNumbers&#x27;, &quot;%s&quot; %phone_num)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;SignName&#x27;, &quot;jk4716138&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateCode&#x27;, &quot;SMS_167532197&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateParam&#x27;, &quot;&#123;\&quot;code\&quot;:\&quot;%s\&quot;&#125;&quot; %content)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    response = client.do_action(request)</span></span><br><span class="line"><span class="string">    # python2:  print(response) </span></span><br><span class="line"><span class="string">    print(str(response, encoding = &#x27;utf-8&#x27;))</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="string">    send_aliyun_msg()</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>在注册视图中， 我们进行调用，即可，</p>
+</li>
+<li><p>短信发送，属于，防止机器人非法注册，（短信一条 大约0.045元，自行测试即可）</p>
+</li>
+</ol>
+<h4 id="图片验证码"><a href="#图片验证码" class="headerlink" title="图片验证码"></a>图片验证码</h4><p>七牛云做图床，Python上传图片</p>
+<ol>
+<li><p>首先需要install 模块</p>
+<ol>
+<li><pre><code> pip3 install qiniu
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. &#96;&#96;&#96;python </span><br><span class="line">    # -*- coding: utf-8 -*-</span><br><span class="line">    # flake8: noqa</span><br><span class="line">    from qiniu import Auth, put_file, etag, urlsafe_base64_encode</span><br><span class="line">    import qiniu.config</span><br><span class="line">    import sys</span><br><span class="line">    import os</span><br><span class="line">    import time</span><br><span class="line">    import subprocess</span><br><span class="line">    </span><br><span class="line">    #-----------默认配置-----------</span><br><span class="line">    # accessKey和secretkey是七牛的秘钥</span><br><span class="line">    access_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    secret_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    # 存储空间</span><br><span class="line">    bucket_name &#x3D; &#39;noteimages&#39;</span><br><span class="line">    # 域名</span><br><span class="line">    bucket_url &#x3D; &#39;存储空间的外链域名&#39;</span><br><span class="line">    </span><br><span class="line">    # 格式</span><br><span class="line">    img_suffix &#x3D; [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;gif&quot;]</span><br><span class="line">    # 本地存放图片地址</span><br><span class="line">    oldPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdImage&#39;</span><br><span class="line">    # 修改名字后存放在的新地址</span><br><span class="line">    newPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdNewImage&#39;</span><br><span class="line">    # 生成结果文档</span><br><span class="line">    result_file &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;result_file.txt&#39;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    # 存放链接数组</span><br><span class="line">    dataArr &#x3D; []</span><br><span class="line">    </span><br><span class="line">    def rename(name):</span><br><span class="line">        count &#x3D; 0</span><br><span class="line">        fileList &#x3D; os.listdir(oldPath)# 该文件夹下所有的文件（包括文件夹）</span><br><span class="line">        for files in fileList: #遍历所有的文件</span><br><span class="line">            oldDir &#x3D; os.path.join(oldPath, files) #原来的文件路径</span><br><span class="line">            if os.path.isdir(oldDir): #如果是文件夹就跳过</span><br><span class="line">                continue</span><br><span class="line">            fileName &#x3D; os.path.splitext(files)[0]  #文件名</span><br><span class="line">            fileType &#x3D; os.path.splitext(files)[1]  #文件扩展名</span><br><span class="line">            if fileType &#x3D;&#x3D; &#39;.jpg&#39; or fileType &#x3D;&#x3D; &#39;&#39;:</span><br><span class="line">                fileType &#x3D; &#39;.png&#39;</span><br><span class="line">            timeString &#x3D; time.strftime(&quot;$%Y-%m-%d$&quot;, time.localtime())</span><br><span class="line">            #生成新的文件名字</span><br><span class="line">            dataName &#x3D; name + timeString + str(count) + fileType</span><br><span class="line">    </span><br><span class="line">            newDir &#x3D; os.path.join(newPath, dataName) # 新的文件路径</span><br><span class="line">            os.rename(oldDir, newDir)</span><br><span class="line">            count +&#x3D; 1</span><br><span class="line">            #链接添加到数组</span><br><span class="line">            dataArr.append(upload_data(dataName,newDir))</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    #上传文件到七牛, 返回链接地址</span><br><span class="line">    def upload_data(newName, localfilePath):</span><br><span class="line">        q &#x3D; Auth(access_key, secret_key)</span><br><span class="line">        # 上传到七牛后保存的文件名</span><br><span class="line">        key &#x3D; newName;</span><br><span class="line">        # 生成上传 Token，可以指定过期时间等</span><br><span class="line">        token &#x3D; q.upload_token(bucket_name, key, 3600)</span><br><span class="line">        # 要上传文件的本地路径</span><br><span class="line">        localfile &#x3D; localfilePath</span><br><span class="line">        ret, info &#x3D; put_file(token, key, localfile)</span><br><span class="line">        return bucket_url + key</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    def crateFile(dataList):</span><br><span class="line">        with open(result_file, &#39;w+&#39;) as f:</span><br><span class="line">            for data in dataList:</span><br><span class="line">                # 如果是图片则生成图片的markdown格式引用</span><br><span class="line">                if os.path.splitext(data)[1][1:] in img_suffix:</span><br><span class="line">                    f.write(&#39;![](&#39;+data+&#39;)&#39;+&#39;\n&#39;)</span><br><span class="line">    </span><br><span class="line">        f.close()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">        </span><br><span class="line">        #生成链接</span><br><span class="line">        rename(input(&#39;请输入md文章标题:  &#39;))</span><br><span class="line">        #写入文件</span><br><span class="line">        crateFile(dataArr)</span><br><span class="line">        #打开文件</span><br><span class="line">        os.system(&#39;open &#39;+ result_file)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>短信验证码</category>
+        <category>短信验证码的子目录</category>
+      </categories>
+      <tags>
+        <tag>短信验证码</tag>
+        <tag>网站验证方式</tag>
       </tags>
   </entry>
   <entry>

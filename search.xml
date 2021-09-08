@@ -50,22 +50,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ES6语法</title>
-    <url>/2021/09/07/ES6%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<p>ES6语法</p>
-<a id="more"></a>
-
-<h1 id="ES6语法"><a href="#ES6语法" class="headerlink" title="ES6语法"></a>ES6语法</h1><h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    &#x2F;&#x2F; 创建类 class  创建一个 明星类</span><br><span class="line">    class Star &#123;</span><br><span class="line">        &#x2F;&#x2F; 构造函数</span><br><span class="line">        constructor(uname)&#123;</span><br><span class="line">            this.uname &#x3D; uanem;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 利用类创建对象 new</span><br><span class="line">    var ldh &#x3D; new Star(&#39;刘德华&#39;);</span><br><span class="line">    console.log(ldh.uname);</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>ES6语法</category>
-      </categories>
-      <tags>
-        <tag>ES6语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>jobweb项目中所遇到知识点</title>
     <url>/2020/12/25/Jobwebproject%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
     <content><![CDATA[<p> jobweb项目中所遇到知识点</p>
@@ -151,6 +135,89 @@
       <tags>
         <tag>web</tag>
         <tag>jobweb 项目 知识点</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ES6语法</title>
+    <url>/2021/09/07/ES6%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<p>ES6语法</p>
+<a id="more"></a>
+
+<h1 id="ES6语法"><a href="#ES6语法" class="headerlink" title="ES6语法"></a>ES6语法</h1><h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    &#x2F;&#x2F; 创建类 class  创建一个 明星类</span><br><span class="line">    class Star &#123;</span><br><span class="line">        &#x2F;&#x2F; 构造函数</span><br><span class="line">        constructor(uname)&#123;</span><br><span class="line">            this.uname &#x3D; uanem;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 利用类创建对象 new</span><br><span class="line">    var ldh &#x3D; new Star(&#39;刘德华&#39;);</span><br><span class="line">    console.log(ldh.uname);</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ES6语法</category>
+      </categories>
+      <tags>
+        <tag>ES6语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MeiDuoProjectExplain</title>
+    <url>/2021/09/07/MeiDuoProjectExplain/</url>
+    <content><![CDATA[<p>MeiDuoProjectExplain<br>网站首页广告分析（这里京东做分析）</p>
+<a id="more"></a>
+<h3 id="网站首页广告分析（这里京东做分析）"><a href="#网站首页广告分析（这里京东做分析）" class="headerlink" title="网站首页广告分析（这里京东做分析）"></a>网站首页广告分析（这里京东做分析）</h3><h4 id="1-核心区"><a href="#1-核心区" class="headerlink" title="1.核心区"></a>1.核心区</h4><p><img src="MeiDuoProjectExplain.assets/1620994509496.png" alt="1620994509496"></p>
+<h4 id="2-楼层"><a href="#2-楼层" class="headerlink" title="2.楼层"></a>2.楼层</h4><p><img src="MeiDuoProjectExplain.assets/1620994571806.png" alt="1620994571806"></p>
+<p><img src="MeiDuoProjectExplain.assets/1620994592226.png" alt="1620994592226"></p>
+<h3 id="SPU-和SKU"><a href="#SPU-和SKU" class="headerlink" title="SPU 和SKU"></a>SPU 和SKU</h3><ul>
+<li>SPU 可以理解为一个类 ， 拥有相同属性， 相同方法， 比如 iPhone x   <ul>
+<li>如手机-&gt;苹果手机-&gt;苹果6，苹果6就是SPU     </li>
+</ul>
+</li>
+<li>SKU  可以理解为一个实例对象， 比如  iPhone x  全网通 黑色 256g  </li>
+</ul>
+<h3 id="Nginx部署静态"><a href="#Nginx部署静态" class="headerlink" title="Nginx部署静态"></a>Nginx部署静态</h3><ol>
+<li><p><code>settings.py文件</code> 设置静态文件目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STATIC_ROOT &#x3D; os.path.join(os.path.dirname(os.path.dirname(BAse_DIR)), &quot;front_end_pc&#x2F;static&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们要把静态文件收集到<code>front_end_pc/static</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="ubuntu-提前装好Nginx服务器"><a href="#ubuntu-提前装好Nginx服务器" class="headerlink" title="ubuntu 提前装好Nginx服务器"></a>ubuntu 提前装好Nginx服务器</h5><ul>
+<li><p>1.配置Nginx服务器</p>
+<p><strong>静态业务</strong></p>
+</li>
+</ul>
+<p><img src="MeiDuoProjectExplain.assets/1623980357480.png" alt="1623980357480"></p>
+<p><strong>动态业务</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623980721048.png" alt="1623980721048"></p>
+<p><strong>server部分说明</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623982962155.png" alt="1623982962155"></p>
+<p><strong>指定wsgi.py 启动配置文件为prod.py</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1623986502245.png" alt="1623986502245"></p>
+<p><strong>服务器地址</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keepalive_timeout  1000;</span><br><span class="line">upstream meiduo &#123;</span><br><span class="line">    server 1xx.1xx.27.77:8001;  # 此处为uwsgi运行的ip地址和端口号</span><br><span class="line">    # 如果有多台服务器，可以在此处继续添加服务器地址</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>uwsgi.ini</code>  放到  同<code>wsgi</code>同一路径下，做<code>uwsgi</code>服务器配置</p>
+<p><strong>uwsgi.ini</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">#使用nginx连接时使用，Django程序所在服务器地址</span><br><span class="line">socket&#x3D;192.168.x.xx:8001</span><br><span class="line">#直接做web服务器使用，Django程序所在服务器地址</span><br><span class="line"># http&#x3D;1xx.168.xxx.133:8001</span><br><span class="line">#项目目录</span><br><span class="line">chdir&#x3D;&#x2F;Users&#x2F;chao&#x2F;Desktop&#x2F;meiduo&#x2F;meiduo_mall</span><br><span class="line">#项目中wsgi.py文件的目录，相对于项目目录</span><br><span class="line">wsgi-file&#x3D;meiduo_mall&#x2F;wsgi.py</span><br><span class="line"># 进程数</span><br><span class="line">processes&#x3D;4</span><br><span class="line"># 线程数</span><br><span class="line">threads&#x3D;2</span><br><span class="line"># uwsgi服务器的角色   # True 为主，False 为从</span><br><span class="line">master&#x3D;True    </span><br><span class="line"># 存放进程编号的文件</span><br><span class="line">pidfile&#x3D;uwsgi.pid</span><br><span class="line"># 日志文件，因为uwsgi可以脱离终端在后台运行，日志看不见。我们以前的runserver是依赖终端的</span><br><span class="line">daemonize&#x3D;uwsgi.log</span><br><span class="line"># 指定依赖的虚拟环境</span><br><span class="line">virtualenv&#x3D;&#x2F;Users&#x2F;chao&#x2F;.virtualenvs&#x2F;django_20</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p><img src="MeiDuoProjectExplain.assets/1624165971359.png" alt="1624165971359"></p>
+<p><strong>uwsgi 命令</strong></p>
+<ul>
+<li><p>启动</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --ini uwsgi.ini</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --stop uwsgi.ini</span><br><span class="line"># 或者 kill</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="美多后台"><a href="#美多后台" class="headerlink" title="美多后台"></a>美多后台</h2><h3 id="采用-drf-架构"><a href="#采用-drf-架构" class="headerlink" title="采用 drf 架构"></a>采用 drf 架构</h3><h3 id="搜索方案-gt-gt-drf-haystack"><a href="#搜索方案-gt-gt-drf-haystack" class="headerlink" title="搜索方案&gt;&gt; drf-haystack"></a>搜索方案&gt;&gt; drf-haystack</h3>]]></content>
+      <categories>
+        <category>Django</category>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>MeiDuoProjectExplain</tag>
+        <tag>项目分析</tag>
       </tags>
   </entry>
   <entry>
@@ -261,73 +328,6 @@
       <tags>
         <tag>异步方案 celery 发短信</tag>
         <tag>Python单例方法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MeiDuoProjectExplain</title>
-    <url>/2021/09/07/MeiDuoProjectExplain/</url>
-    <content><![CDATA[<p>MeiDuoProjectExplain<br>网站首页广告分析（这里京东做分析）</p>
-<a id="more"></a>
-<h3 id="网站首页广告分析（这里京东做分析）"><a href="#网站首页广告分析（这里京东做分析）" class="headerlink" title="网站首页广告分析（这里京东做分析）"></a>网站首页广告分析（这里京东做分析）</h3><h4 id="1-核心区"><a href="#1-核心区" class="headerlink" title="1.核心区"></a>1.核心区</h4><p><img src="MeiDuoProjectExplain.assets/1620994509496.png" alt="1620994509496"></p>
-<h4 id="2-楼层"><a href="#2-楼层" class="headerlink" title="2.楼层"></a>2.楼层</h4><p><img src="MeiDuoProjectExplain.assets/1620994571806.png" alt="1620994571806"></p>
-<p><img src="MeiDuoProjectExplain.assets/1620994592226.png" alt="1620994592226"></p>
-<h3 id="SPU-和SKU"><a href="#SPU-和SKU" class="headerlink" title="SPU 和SKU"></a>SPU 和SKU</h3><ul>
-<li>SPU 可以理解为一个类 ， 拥有相同属性， 相同方法， 比如 iPhone x   <ul>
-<li>如手机-&gt;苹果手机-&gt;苹果6，苹果6就是SPU     </li>
-</ul>
-</li>
-<li>SKU  可以理解为一个实例对象， 比如  iPhone x  全网通 黑色 256g  </li>
-</ul>
-<h3 id="Nginx部署静态"><a href="#Nginx部署静态" class="headerlink" title="Nginx部署静态"></a>Nginx部署静态</h3><ol>
-<li><p><code>settings.py文件</code> 设置静态文件目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">STATIC_ROOT &#x3D; os.path.join(os.path.dirname(os.path.dirname(BAse_DIR)), &quot;front_end_pc&#x2F;static&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>我们要把静态文件收集到<code>front_end_pc/static</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python manage.py collectstatic</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h5 id="ubuntu-提前装好Nginx服务器"><a href="#ubuntu-提前装好Nginx服务器" class="headerlink" title="ubuntu 提前装好Nginx服务器"></a>ubuntu 提前装好Nginx服务器</h5><ul>
-<li><p>1.配置Nginx服务器</p>
-<p><strong>静态业务</strong></p>
-</li>
-</ul>
-<p><img src="MeiDuoProjectExplain.assets/1623980357480.png" alt="1623980357480"></p>
-<p><strong>动态业务</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623980721048.png" alt="1623980721048"></p>
-<p><strong>server部分说明</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623982962155.png" alt="1623982962155"></p>
-<p><strong>指定wsgi.py 启动配置文件为prod.py</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1623986502245.png" alt="1623986502245"></p>
-<p><strong>服务器地址</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keepalive_timeout  1000;</span><br><span class="line">upstream meiduo &#123;</span><br><span class="line">    server 1xx.1xx.27.77:8001;  # 此处为uwsgi运行的ip地址和端口号</span><br><span class="line">    # 如果有多台服务器，可以在此处继续添加服务器地址</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><code>uwsgi.ini</code>  放到  同<code>wsgi</code>同一路径下，做<code>uwsgi</code>服务器配置</p>
-<p><strong>uwsgi.ini</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">#使用nginx连接时使用，Django程序所在服务器地址</span><br><span class="line">socket&#x3D;192.168.x.xx:8001</span><br><span class="line">#直接做web服务器使用，Django程序所在服务器地址</span><br><span class="line"># http&#x3D;1xx.168.xxx.133:8001</span><br><span class="line">#项目目录</span><br><span class="line">chdir&#x3D;&#x2F;Users&#x2F;chao&#x2F;Desktop&#x2F;meiduo&#x2F;meiduo_mall</span><br><span class="line">#项目中wsgi.py文件的目录，相对于项目目录</span><br><span class="line">wsgi-file&#x3D;meiduo_mall&#x2F;wsgi.py</span><br><span class="line"># 进程数</span><br><span class="line">processes&#x3D;4</span><br><span class="line"># 线程数</span><br><span class="line">threads&#x3D;2</span><br><span class="line"># uwsgi服务器的角色   # True 为主，False 为从</span><br><span class="line">master&#x3D;True    </span><br><span class="line"># 存放进程编号的文件</span><br><span class="line">pidfile&#x3D;uwsgi.pid</span><br><span class="line"># 日志文件，因为uwsgi可以脱离终端在后台运行，日志看不见。我们以前的runserver是依赖终端的</span><br><span class="line">daemonize&#x3D;uwsgi.log</span><br><span class="line"># 指定依赖的虚拟环境</span><br><span class="line">virtualenv&#x3D;&#x2F;Users&#x2F;chao&#x2F;.virtualenvs&#x2F;django_20</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong></p>
-<p><img src="MeiDuoProjectExplain.assets/1624165971359.png" alt="1624165971359"></p>
-<p><strong>uwsgi 命令</strong></p>
-<ul>
-<li><p>启动</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --ini uwsgi.ini</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>停止</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uwsgi --stop uwsgi.ini</span><br><span class="line"># 或者 kill</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<h2 id="美多后台"><a href="#美多后台" class="headerlink" title="美多后台"></a>美多后台</h2><h3 id="采用-drf-架构"><a href="#采用-drf-架构" class="headerlink" title="采用 drf 架构"></a>采用 drf 架构</h3><h3 id="搜索方案-gt-gt-drf-haystack"><a href="#搜索方案-gt-gt-drf-haystack" class="headerlink" title="搜索方案&gt;&gt; drf-haystack"></a>搜索方案&gt;&gt; drf-haystack</h3>]]></content>
-      <categories>
-        <category>Django</category>
-        <category>web</category>
-      </categories>
-      <tags>
-        <tag>MeiDuoProjectExplain</tag>
-        <tag>项目分析</tag>
       </tags>
   </entry>
   <entry>
@@ -697,6 +697,65 @@
       </tags>
   </entry>
   <entry>
+    <title>数据库的导出命令</title>
+    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
+    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<a id="more"></a>
+<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
+<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
+<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
+<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
+<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
+<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
+<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
+<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
+<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
+<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
+<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
+      <categories>
+        <category>MySQL数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jvm 堆&amp;栈的理解</title>
+    <url>/2021/09/07/jvm%E5%A0%86%E6%A0%88%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<p>Jvm 堆&amp;栈的理解</p>
+<a id="more"></a>
+<h2 id="Jvm-堆-amp-栈的理解"><a href="#Jvm-堆-amp-栈的理解" class="headerlink" title="Jvm 堆&amp;栈的理解"></a>Jvm 堆&amp;栈的理解</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> JVM里的“堆”（heap）特指用于存放Java对象的内存区域 </p>
+<p><strong>要注意，这个“堆”并不是数据结构意义上的堆（<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Heap_(data_structure)">Heap (data structure)</a>，一种有序的树），而是动态内存分配意义上的堆——用于管理动态生命周期的内存区域</strong></p>
+<p> <strong>JVM的堆被同一个JVM实例中的所有Java线程共享。它通常由某种自动内存管理机制所管理，这种机制通常叫做“垃圾回收”（garbage collection，GC）</strong> </p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p> JVM里的“栈”（ stack ）特指用于存放Java方法 ，基本类型的变量，和对象的引用变量 ，的内存区域 </p>
+<p><strong>特点是 先进后出</strong></p>
+<p>方法执行后，方法会从栈里出去，释放</p>
+<p> 存取速度比堆要快，仅此于寄存器，栈数据可以共享，但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。 </p>
+<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><blockquote>
+<p>JVM是基于堆栈的虚拟机.JVM为每个新创建的线程都分配一个堆栈.也就是说,对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作:以帧为单位的压栈和出栈操作。</p>
+</blockquote>
+<ul>
+<li>差异</li>
+</ul>
+<blockquote>
+<p>1.堆内存用来存放由new创建的对象和数组。<br>2.栈内存用来存放方法或者局部变量等<br>3.堆是先进先出，后进后出<br>4.栈是后进先出，先进后出</p>
+</blockquote>
+<ul>
+<li>相同</li>
+</ul>
+<blockquote>
+<p>1.都是属于Java内存的一种<br>2.系统都会自动去回收它，但是对于堆内存一般开发人员会自动回收它</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>Jvm 堆&amp;栈的理解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java 跨包使用 &amp;&amp; 泛型</title>
     <url>/2021/09/07/javaday02/</url>
     <content><![CDATA[<p>java 跨包使用 &amp;&amp; 泛型</p>
@@ -738,140 +797,6 @@
       </categories>
       <tags>
         <tag>java 跨包使用 &amp;&amp; 泛型</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库的导出命令</title>
-    <url>/2021/04/11/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%87%BA/</url>
-    <content><![CDATA[<p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名<br>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<a id="more"></a>
-<h2 id="数据库的导出命令"><a href="#数据库的导出命令" class="headerlink" title="数据库的导出命令"></a>数据库的导出命令</h2><h4 id="导出数据库（SQL脚本）"><a href="#导出数据库（SQL脚本）" class="headerlink" title="导出数据库（SQL脚本）"></a>导出数据库（SQL脚本）</h4><p>mysqldump -u 用户名 -p 数据库 &gt; 导出的文件名</p>
-<p>mysqldump -uroot -pmysql db_name &gt; test_db.sql</p>
-<h4 id="导出数据库的一个表"><a href="#导出数据库的一个表" class="headerlink" title="导出数据库的一个表"></a>导出数据库的一个表</h4><p>mysqldump -u 用户名 -p数据库 b表名 &gt; 导出的文件名</p>
-<p>mysqldump -u root -p test_db users &gt; test_users.sql </p>
-<h4 id="导出所有数据库"><a href="#导出所有数据库" class="headerlink" title="导出所有数据库"></a>导出所有数据库</h4><p>mysqldump -uroot -p –all-databases &gt; /DestTop/all_db.sql</p>
-<h4 id="条件导出，导出test表b2中id-6的数据"><a href="#条件导出，导出test表b2中id-6的数据" class="headerlink" title="条件导出，导出test表b2中id=6的数据"></a>条件导出，导出test表b2中id=6的数据</h4><p>mysqldump -uroot -p test b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<p>mysqldump -uroot -p –databases test –tables b2 –where=’id=6’ &gt; /DestTop/all_db.sql</p>
-<h4 id="导出表结构不导出数据，-–no-data"><a href="#导出表结构不导出数据，-–no-data" class="headerlink" title="导出表结构不导出数据， –no-data"></a>导出表结构不导出数据， –no-data</h4><p>mysqldump -uroot -p –no-data db1 &gt; /desktop/db1.sql</p>
-<h4 id="跨服务器导出导入数据"><a href="#跨服务器导出导入数据" class="headerlink" title="跨服务器导出导入数据"></a>跨服务器导出导入数据</h4><p>mysqldump –host=h1 -uroot -proot –databases db1 |mysql –host=h2 -uroot -proot db2</p>
-<h4 id="导入数据库"><a href="#导入数据库" class="headerlink" title="导入数据库"></a>导入数据库</h4><p>source mydb.sql</p>
-<p>mysql -u用户 -p 数据库名 &lt;  数据库名.sql</p>
-<h4 id="感谢大佬的技术博客"><a href="#感谢大佬的技术博客" class="headerlink" title="感谢大佬的技术博客"></a><a href="https://www.cnblogs.com/chenmh/p/5300370.html">感谢大佬的技术博客</a></h4>]]></content>
-      <categories>
-        <category>MySQL数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端工程化 &amp;&amp; vue3.0</title>
-    <url>/2021/09/07/vue3.0/</url>
-    <content><![CDATA[<p>前端工程化 &amp;&amp; vue3.0</p>
-<a id="more"></a>
-
-
-
-<h2 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h2><h4 id="实际的前端开发："><a href="#实际的前端开发：" class="headerlink" title="实际的前端开发："></a>实际的前端开发：</h4><ul>
-<li>模块化|（js的模块化、Css的模块化、资源的模块化）</li>
-<li>组件化（复用现有的UI结构、样式、行为）</li>
-<li>规范化（目录结构的划分、编码规范化、接口规范化、文档规范化、Git分支管理）</li>
-<li>自动化（自动化构建、自动部署、自动化测试）</li>
-</ul>
-<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h4><p><strong>主要功能</strong>：它提供了友好的<strong>前端模块化开发</strong>支持，以及<strong>代码压缩混淆、处理浏览器端JavaScript的兼容性、性能优化</strong>等强大的功能。</p>
-<h5 id="3-在项目中安装-webpack"><a href="#3-在项目中安装-webpack" class="headerlink" title="3.在项目中安装 webpack"></a>3.在项目中安装 webpack</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在终端运行如下的命令，安装webpack相关的两个包：</span><br><span class="line">npm install webpack@5.42.1 webpack-cli@4.7.2-save-dev</span><br><span class="line"></span><br><span class="line">-S 是--save的简写</span><br><span class="line">-D 是--save-dev的简写</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-在项目中配置-webpack"><a href="#4-在项目中配置-webpack" class="headerlink" title="4.在项目中配置 webpack"></a>4.在项目中配置 webpack</h5><ul>
-<li><p>在项目根目录中，创建名为<code>webpack.config.js</code>的webpack配置文件， 并初始化如下的配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">	mode:&#39;development&#39;  &#x2F;&#x2F;mode用来指定构建模式。可选值有 development和production</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 package.json 的 scripts节点下，新增<code>dev</code>脚本如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;：&#123;</span><br><span class="line">	“dev&quot;：&quot;webpack&quot;&#x2F;&#x2F;script 节点下的脚本，可以通过npm run执行。例如npm run dev</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在终端中运行 <code>npm run dev</code>  命令：启动webpack进行项目的打包构建</p>
-</li>
-</ul>
-<h2 id="vue3-0-项目"><a href="#vue3-0-项目" class="headerlink" title="vue3.0  项目"></a>vue3.0  项目</h2><h3 id="一，前端项目初始化步骤"><a href="#一，前端项目初始化步骤" class="headerlink" title="一，前端项目初始化步骤"></a>一，前端项目初始化步骤</h3><p>①  安装Vue脚手架<br>②  通过vue脚手架创建项目<br>③  配置vue路由<br>④  配置E1ement-UI组件库<br>⑤  配置axios库<br>⑥  初始化git 远程仓库<br>⑦  将本地项目托管到Github或码云中</p>
-<ul>
-<li><p>install vue 脚手架</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install @vue&#x2F;cli -g</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 可视化创建</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue ui</span><br><span class="line">🚀  Starting GUI...</span><br><span class="line">🌠  Ready on http:&#x2F;&#x2F;localhost:8000</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>使用命令行创建</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">###模板下载好后的交互选项</span><br><span class="line">1.Project name vue-demo # 项目名称，直接回车，按照括号中默认名字</span><br><span class="line">（注意这里的名字不能有大写字母，如果有会报错Sorry, name can no longer contain capital letters）</span><br><span class="line">2. Project description A Vue.js project # 项目描述,直接回车</span><br><span class="line">3. Author # 作者名称，默认直接回车</span><br><span class="line">4. Vue build standalone # 一般选择的Standalone(运行时 + 编译器)模式</span><br><span class="line">    Runtime + Compiler: recommended for most users；</span><br><span class="line">Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specificHTML) </span><br><span class="line">areONLY allowed in .vue files - render functions arerequired elsewhere</span><br><span class="line">（一般都选这个Runtime + Compiler: recommended for most users）</span><br><span class="line">5. Install vue-router? Yes # 是否需要 vue-router，路由，一般都需要，输入y敲回车</span><br><span class="line">6.Use ESLint to lint your code? Yes # 是否使用 ESLint 作为代码规范.</span><br><span class="line">7. Pick an ESLint preset Standard # 一样的ESlint 相关</span><br><span class="line">8. Set up unit tests Yes # 是否安装单元测试</span><br><span class="line">9. Pick a test runner 按需选择 # 测试模块</span><br><span class="line">10. Setup e2e tests with Nightwatch? 安装选择 # e2e 测试</span><br><span class="line">11. Should we run &#96;npm install&#96; for you after the project has been created? (recommended) npm # </span><br><span class="line">包管理器，一般用NPM</span><br></pre></td></tr></table></figure>
-
-
-
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="版本bug"><a href="#版本bug" class="headerlink" title="版本bug"></a>版本bug</h3><h4 id="vue-2-0"><a href="#vue-2-0" class="headerlink" title="vue 2.0"></a>vue 2.0</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack-dev-server@2.9.1</span><br></pre></td></tr></table></figure>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h4 id="生成环境-build"><a href="#生成环境-build" class="headerlink" title="生成环境-build"></a>生成环境-build</h4><p>有个插件能够移出项目中的所有 <code>log打印</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">transform-remove-consol  </span><br></pre></td></tr></table></figure>
-
-<h5 id="项目优化"><a href="#项目优化" class="headerlink" title="项目优化"></a>项目优化</h5><p><strong>通过externals 加载外部cdn资源</strong></p>
-<p>默认情况下，通过import 语法导入的第三方资源包，最终会被打包合并到同一个文件中，从而导致打包成功后，单文件体积过大的问题。</p>
-<p>为了解决上述问题，可以通过webpack的externals节点，来配置加载外部的cdn资源，凡是声明在externals中的第三方依赖包，都不会被打包</p>
-<h4 id="使用pm2-管理应用"><a href="#使用pm2-管理应用" class="headerlink" title="使用pm2 管理应用"></a>使用pm2 管理应用</h4><ol>
-<li>在服务器中安装pm2： <code>npm i pm2 -g</code></li>
-<li>启动项目： <code>pm2 start 脚本 --name 自定义名称</code></li>
-<li>查看运行项目： <code>pm2 ls</code></li>
-<li>重启项目： <code>pm2 restart 自定义名称</code></li>
-<li>停止项目：<code>pm2 stop 自定义名称</code></li>
-<li>删除项目： <code>pm2 delete 自定义名称</code> </li>
-</ol>
-]]></content>
-      <categories>
-        <category>前端</category>
-        <category>vue</category>
-      </categories>
-      <tags>
-        <tag>前端工程化</tag>
-        <tag>vue3.0</tag>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pandas 数据处理02  groupby</title>
-    <url>/2020/12/28/pandas02/</url>
-    <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
-<a id="more"></a>
-
-<h4 id="时间戳-转换时间"><a href="#时间戳-转换时间" class="headerlink" title="时间戳 转换时间"></a>时间戳 转换时间</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">df &#x3D; pd.read_csv(&quot;.&#x2F;train.csv&quot;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">d_time &#x3D; pd.to_datetime(df[&#39;time&#39;], unit&#x3D;&#39;s&#39;)</span><br><span class="line">print(type(d_time)) # &lt;class &#39;pandas.core.series.Series&#39;&gt;</span><br><span class="line">print(&#39;--------------&#39;)</span><br><span class="line">print(d_time)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="时间值-处理"><a href="#时间值-处理" class="headerlink" title="时间值 处理"></a>时间值 处理</h4><p><img src="http://qny.jkraise.top/pandas02assets/1609116502837.png~01style" alt="1609116502837"></p>
-<h4 id="删除-缺失值-dropna"><a href="#删除-缺失值-dropna" class="headerlink" title="删除 缺失值 dropna"></a>删除 缺失值 dropna</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;./breast-cancer-wisconsin.data&#x27;</span>)</span><br><span class="line"></span><br><span class="line">df = df.replace(to_replace=<span class="string">&#x27;?&#x27;</span>, value=np.nan)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">print(<span class="string">&#x27;--------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 默认是0 删除行数据  为1 删除列数据</span></span><br><span class="line"><span class="comment"># how=&#x27;all&#x27; 全部是nan 删除</span></span><br><span class="line"><span class="comment"># how=&#x27;any&#x27; 有nan就删除</span></span><br><span class="line"></span><br><span class="line">df1 = df.dropna(axis=<span class="number">0</span>, how=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
-
-<h4 id="pandas的合并"><a href="#pandas的合并" class="headerlink" title="pandas的合并"></a>pandas的合并</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 指定列的 合并</span></span><br><span class="line">pd.merge()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>merge 案例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 商品详情 product_id 商品的名字 和 aisle_id</span></span><br><span class="line">product = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/products.csv&quot;</span>)</span><br><span class="line"><span class="comment"># orderid  product_id</span></span><br><span class="line">order_pro = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/order_products__prior.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># orderId  userId</span></span><br><span class="line">orders = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/orders.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># aisles_nameid  aislesId</span></span><br><span class="line">aisles = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/aisles.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并product和order_pro, 通过product_id</span></span><br><span class="line">mg1 = pd.merge(order_pro, product, on=[<span class="string">&#x27;product_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg1 和orders 通过order_id</span></span><br><span class="line">mg2 = pd.merge(mg1, orders, on=[<span class="string">&#x27;order_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg2 和aisles 通过aisle_id</span></span><br><span class="line">mg3 = pd.merge(mg2, aisles, on=[<span class="string">&#x27;aisle_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户购买的所有类商品的数量</span></span><br><span class="line">user_ai = pd.crosstab(mg3[<span class="string">&#x27;user_id&#x27;</span>],mg3[<span class="string">&#x27;aisle&#x27;</span>])</span><br><span class="line">print(user_ai)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="聚合分组1"><a href="#聚合分组1" class="headerlink" title="聚合分组1"></a>聚合分组1</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 按国家分组</span></span><br><span class="line">df_country = df.groupby(<span class="string">&#x27;Country&#x27;</span>)</span><br><span class="line">print(df_country.count().reset_index())</span><br><span class="line"><span class="comment"># 按国家 和省分组</span></span><br><span class="line">df_country_Province = df.gourpby([<span class="string">&#x27;Country&#x27;</span>,<span class="string">&#x27;State/Province&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看数据</span></span><br><span class="line">print(df_country_Province.count().reset_index())</span><br></pre></td></tr></table></figure>
-
-<p>聚合函数+分组</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;color&#x27;</span>: [<span class="string">&#x27;white&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object&#x27;</span>: [<span class="string">&#x27;pen&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;ashtray&#x27;</span>, <span class="string">&#x27;pen&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;price1&#x27;</span>: [<span class="number">5.56</span>, <span class="number">4.20</span>, <span class="number">1.30</span>, <span class="number">0.56</span>, <span class="number">2.75</span>],</span><br><span class="line">    <span class="string">&#x27;price2&#x27;</span>: [<span class="number">4.75</span>, <span class="number">4.12</span>, <span class="number">1.60</span>, <span class="number">0.75</span>, <span class="number">3.15</span>]</span><br><span class="line">&#125;)</span><br><span class="line">      </span><br><span class="line">print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先分组， 后聚合</span></span><br><span class="line">df_color = df.groupby(<span class="string">&#x27;color&#x27;</span>)</span><br><span class="line">print(type(df_color))</span><br><span class="line">print(df_color.mean())</span><br><span class="line">print(df_color.max())</span><br><span class="line">print(<span class="string">&#x27;---------------------------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 第二种  先聚合 再分组 （不常用）</span></span><br><span class="line">price_m = df[<span class="string">&#x27;price2&#x27;</span>].groupby(df[<span class="string">&#x27;color&#x27;</span>]).mean()</span><br><span class="line">print(price_m)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>pandas 数据处理</category>
-      </categories>
-      <tags>
-        <tag>pandas 数据处理</tag>
       </tags>
   </entry>
   <entry>
@@ -1019,38 +944,113 @@
       </tags>
   </entry>
   <entry>
-    <title>Jvm 堆&amp;栈的理解</title>
-    <url>/2021/09/07/jvm%E5%A0%86%E6%A0%88%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<p>Jvm 堆&amp;栈的理解</p>
+    <title>pandas 数据处理02  groupby</title>
+    <url>/2020/12/28/pandas02/</url>
+    <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
 <a id="more"></a>
-<h2 id="Jvm-堆-amp-栈的理解"><a href="#Jvm-堆-amp-栈的理解" class="headerlink" title="Jvm 堆&amp;栈的理解"></a>Jvm 堆&amp;栈的理解</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> JVM里的“堆”（heap）特指用于存放Java对象的内存区域 </p>
-<p><strong>要注意，这个“堆”并不是数据结构意义上的堆（<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Heap_(data_structure)">Heap (data structure)</a>，一种有序的树），而是动态内存分配意义上的堆——用于管理动态生命周期的内存区域</strong></p>
-<p> <strong>JVM的堆被同一个JVM实例中的所有Java线程共享。它通常由某种自动内存管理机制所管理，这种机制通常叫做“垃圾回收”（garbage collection，GC）</strong> </p>
-<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p> JVM里的“栈”（ stack ）特指用于存放Java方法 ，基本类型的变量，和对象的引用变量 ，的内存区域 </p>
-<p><strong>特点是 先进后出</strong></p>
-<p>方法执行后，方法会从栈里出去，释放</p>
-<p> 存取速度比堆要快，仅此于寄存器，栈数据可以共享，但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。 </p>
-<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><blockquote>
-<p>JVM是基于堆栈的虚拟机.JVM为每个新创建的线程都分配一个堆栈.也就是说,对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作:以帧为单位的压栈和出栈操作。</p>
-</blockquote>
-<ul>
-<li>差异</li>
-</ul>
-<blockquote>
-<p>1.堆内存用来存放由new创建的对象和数组。<br>2.栈内存用来存放方法或者局部变量等<br>3.堆是先进先出，后进后出<br>4.栈是后进先出，先进后出</p>
-</blockquote>
-<ul>
-<li>相同</li>
-</ul>
-<blockquote>
-<p>1.都是属于Java内存的一种<br>2.系统都会自动去回收它，但是对于堆内存一般开发人员会自动回收它</p>
-</blockquote>
+
+<h4 id="时间戳-转换时间"><a href="#时间戳-转换时间" class="headerlink" title="时间戳 转换时间"></a>时间戳 转换时间</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">df &#x3D; pd.read_csv(&quot;.&#x2F;train.csv&quot;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">d_time &#x3D; pd.to_datetime(df[&#39;time&#39;], unit&#x3D;&#39;s&#39;)</span><br><span class="line">print(type(d_time)) # &lt;class &#39;pandas.core.series.Series&#39;&gt;</span><br><span class="line">print(&#39;--------------&#39;)</span><br><span class="line">print(d_time)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="时间值-处理"><a href="#时间值-处理" class="headerlink" title="时间值 处理"></a>时间值 处理</h4><p><img src="http://qny.jkraise.top/pandas02assets/1609116502837.png~01style" alt="1609116502837"></p>
+<h4 id="删除-缺失值-dropna"><a href="#删除-缺失值-dropna" class="headerlink" title="删除 缺失值 dropna"></a>删除 缺失值 dropna</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;./breast-cancer-wisconsin.data&#x27;</span>)</span><br><span class="line"></span><br><span class="line">df = df.replace(to_replace=<span class="string">&#x27;?&#x27;</span>, value=np.nan)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">print(<span class="string">&#x27;--------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 默认是0 删除行数据  为1 删除列数据</span></span><br><span class="line"><span class="comment"># how=&#x27;all&#x27; 全部是nan 删除</span></span><br><span class="line"><span class="comment"># how=&#x27;any&#x27; 有nan就删除</span></span><br><span class="line"></span><br><span class="line">df1 = df.dropna(axis=<span class="number">0</span>, how=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
+
+<h4 id="pandas的合并"><a href="#pandas的合并" class="headerlink" title="pandas的合并"></a>pandas的合并</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 指定列的 合并</span></span><br><span class="line">pd.merge()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>merge 案例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 商品详情 product_id 商品的名字 和 aisle_id</span></span><br><span class="line">product = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/products.csv&quot;</span>)</span><br><span class="line"><span class="comment"># orderid  product_id</span></span><br><span class="line">order_pro = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/order_products__prior.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># orderId  userId</span></span><br><span class="line">orders = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/orders.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># aisles_nameid  aislesId</span></span><br><span class="line">aisles = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/aisles.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并product和order_pro, 通过product_id</span></span><br><span class="line">mg1 = pd.merge(order_pro, product, on=[<span class="string">&#x27;product_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg1 和orders 通过order_id</span></span><br><span class="line">mg2 = pd.merge(mg1, orders, on=[<span class="string">&#x27;order_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg2 和aisles 通过aisle_id</span></span><br><span class="line">mg3 = pd.merge(mg2, aisles, on=[<span class="string">&#x27;aisle_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户购买的所有类商品的数量</span></span><br><span class="line">user_ai = pd.crosstab(mg3[<span class="string">&#x27;user_id&#x27;</span>],mg3[<span class="string">&#x27;aisle&#x27;</span>])</span><br><span class="line">print(user_ai)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="聚合分组1"><a href="#聚合分组1" class="headerlink" title="聚合分组1"></a>聚合分组1</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 按国家分组</span></span><br><span class="line">df_country = df.groupby(<span class="string">&#x27;Country&#x27;</span>)</span><br><span class="line">print(df_country.count().reset_index())</span><br><span class="line"><span class="comment"># 按国家 和省分组</span></span><br><span class="line">df_country_Province = df.gourpby([<span class="string">&#x27;Country&#x27;</span>,<span class="string">&#x27;State/Province&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看数据</span></span><br><span class="line">print(df_country_Province.count().reset_index())</span><br></pre></td></tr></table></figure>
+
+<p>聚合函数+分组</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;color&#x27;</span>: [<span class="string">&#x27;white&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object&#x27;</span>: [<span class="string">&#x27;pen&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;ashtray&#x27;</span>, <span class="string">&#x27;pen&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;price1&#x27;</span>: [<span class="number">5.56</span>, <span class="number">4.20</span>, <span class="number">1.30</span>, <span class="number">0.56</span>, <span class="number">2.75</span>],</span><br><span class="line">    <span class="string">&#x27;price2&#x27;</span>: [<span class="number">4.75</span>, <span class="number">4.12</span>, <span class="number">1.60</span>, <span class="number">0.75</span>, <span class="number">3.15</span>]</span><br><span class="line">&#125;)</span><br><span class="line">      </span><br><span class="line">print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先分组， 后聚合</span></span><br><span class="line">df_color = df.groupby(<span class="string">&#x27;color&#x27;</span>)</span><br><span class="line">print(type(df_color))</span><br><span class="line">print(df_color.mean())</span><br><span class="line">print(df_color.max())</span><br><span class="line">print(<span class="string">&#x27;---------------------------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 第二种  先聚合 再分组 （不常用）</span></span><br><span class="line">price_m = df[<span class="string">&#x27;price2&#x27;</span>].groupby(df[<span class="string">&#x27;color&#x27;</span>]).mean()</span><br><span class="line">print(price_m)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
 ]]></content>
       <categories>
-        <category>java</category>
+        <category>pandas 数据处理</category>
       </categories>
       <tags>
-        <tag>Jvm 堆&amp;栈的理解</tag>
+        <tag>pandas 数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端工程化 &amp;&amp; vue3.0</title>
+    <url>/2021/09/07/vue3.0/</url>
+    <content><![CDATA[<p>前端工程化 &amp;&amp; vue3.0</p>
+<a id="more"></a>
+
+
+
+<h2 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h2><h4 id="实际的前端开发："><a href="#实际的前端开发：" class="headerlink" title="实际的前端开发："></a>实际的前端开发：</h4><ul>
+<li>模块化|（js的模块化、Css的模块化、资源的模块化）</li>
+<li>组件化（复用现有的UI结构、样式、行为）</li>
+<li>规范化（目录结构的划分、编码规范化、接口规范化、文档规范化、Git分支管理）</li>
+<li>自动化（自动化构建、自动部署、自动化测试）</li>
+</ul>
+<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h4><p><strong>主要功能</strong>：它提供了友好的<strong>前端模块化开发</strong>支持，以及<strong>代码压缩混淆、处理浏览器端JavaScript的兼容性、性能优化</strong>等强大的功能。</p>
+<h5 id="3-在项目中安装-webpack"><a href="#3-在项目中安装-webpack" class="headerlink" title="3.在项目中安装 webpack"></a>3.在项目中安装 webpack</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在终端运行如下的命令，安装webpack相关的两个包：</span><br><span class="line">npm install webpack@5.42.1 webpack-cli@4.7.2-save-dev</span><br><span class="line"></span><br><span class="line">-S 是--save的简写</span><br><span class="line">-D 是--save-dev的简写</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-在项目中配置-webpack"><a href="#4-在项目中配置-webpack" class="headerlink" title="4.在项目中配置 webpack"></a>4.在项目中配置 webpack</h5><ul>
+<li><p>在项目根目录中，创建名为<code>webpack.config.js</code>的webpack配置文件， 并初始化如下的配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">	mode:&#39;development&#39;  &#x2F;&#x2F;mode用来指定构建模式。可选值有 development和production</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 package.json 的 scripts节点下，新增<code>dev</code>脚本如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;：&#123;</span><br><span class="line">	“dev&quot;：&quot;webpack&quot;&#x2F;&#x2F;script 节点下的脚本，可以通过npm run执行。例如npm run dev</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在终端中运行 <code>npm run dev</code>  命令：启动webpack进行项目的打包构建</p>
+</li>
+</ul>
+<h2 id="vue3-0-项目"><a href="#vue3-0-项目" class="headerlink" title="vue3.0  项目"></a>vue3.0  项目</h2><h3 id="一，前端项目初始化步骤"><a href="#一，前端项目初始化步骤" class="headerlink" title="一，前端项目初始化步骤"></a>一，前端项目初始化步骤</h3><p>①  安装Vue脚手架<br>②  通过vue脚手架创建项目<br>③  配置vue路由<br>④  配置E1ement-UI组件库<br>⑤  配置axios库<br>⑥  初始化git 远程仓库<br>⑦  将本地项目托管到Github或码云中</p>
+<ul>
+<li><p>install vue 脚手架</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install @vue&#x2F;cli -g</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 可视化创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue ui</span><br><span class="line">🚀  Starting GUI...</span><br><span class="line">🌠  Ready on http:&#x2F;&#x2F;localhost:8000</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用命令行创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">###模板下载好后的交互选项</span><br><span class="line">1.Project name vue-demo # 项目名称，直接回车，按照括号中默认名字</span><br><span class="line">（注意这里的名字不能有大写字母，如果有会报错Sorry, name can no longer contain capital letters）</span><br><span class="line">2. Project description A Vue.js project # 项目描述,直接回车</span><br><span class="line">3. Author # 作者名称，默认直接回车</span><br><span class="line">4. Vue build standalone # 一般选择的Standalone(运行时 + 编译器)模式</span><br><span class="line">    Runtime + Compiler: recommended for most users；</span><br><span class="line">Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specificHTML) </span><br><span class="line">areONLY allowed in .vue files - render functions arerequired elsewhere</span><br><span class="line">（一般都选这个Runtime + Compiler: recommended for most users）</span><br><span class="line">5. Install vue-router? Yes # 是否需要 vue-router，路由，一般都需要，输入y敲回车</span><br><span class="line">6.Use ESLint to lint your code? Yes # 是否使用 ESLint 作为代码规范.</span><br><span class="line">7. Pick an ESLint preset Standard # 一样的ESlint 相关</span><br><span class="line">8. Set up unit tests Yes # 是否安装单元测试</span><br><span class="line">9. Pick a test runner 按需选择 # 测试模块</span><br><span class="line">10. Setup e2e tests with Nightwatch? 安装选择 # e2e 测试</span><br><span class="line">11. Should we run &#96;npm install&#96; for you after the project has been created? (recommended) npm # </span><br><span class="line">包管理器，一般用NPM</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="版本bug"><a href="#版本bug" class="headerlink" title="版本bug"></a>版本bug</h3><h4 id="vue-2-0"><a href="#vue-2-0" class="headerlink" title="vue 2.0"></a>vue 2.0</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install webpack-dev-server@2.9.1</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h4 id="生成环境-build"><a href="#生成环境-build" class="headerlink" title="生成环境-build"></a>生成环境-build</h4><p>有个插件能够移出项目中的所有 <code>log打印</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">transform-remove-consol  </span><br></pre></td></tr></table></figure>
+
+<h5 id="项目优化"><a href="#项目优化" class="headerlink" title="项目优化"></a>项目优化</h5><p><strong>通过externals 加载外部cdn资源</strong></p>
+<p>默认情况下，通过import 语法导入的第三方资源包，最终会被打包合并到同一个文件中，从而导致打包成功后，单文件体积过大的问题。</p>
+<p>为了解决上述问题，可以通过webpack的externals节点，来配置加载外部的cdn资源，凡是声明在externals中的第三方依赖包，都不会被打包</p>
+<h4 id="使用pm2-管理应用"><a href="#使用pm2-管理应用" class="headerlink" title="使用pm2 管理应用"></a>使用pm2 管理应用</h4><ol>
+<li>在服务器中安装pm2： <code>npm i pm2 -g</code></li>
+<li>启动项目： <code>pm2 start 脚本 --name 自定义名称</code></li>
+<li>查看运行项目： <code>pm2 ls</code></li>
+<li>重启项目： <code>pm2 restart 自定义名称</code></li>
+<li>停止项目：<code>pm2 stop 自定义名称</code></li>
+<li>删除项目： <code>pm2 delete 自定义名称</code> </li>
+</ol>
+]]></content>
+      <categories>
+        <category>前端</category>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>前端工程化</tag>
+        <tag>vue3.0</tag>
+        <tag>webpack</tag>
       </tags>
   </entry>
   <entry>
@@ -1117,6 +1117,40 @@
       </tags>
   </entry>
   <entry>
+    <title>哈佛曼编码</title>
+    <url>/2020/12/25/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>哈佛曼编码</p>
+<a id="more"></a>
+<p>哈弗曼</p>
+]]></content>
+      <categories>
+        <category>哈佛曼编码</category>
+      </categories>
+      <tags>
+        <tag>哈佛曼编码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>flask 项目使用redis数据库的原因</title>
+    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
+<a id="more"></a>
+
+<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
+<p>不用则会降低响应，影响用户体验，</p>
+<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
+<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
+]]></content>
+      <categories>
+        <category>redis</category>
+        <category>redis的子目录</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式 爬虫 Scrapy项目 scrapyd</title>
     <url>/2020/12/25/%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%ABScrapy/</url>
     <content><![CDATA[<p>分布式 爬虫 Scrapy项目 scrapyd</p>
@@ -1171,66 +1205,6 @@
       <tags>
         <tag>爬虫</tag>
         <tag>爬虫框架scrapy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>flask 项目使用redis数据库的原因</title>
-    <url>/2020/10/09/%E4%BD%BF%E7%94%A8redis%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<p>flask 项目使用Redis内存型数据库的原因</p>
-<a id="more"></a>
-
-<h4 id="flask-项目使用Redis内存型数据库的原因"><a href="#flask-项目使用Redis内存型数据库的原因" class="headerlink" title="flask 项目使用Redis内存型数据库的原因"></a>flask 项目使用Redis内存型数据库的原因</h4><p>缓存用户常用的数据，提升用户到服务器的响应速度，提高用户的体验</p>
-<p>不用则会降低响应，影响用户体验，</p>
-<h4 id="Redis-与-mysql数据库的区别"><a href="#Redis-与-mysql数据库的区别" class="headerlink" title="Redis 与 mysql数据库的区别"></a>Redis 与 mysql数据库的区别</h4><p>Redis 存储在 内存中，内存存取数据， 速度快</p>
-<p>mysql数据库 存储于硬盘， 存持久化数据，大量数据， <strong>jZnhp3</strong></p>
-]]></content>
-      <categories>
-        <category>redis</category>
-        <category>redis的子目录</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微信小程序知识点 总结</title>
-    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<a id="more"></a>
-<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<ol>
-<li>开搞  按思路来</li>
-</ol>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
-<p>2，web 与小程序的不同</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
-<p>3，最后利用 判断时间戳</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>微信小程序</category>
-      </categories>
-      <tags>
-        <tag>微信小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>哈佛曼编码</title>
-    <url>/2020/12/25/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
-    <content><![CDATA[<p>哈佛曼编码</p>
-<a id="more"></a>
-<p>哈弗曼</p>
-]]></content>
-      <categories>
-        <category>哈佛曼编码</category>
-      </categories>
-      <tags>
-        <tag>哈佛曼编码</tag>
       </tags>
   </entry>
   <entry>
@@ -1307,6 +1281,32 @@
         <tag>移动web项目</tag>
         <tag>React</tag>
         <tag>好客租房-React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信小程序知识点 总结</title>
+    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
+<a id="more"></a>
+<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
+<ol>
+<li>开搞  按思路来</li>
+</ol>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
+<p>2，web 与小程序的不同</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
+<p>3，最后利用 判断时间戳</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>微信小程序</category>
+      </categories>
+      <tags>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -1419,61 +1419,6 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
       <tags>
         <tag>爬虫</tag>
         <tag>爬虫框架scrapy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>短信验证码</title>
-    <url>/2020/10/09/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/</url>
-    <content><![CDATA[<p> 短信验证码</p>
-<a id="more"></a>
-
-<p>当今网站，为了防止，机器人非法注册，出现了，图片验证码， 短信验证码，。。。</p>
-<p>今天就来讲一下，短信验证码的流程</p>
-<p>这里以 <strong>阿里云</strong>为例，很多网站，都提供<strong>短信服务，API,  只需要SDK</strong>， 就可使用，开通服务即可，</p>
-<h4 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h4><p>一, 注册并实名制</p>
-<p>1.1 创建一个阿里云账号，<a href="https://account.aliyun.com/register/register.htm?spm=a2c4e.11153940.0.0.40e954a1MwMU0J">点击这里</a></p>
-<p>1.2 实名认证：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击这里</a></p>
-<p>1.3 绑定企业支付宝：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击绑定企业支付宝</a></p>
-<p>二，开通短信服务</p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602497737358"></p>
-<p>2.1 子账户（使用） <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击看子账号页面</a></p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602504639969"></p>
-<p>2.2 进入控制台： <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击查看控制台</a></p>
-<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602504695477.png~01style" alt="1602504695477"></p>
-<p>进行购买短信包</p>
-<ol>
-<li><p>这里我们用python 为例， copy下来， 放到， demo中， 进行模块封装，方便进行调用，</p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推荐使用 pip 命令，安装阿里云SDK核心库：</span></span><br><span class="line"></span><br><span class="line">pip install aliyun-python-sdk-core</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.request <span class="keyword">import</span> CommonRequest</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_aliyun_msg</span>()</span></span><br><span class="line"><span class="function">	&quot;&quot;&quot;</span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">	:</span>param phone_num: 手机号</span><br><span class="line">	:param content: 短信码</span><br><span class="line">	:<span class="keyword">return</span>: </span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    client = AcsClient(&#x27;&lt;accessKeyId&gt;&#x27;, &#x27;&lt;accessSecret&gt;&#x27;, &#x27;cn-hangzhou&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request = CommonRequest(pthone_num, content)</span></span><br><span class="line"><span class="string">    request.set_accept_format(&#x27;json&#x27;)</span></span><br><span class="line"><span class="string">    request.set_domain(&#x27;dysmsapi.aliyuncs.com&#x27;)</span></span><br><span class="line"><span class="string">    request.set_method(&#x27;POST&#x27;)</span></span><br><span class="line"><span class="string">    request.set_protocol_type(&#x27;https&#x27;) # https | http</span></span><br><span class="line"><span class="string">    request.set_version(&#x27;2017-05-25&#x27;)</span></span><br><span class="line"><span class="string">    request.set_action_name(&#x27;SendSms&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request.add_query_param(&#x27;RegionId&#x27;, &quot;cn-hangzhou&quot;)</span></span><br><span class="line"><span class="string">    request.add_query_param (&#x27;PhoneNumbers&#x27;, &quot;%s&quot; %phone_num)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;SignName&#x27;, &quot;jk4716138&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateCode&#x27;, &quot;SMS_167532197&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateParam&#x27;, &quot;&#123;\&quot;code\&quot;:\&quot;%s\&quot;&#125;&quot; %content)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    response = client.do_action(request)</span></span><br><span class="line"><span class="string">    # python2:  print(response) </span></span><br><span class="line"><span class="string">    print(str(response, encoding = &#x27;utf-8&#x27;))</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="string">    send_aliyun_msg()</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<ol start="2">
-<li><p>在注册视图中， 我们进行调用，即可，</p>
-</li>
-<li><p>短信发送，属于，防止机器人非法注册，（短信一条 大约0.045元，自行测试即可）</p>
-</li>
-</ol>
-<h4 id="图片验证码"><a href="#图片验证码" class="headerlink" title="图片验证码"></a>图片验证码</h4><p>七牛云做图床，Python上传图片</p>
-<ol>
-<li><p>首先需要install 模块</p>
-<ol>
-<li><pre><code> pip3 install qiniu
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. &#96;&#96;&#96;python </span><br><span class="line">    # -*- coding: utf-8 -*-</span><br><span class="line">    # flake8: noqa</span><br><span class="line">    from qiniu import Auth, put_file, etag, urlsafe_base64_encode</span><br><span class="line">    import qiniu.config</span><br><span class="line">    import sys</span><br><span class="line">    import os</span><br><span class="line">    import time</span><br><span class="line">    import subprocess</span><br><span class="line">    </span><br><span class="line">    #-----------默认配置-----------</span><br><span class="line">    # accessKey和secretkey是七牛的秘钥</span><br><span class="line">    access_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    secret_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    # 存储空间</span><br><span class="line">    bucket_name &#x3D; &#39;noteimages&#39;</span><br><span class="line">    # 域名</span><br><span class="line">    bucket_url &#x3D; &#39;存储空间的外链域名&#39;</span><br><span class="line">    </span><br><span class="line">    # 格式</span><br><span class="line">    img_suffix &#x3D; [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;gif&quot;]</span><br><span class="line">    # 本地存放图片地址</span><br><span class="line">    oldPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdImage&#39;</span><br><span class="line">    # 修改名字后存放在的新地址</span><br><span class="line">    newPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdNewImage&#39;</span><br><span class="line">    # 生成结果文档</span><br><span class="line">    result_file &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;result_file.txt&#39;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    # 存放链接数组</span><br><span class="line">    dataArr &#x3D; []</span><br><span class="line">    </span><br><span class="line">    def rename(name):</span><br><span class="line">        count &#x3D; 0</span><br><span class="line">        fileList &#x3D; os.listdir(oldPath)# 该文件夹下所有的文件（包括文件夹）</span><br><span class="line">        for files in fileList: #遍历所有的文件</span><br><span class="line">            oldDir &#x3D; os.path.join(oldPath, files) #原来的文件路径</span><br><span class="line">            if os.path.isdir(oldDir): #如果是文件夹就跳过</span><br><span class="line">                continue</span><br><span class="line">            fileName &#x3D; os.path.splitext(files)[0]  #文件名</span><br><span class="line">            fileType &#x3D; os.path.splitext(files)[1]  #文件扩展名</span><br><span class="line">            if fileType &#x3D;&#x3D; &#39;.jpg&#39; or fileType &#x3D;&#x3D; &#39;&#39;:</span><br><span class="line">                fileType &#x3D; &#39;.png&#39;</span><br><span class="line">            timeString &#x3D; time.strftime(&quot;$%Y-%m-%d$&quot;, time.localtime())</span><br><span class="line">            #生成新的文件名字</span><br><span class="line">            dataName &#x3D; name + timeString + str(count) + fileType</span><br><span class="line">    </span><br><span class="line">            newDir &#x3D; os.path.join(newPath, dataName) # 新的文件路径</span><br><span class="line">            os.rename(oldDir, newDir)</span><br><span class="line">            count +&#x3D; 1</span><br><span class="line">            #链接添加到数组</span><br><span class="line">            dataArr.append(upload_data(dataName,newDir))</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    #上传文件到七牛, 返回链接地址</span><br><span class="line">    def upload_data(newName, localfilePath):</span><br><span class="line">        q &#x3D; Auth(access_key, secret_key)</span><br><span class="line">        # 上传到七牛后保存的文件名</span><br><span class="line">        key &#x3D; newName;</span><br><span class="line">        # 生成上传 Token，可以指定过期时间等</span><br><span class="line">        token &#x3D; q.upload_token(bucket_name, key, 3600)</span><br><span class="line">        # 要上传文件的本地路径</span><br><span class="line">        localfile &#x3D; localfilePath</span><br><span class="line">        ret, info &#x3D; put_file(token, key, localfile)</span><br><span class="line">        return bucket_url + key</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    def crateFile(dataList):</span><br><span class="line">        with open(result_file, &#39;w+&#39;) as f:</span><br><span class="line">            for data in dataList:</span><br><span class="line">                # 如果是图片则生成图片的markdown格式引用</span><br><span class="line">                if os.path.splitext(data)[1][1:] in img_suffix:</span><br><span class="line">                    f.write(&#39;![](&#39;+data+&#39;)&#39;+&#39;\n&#39;)</span><br><span class="line">    </span><br><span class="line">        f.close()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">        </span><br><span class="line">        #生成链接</span><br><span class="line">        rename(input(&#39;请输入md文章标题:  &#39;))</span><br><span class="line">        #写入文件</span><br><span class="line">        crateFile(dataArr)</span><br><span class="line">        #打开文件</span><br><span class="line">        os.system(&#39;open &#39;+ result_file)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>短信验证码</category>
-        <category>短信验证码的子目录</category>
-      </categories>
-      <tags>
-        <tag>短信验证码</tag>
-        <tag>网站验证方式</tag>
       </tags>
   </entry>
   <entry>
@@ -1640,6 +1585,61 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
       </categories>
       <tags>
         <tag>壁纸，视频，</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>短信验证码</title>
+    <url>/2020/10/09/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81/</url>
+    <content><![CDATA[<p> 短信验证码</p>
+<a id="more"></a>
+
+<p>当今网站，为了防止，机器人非法注册，出现了，图片验证码， 短信验证码，。。。</p>
+<p>今天就来讲一下，短信验证码的流程</p>
+<p>这里以 <strong>阿里云</strong>为例，很多网站，都提供<strong>短信服务，API,  只需要SDK</strong>， 就可使用，开通服务即可，</p>
+<h4 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h4><p>一, 注册并实名制</p>
+<p>1.1 创建一个阿里云账号，<a href="https://account.aliyun.com/register/register.htm?spm=a2c4e.11153940.0.0.40e954a1MwMU0J">点击这里</a></p>
+<p>1.2 实名认证：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击这里</a></p>
+<p>1.3 绑定企业支付宝：<a href="https://account.console.aliyun.com/?spm=a2c4e.11153940.0.0.40e954a1MwMU0J#/auth/home">点击绑定企业支付宝</a></p>
+<p>二，开通短信服务</p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602497737358"></p>
+<p>2.1 子账户（使用） <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击看子账号页面</a></p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602497737358.png~01style" alt="1602504639969"></p>
+<p>2.2 进入控制台： <a href="https://dysms.console.aliyun.com/dysms.htm?spm=a2c4e.11153940.0.0.40e954a1GnIycK#/account">点击查看控制台</a></p>
+<p><img src="http://qny.jkraise.top/%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81.assets/1602504695477.png~01style" alt="1602504695477"></p>
+<p>进行购买短信包</p>
+<ol>
+<li><p>这里我们用python 为例， copy下来， 放到， demo中， 进行模块封装，方便进行调用，</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推荐使用 pip 命令，安装阿里云SDK核心库：</span></span><br><span class="line"></span><br><span class="line">pip install aliyun-python-sdk-core</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.client <span class="keyword">import</span> AcsClient</span><br><span class="line"><span class="keyword">from</span> aliyunsdkcore.request <span class="keyword">import</span> CommonRequest</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_aliyun_msg</span>()</span></span><br><span class="line"><span class="function">	&quot;&quot;&quot;</span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">	:</span>param phone_num: 手机号</span><br><span class="line">	:param content: 短信码</span><br><span class="line">	:<span class="keyword">return</span>: </span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    client = AcsClient(&#x27;&lt;accessKeyId&gt;&#x27;, &#x27;&lt;accessSecret&gt;&#x27;, &#x27;cn-hangzhou&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request = CommonRequest(pthone_num, content)</span></span><br><span class="line"><span class="string">    request.set_accept_format(&#x27;json&#x27;)</span></span><br><span class="line"><span class="string">    request.set_domain(&#x27;dysmsapi.aliyuncs.com&#x27;)</span></span><br><span class="line"><span class="string">    request.set_method(&#x27;POST&#x27;)</span></span><br><span class="line"><span class="string">    request.set_protocol_type(&#x27;https&#x27;) # https | http</span></span><br><span class="line"><span class="string">    request.set_version(&#x27;2017-05-25&#x27;)</span></span><br><span class="line"><span class="string">    request.set_action_name(&#x27;SendSms&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    request.add_query_param(&#x27;RegionId&#x27;, &quot;cn-hangzhou&quot;)</span></span><br><span class="line"><span class="string">    request.add_query_param (&#x27;PhoneNumbers&#x27;, &quot;%s&quot; %phone_num)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;SignName&#x27;, &quot;jk4716138&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateCode&#x27;, &quot;SMS_167532197&quot;)</span></span><br><span class="line"><span class="string">	request.add_query_param (&#x27;TemplateParam&#x27;, &quot;&#123;\&quot;code\&quot;:\&quot;%s\&quot;&#125;&quot; %content)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    response = client.do_action(request)</span></span><br><span class="line"><span class="string">    # python2:  print(response) </span></span><br><span class="line"><span class="string">    print(str(response, encoding = &#x27;utf-8&#x27;))</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="string">    send_aliyun_msg()</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>在注册视图中， 我们进行调用，即可，</p>
+</li>
+<li><p>短信发送，属于，防止机器人非法注册，（短信一条 大约0.045元，自行测试即可）</p>
+</li>
+</ol>
+<h4 id="图片验证码"><a href="#图片验证码" class="headerlink" title="图片验证码"></a>图片验证码</h4><p>七牛云做图床，Python上传图片</p>
+<ol>
+<li><p>首先需要install 模块</p>
+<ol>
+<li><pre><code> pip3 install qiniu
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2. &#96;&#96;&#96;python </span><br><span class="line">    # -*- coding: utf-8 -*-</span><br><span class="line">    # flake8: noqa</span><br><span class="line">    from qiniu import Auth, put_file, etag, urlsafe_base64_encode</span><br><span class="line">    import qiniu.config</span><br><span class="line">    import sys</span><br><span class="line">    import os</span><br><span class="line">    import time</span><br><span class="line">    import subprocess</span><br><span class="line">    </span><br><span class="line">    #-----------默认配置-----------</span><br><span class="line">    # accessKey和secretkey是七牛的秘钥</span><br><span class="line">    access_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    secret_key &#x3D; &#39;七牛账号下查找&#39;</span><br><span class="line">    # 存储空间</span><br><span class="line">    bucket_name &#x3D; &#39;noteimages&#39;</span><br><span class="line">    # 域名</span><br><span class="line">    bucket_url &#x3D; &#39;存储空间的外链域名&#39;</span><br><span class="line">    </span><br><span class="line">    # 格式</span><br><span class="line">    img_suffix &#x3D; [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;gif&quot;]</span><br><span class="line">    # 本地存放图片地址</span><br><span class="line">    oldPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdImage&#39;</span><br><span class="line">    # 修改名字后存放在的新地址</span><br><span class="line">    newPath &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;md文件&#x2F;mdNewImage&#39;</span><br><span class="line">    # 生成结果文档</span><br><span class="line">    result_file &#x3D; &#39;&#x2F;Users&#x2F;zwz&#x2F;Desktop&#x2F;result_file.txt&#39;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    # 存放链接数组</span><br><span class="line">    dataArr &#x3D; []</span><br><span class="line">    </span><br><span class="line">    def rename(name):</span><br><span class="line">        count &#x3D; 0</span><br><span class="line">        fileList &#x3D; os.listdir(oldPath)# 该文件夹下所有的文件（包括文件夹）</span><br><span class="line">        for files in fileList: #遍历所有的文件</span><br><span class="line">            oldDir &#x3D; os.path.join(oldPath, files) #原来的文件路径</span><br><span class="line">            if os.path.isdir(oldDir): #如果是文件夹就跳过</span><br><span class="line">                continue</span><br><span class="line">            fileName &#x3D; os.path.splitext(files)[0]  #文件名</span><br><span class="line">            fileType &#x3D; os.path.splitext(files)[1]  #文件扩展名</span><br><span class="line">            if fileType &#x3D;&#x3D; &#39;.jpg&#39; or fileType &#x3D;&#x3D; &#39;&#39;:</span><br><span class="line">                fileType &#x3D; &#39;.png&#39;</span><br><span class="line">            timeString &#x3D; time.strftime(&quot;$%Y-%m-%d$&quot;, time.localtime())</span><br><span class="line">            #生成新的文件名字</span><br><span class="line">            dataName &#x3D; name + timeString + str(count) + fileType</span><br><span class="line">    </span><br><span class="line">            newDir &#x3D; os.path.join(newPath, dataName) # 新的文件路径</span><br><span class="line">            os.rename(oldDir, newDir)</span><br><span class="line">            count +&#x3D; 1</span><br><span class="line">            #链接添加到数组</span><br><span class="line">            dataArr.append(upload_data(dataName,newDir))</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    #上传文件到七牛, 返回链接地址</span><br><span class="line">    def upload_data(newName, localfilePath):</span><br><span class="line">        q &#x3D; Auth(access_key, secret_key)</span><br><span class="line">        # 上传到七牛后保存的文件名</span><br><span class="line">        key &#x3D; newName;</span><br><span class="line">        # 生成上传 Token，可以指定过期时间等</span><br><span class="line">        token &#x3D; q.upload_token(bucket_name, key, 3600)</span><br><span class="line">        # 要上传文件的本地路径</span><br><span class="line">        localfile &#x3D; localfilePath</span><br><span class="line">        ret, info &#x3D; put_file(token, key, localfile)</span><br><span class="line">        return bucket_url + key</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    def crateFile(dataList):</span><br><span class="line">        with open(result_file, &#39;w+&#39;) as f:</span><br><span class="line">            for data in dataList:</span><br><span class="line">                # 如果是图片则生成图片的markdown格式引用</span><br><span class="line">                if os.path.splitext(data)[1][1:] in img_suffix:</span><br><span class="line">                    f.write(&#39;![](&#39;+data+&#39;)&#39;+&#39;\n&#39;)</span><br><span class="line">    </span><br><span class="line">        f.close()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">        </span><br><span class="line">        #生成链接</span><br><span class="line">        rename(input(&#39;请输入md文章标题:  &#39;))</span><br><span class="line">        #写入文件</span><br><span class="line">        crateFile(dataArr)</span><br><span class="line">        #打开文件</span><br><span class="line">        os.system(&#39;open &#39;+ result_file)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>短信验证码</category>
+        <category>短信验证码的子目录</category>
+      </categories>
+      <tags>
+        <tag>短信验证码</tag>
+        <tag>网站验证方式</tag>
       </tags>
   </entry>
   <entry>

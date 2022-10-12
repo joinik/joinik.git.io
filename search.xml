@@ -715,20 +715,6 @@
       </tags>
   </entry>
   <entry>
-    <title>c++教程</title>
-    <url>/2021/04/11/c++001/</url>
-    <content><![CDATA[<p>c++教程</p>
-<a id="more"></a>]]></content>
-      <categories>
-        <category>c++</category>
-        <category>c</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-        <tag>c++ 入门</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker指令&amp;&amp; 容器使用</title>
     <url>/2021/09/07/docker/</url>
     <content><![CDATA[<p>Docker指令&amp;&amp; 容器使用</p>
@@ -779,6 +765,43 @@
       </categories>
       <tags>
         <tag>Docker指令&amp;&amp; 容器使用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker-Compose</title>
+    <url>/2021/09/07/docker03/</url>
+    <content><![CDATA[<p>docker-Compose</p>
+<a id="more"></a>
+
+<h3 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h3><ol>
+<li>创建docker-compose.yml <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">    redis:</span><br><span class="line">        image: redis</span><br><span class="line">        expose:</span><br><span class="line">            - 6379</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;6389:6379&quot;</span><br><span class="line">    mysql:</span><br><span class="line">        image: mysql:5.5</span><br><span class="line">        expose:</span><br><span class="line">            - 3306</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;3307:3306&quot;</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: python</span><br><span class="line">            MYSQL_USER: root</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;02_mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">    flask:</span><br><span class="line">        build: .&#x2F;01_flask</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;01_flask&#x2F;project:&#x2F;home&#x2F;project</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;5000:5000&quot;</span><br><span class="line">        depends_on:</span><br><span class="line">            - mysql</span><br><span class="line">            - redis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="一些常用的命令"><a href="#一些常用的命令" class="headerlink" title="一些常用的命令"></a>一些常用的命令</h4></li>
+</ol>
+<ul>
+<li>生成容器并运行<ul>
+<li><code>docker-compose up</code></li>
+</ul>
+</li>
+<li>删除容器 <ul>
+<li><code>docker-compose down</code></li>
+</ul>
+</li>
+<li>开启容器并运行<ul>
+<li><code>docker-compose start</code></li>
+</ul>
+</li>
+<li>停止容器运行<ul>
+<li><code>docker-compose stop</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>depends_on</strong><br><img src="https://qny.jkraise.top/docker03/647_1.png"></p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker-Compose</tag>
       </tags>
   </entry>
   <entry>
@@ -841,40 +864,39 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker-Compose</title>
-    <url>/2021/09/07/docker03/</url>
-    <content><![CDATA[<p>docker-Compose</p>
-<a id="more"></a>
-
-<h3 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h3><ol>
-<li>创建docker-compose.yml <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">    redis:</span><br><span class="line">        image: redis</span><br><span class="line">        expose:</span><br><span class="line">            - 6379</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;6389:6379&quot;</span><br><span class="line">    mysql:</span><br><span class="line">        image: mysql:5.5</span><br><span class="line">        expose:</span><br><span class="line">            - 3306</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;3307:3306&quot;</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_ROOT_PASSWORD: python</span><br><span class="line">            MYSQL_USER: root</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;02_mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">    flask:</span><br><span class="line">        build: .&#x2F;01_flask</span><br><span class="line">        volumes:</span><br><span class="line">            - .&#x2F;01_flask&#x2F;project:&#x2F;home&#x2F;project</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;5000:5000&quot;</span><br><span class="line">        depends_on:</span><br><span class="line">            - mysql</span><br><span class="line">            - redis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="一些常用的命令"><a href="#一些常用的命令" class="headerlink" title="一些常用的命令"></a>一些常用的命令</h4></li>
-</ol>
-<ul>
-<li>生成容器并运行<ul>
-<li><code>docker-compose up</code></li>
-</ul>
-</li>
-<li>删除容器 <ul>
-<li><code>docker-compose down</code></li>
-</ul>
-</li>
-<li>开启容器并运行<ul>
-<li><code>docker-compose start</code></li>
-</ul>
-</li>
-<li>停止容器运行<ul>
-<li><code>docker-compose stop</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>depends_on</strong><br><img src="https://qny.jkraise.top/docker03/647_1.png"></p>
-]]></content>
+    <title>c++教程</title>
+    <url>/2021/04/11/c++001/</url>
+    <content><![CDATA[<p>c++教程</p>
+<a id="more"></a>]]></content>
       <categories>
-        <category>Docker</category>
+        <category>c++</category>
+        <category>c</category>
       </categories>
       <tags>
-        <tag>Docker-Compose</tag>
+        <tag>c++</tag>
+        <tag>c++ 入门</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jdk8 之后，接口提供了默认方法</title>
+    <url>/2021/09/07/javaInterface/</url>
+    <content><![CDATA[<p> jdk8 之后，接口提供了默认方法</p>
+<a id="more"></a>
+
+<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
+<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
+</li>
+<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
+<p><img src="https://qny.jkraise.top/javainterface/1619488312119.png" alt="1619488312119"></p>
+</li>
+</ul>
+<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="https://qny.jkraise.top/javainterface/1619489768318.png" alt="1619489768318"></p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>jdk8 之后，接口提供了默认方法</tag>
       </tags>
   </entry>
   <entry>
@@ -955,25 +977,63 @@
       </tags>
   </entry>
   <entry>
-    <title>jdk8 之后，接口提供了默认方法</title>
-    <url>/2021/09/07/javaInterface/</url>
-    <content><![CDATA[<p> jdk8 之后，接口提供了默认方法</p>
+    <title>事件js</title>
+    <url>/2020/12/25/js%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<p>事件js<br>1.addEventListener() 事件监听<br>2.事件解绑(removeEventListener)<br>3.DOM事件流</p>
 <a id="more"></a>
+<h2 id="事件js"><a href="#事件js" class="headerlink" title="事件js"></a>事件js</h2><h3 id="1-addEventListener-事件监听"><a href="#1-addEventListener-事件监听" class="headerlink" title="1.addEventListener() 事件监听"></a>1.addEventListener() 事件监听</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">button.addEventListener(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;监听事件---1&quot;</span>)</span><br><span class="line">&#125;) 事件监听</span><br></pre></td></tr></table></figure>
 
-<h4 id="jdk8-之后，接口提供了默认方法"><a href="#jdk8-之后，接口提供了默认方法" class="headerlink" title="jdk8 之后，接口提供了默认方法"></a>jdk8 之后，接口提供了默认方法</h4><ul>
-<li><p>在接口里 可以写 有实现体的方法了，可以被重写，但是不强制</p>
-</li>
-<li><p>如果实现的多个接口有相同名字的默认方法，实现类必须重写</p>
-<p><img src="https://qny.jkraise.top/javainterface/1619488312119.png" alt="1619488312119"></p>
-</li>
+<h3 id="2-事件解绑-removeEventListener"><a href="#2-事件解绑-removeEventListener" class="headerlink" title="2.事件解绑(removeEventListener)"></a>2.事件解绑(removeEventListener)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">button</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    let fn &#x3D; function()&#123;</span><br><span class="line">        div.classList.toggle(&quot;active&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    add.addEventListener(&quot;click&quot;, fn)  &#x2F;&#x2F; 监听事件</span><br><span class="line"></span><br><span class="line">    remove.addEventListener(&#39;click&#39;, function()&#123;</span><br><span class="line">        &#x2F;&#x2F; not enouth argunments</span><br><span class="line">        &#x2F;&#x2F; 事件类型 第二个参数， 处理函数</span><br><span class="line">        add.removeEventListener(&#39;click&#39;, fn)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h3><p>事件发生时在元素之间的传播顺序—–事件流</p>
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><p>e.target ——》事件对象</p>
+<p>e.type    ——-》事件类型</p>
+<p>e.preventDefault() ——-》阻止默认事件</p>
+<p>e.stopPropagation() ——-&gt; 阻止冒泡事件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let link &#x3D; document.querySelector(&quot;a&quot;);</span><br><span class="line">let form &#x3D; document.querySelector(&quot;form&quot;);</span><br><span class="line"></span><br><span class="line">link.addEventListener(&#39;click&#39;,function(e)&#123;</span><br><span class="line">	e.preventDefault();</span><br><span class="line">	console.log(&quot;a标签&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">form.addEventListener(&#39;click&#39;,function(e)&#123;</span><br><span class="line">	e.preventDefault();</span><br><span class="line">	console.log(&quot;form标签&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h3><p><strong>注意：说白了就是，不给子元素注册事件，给父元素注册事件，把处理代码在父元素的事件中执行</strong></p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jvm 堆&amp;栈的理解</title>
+    <url>/2021/09/07/jvm%E5%A0%86%E6%A0%88%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<p>Jvm 堆&amp;栈的理解</p>
+<a id="more"></a>
+<h2 id="Jvm-堆-amp-栈的理解"><a href="#Jvm-堆-amp-栈的理解" class="headerlink" title="Jvm 堆&amp;栈的理解"></a>Jvm 堆&amp;栈的理解</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> JVM里的“堆”（heap）特指用于存放Java对象的内存区域 </p>
+<p><strong>要注意，这个“堆”并不是数据结构意义上的堆（<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Heap_(data_structure)">Heap (data structure)</a>，一种有序的树），而是动态内存分配意义上的堆——用于管理动态生命周期的内存区域</strong></p>
+<p> <strong>JVM的堆被同一个JVM实例中的所有Java线程共享。它通常由某种自动内存管理机制所管理，这种机制通常叫做“垃圾回收”（garbage collection，GC）</strong> </p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p> JVM里的“栈”（ stack ）特指用于存放Java方法 ，基本类型的变量，和对象的引用变量 ，的内存区域 </p>
+<p><strong>特点是 先进后出</strong></p>
+<p>方法执行后，方法会从栈里出去，释放</p>
+<p> 存取速度比堆要快，仅此于寄存器，栈数据可以共享，但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。 </p>
+<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><blockquote>
+<p>JVM是基于堆栈的虚拟机.JVM为每个新创建的线程都分配一个堆栈.也就是说,对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作:以帧为单位的压栈和出栈操作。</p>
+</blockquote>
+<ul>
+<li>差异</li>
 </ul>
-<h4 id="jdk8-之后，接口提供了静态方法"><a href="#jdk8-之后，接口提供了静态方法" class="headerlink" title="jdk8 之后，接口提供了静态方法"></a>jdk8 之后，接口提供了静态方法</h4><p><img src="https://qny.jkraise.top/javainterface/1619489768318.png" alt="1619489768318"></p>
+<blockquote>
+<p>1.堆内存用来存放由new创建的对象和数组。<br>2.栈内存用来存放方法或者局部变量等<br>3.堆是先进先出，后进后出<br>4.栈是后进先出，先进后出</p>
+</blockquote>
+<ul>
+<li>相同</li>
+</ul>
+<blockquote>
+<p>1.都是属于Java内存的一种<br>2.系统都会自动去回收它，但是对于堆内存一般开发人员会自动回收它</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>java</category>
       </categories>
       <tags>
-        <tag>jdk8 之后，接口提供了默认方法</tag>
+        <tag>Jvm 堆&amp;栈的理解</tag>
       </tags>
   </entry>
   <entry>
@@ -1040,66 +1100,6 @@
       </categories>
       <tags>
         <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事件js</title>
-    <url>/2020/12/25/js%E4%BA%8B%E4%BB%B6/</url>
-    <content><![CDATA[<p>事件js<br>1.addEventListener() 事件监听<br>2.事件解绑(removeEventListener)<br>3.DOM事件流</p>
-<a id="more"></a>
-<h2 id="事件js"><a href="#事件js" class="headerlink" title="事件js"></a>事件js</h2><h3 id="1-addEventListener-事件监听"><a href="#1-addEventListener-事件监听" class="headerlink" title="1.addEventListener() 事件监听"></a>1.addEventListener() 事件监听</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">button.addEventListener(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;监听事件---1&quot;</span>)</span><br><span class="line">&#125;) 事件监听</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-事件解绑-removeEventListener"><a href="#2-事件解绑-removeEventListener" class="headerlink" title="2.事件解绑(removeEventListener)"></a>2.事件解绑(removeEventListener)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">button</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    let fn &#x3D; function()&#123;</span><br><span class="line">        div.classList.toggle(&quot;active&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    add.addEventListener(&quot;click&quot;, fn)  &#x2F;&#x2F; 监听事件</span><br><span class="line"></span><br><span class="line">    remove.addEventListener(&#39;click&#39;, function()&#123;</span><br><span class="line">        &#x2F;&#x2F; not enouth argunments</span><br><span class="line">        &#x2F;&#x2F; 事件类型 第二个参数， 处理函数</span><br><span class="line">        add.removeEventListener(&#39;click&#39;, fn)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="DOM事件流"><a href="#DOM事件流" class="headerlink" title="DOM事件流"></a>DOM事件流</h3><p>事件发生时在元素之间的传播顺序—–事件流</p>
-<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><p>e.target ——》事件对象</p>
-<p>e.type    ——-》事件类型</p>
-<p>e.preventDefault() ——-》阻止默认事件</p>
-<p>e.stopPropagation() ——-&gt; 阻止冒泡事件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">let link &#x3D; document.querySelector(&quot;a&quot;);</span><br><span class="line">let form &#x3D; document.querySelector(&quot;form&quot;);</span><br><span class="line"></span><br><span class="line">link.addEventListener(&#39;click&#39;,function(e)&#123;</span><br><span class="line">	e.preventDefault();</span><br><span class="line">	console.log(&quot;a标签&quot;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">form.addEventListener(&#39;click&#39;,function(e)&#123;</span><br><span class="line">	e.preventDefault();</span><br><span class="line">	console.log(&quot;form标签&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h3><p><strong>注意：说白了就是，不给子元素注册事件，给父元素注册事件，把处理代码在父元素的事件中执行</strong></p>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-      <tags>
-        <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jvm 堆&amp;栈的理解</title>
-    <url>/2021/09/07/jvm%E5%A0%86%E6%A0%88%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<p>Jvm 堆&amp;栈的理解</p>
-<a id="more"></a>
-<h2 id="Jvm-堆-amp-栈的理解"><a href="#Jvm-堆-amp-栈的理解" class="headerlink" title="Jvm 堆&amp;栈的理解"></a>Jvm 堆&amp;栈的理解</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> JVM里的“堆”（heap）特指用于存放Java对象的内存区域 </p>
-<p><strong>要注意，这个“堆”并不是数据结构意义上的堆（<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Heap_(data_structure)">Heap (data structure)</a>，一种有序的树），而是动态内存分配意义上的堆——用于管理动态生命周期的内存区域</strong></p>
-<p> <strong>JVM的堆被同一个JVM实例中的所有Java线程共享。它通常由某种自动内存管理机制所管理，这种机制通常叫做“垃圾回收”（garbage collection，GC）</strong> </p>
-<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p> JVM里的“栈”（ stack ）特指用于存放Java方法 ，基本类型的变量，和对象的引用变量 ，的内存区域 </p>
-<p><strong>特点是 先进后出</strong></p>
-<p>方法执行后，方法会从栈里出去，释放</p>
-<p> 存取速度比堆要快，仅此于寄存器，栈数据可以共享，但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。 </p>
-<h2 id="栈和堆的区别"><a href="#栈和堆的区别" class="headerlink" title="栈和堆的区别"></a>栈和堆的区别</h2><blockquote>
-<p>JVM是基于堆栈的虚拟机.JVM为每个新创建的线程都分配一个堆栈.也就是说,对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作:以帧为单位的压栈和出栈操作。</p>
-</blockquote>
-<ul>
-<li>差异</li>
-</ul>
-<blockquote>
-<p>1.堆内存用来存放由new创建的对象和数组。<br>2.栈内存用来存放方法或者局部变量等<br>3.堆是先进先出，后进后出<br>4.栈是后进先出，先进后出</p>
-</blockquote>
-<ul>
-<li>相同</li>
-</ul>
-<blockquote>
-<p>1.都是属于Java内存的一种<br>2.系统都会自动去回收它，但是对于堆内存一般开发人员会自动回收它</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>Jvm 堆&amp;栈的理解</tag>
       </tags>
   </entry>
   <entry>
@@ -1302,6 +1302,43 @@ server.on(&#39;request&#39;,(req,res)=&gt;&#123;
       </tags>
   </entry>
   <entry>
+    <title>pandas 数据处理02  groupby</title>
+    <url>/2020/12/28/pandas02/</url>
+    <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
+<a id="more"></a>
+
+<h4 id="时间戳-转换时间"><a href="#时间戳-转换时间" class="headerlink" title="时间戳 转换时间"></a>时间戳 转换时间</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">df &#x3D; pd.read_csv(&quot;.&#x2F;train.csv&quot;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">d_time &#x3D; pd.to_datetime(df[&#39;time&#39;], unit&#x3D;&#39;s&#39;)</span><br><span class="line">print(type(d_time)) # &lt;class &#39;pandas.core.series.Series&#39;&gt;</span><br><span class="line">print(&#39;--------------&#39;)</span><br><span class="line">print(d_time)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="时间值-处理"><a href="#时间值-处理" class="headerlink" title="时间值 处理"></a>时间值 处理</h4><p><img src="http://qny.jkraise.top/pandas02assets/1609116502837.png~01style" alt="1609116502837"></p>
+<h4 id="删除-缺失值-dropna"><a href="#删除-缺失值-dropna" class="headerlink" title="删除 缺失值 dropna"></a>删除 缺失值 dropna</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;./breast-cancer-wisconsin.data&#x27;</span>)</span><br><span class="line"></span><br><span class="line">df = df.replace(to_replace=<span class="string">&#x27;?&#x27;</span>, value=np.nan)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">print(<span class="string">&#x27;--------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 默认是0 删除行数据  为1 删除列数据</span></span><br><span class="line"><span class="comment"># how=&#x27;all&#x27; 全部是nan 删除</span></span><br><span class="line"><span class="comment"># how=&#x27;any&#x27; 有nan就删除</span></span><br><span class="line"></span><br><span class="line">df1 = df.dropna(axis=<span class="number">0</span>, how=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
+
+<h4 id="pandas的合并"><a href="#pandas的合并" class="headerlink" title="pandas的合并"></a>pandas的合并</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 指定列的 合并</span></span><br><span class="line">pd.merge()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>merge 案例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 商品详情 product_id 商品的名字 和 aisle_id</span></span><br><span class="line">product = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/products.csv&quot;</span>)</span><br><span class="line"><span class="comment"># orderid  product_id</span></span><br><span class="line">order_pro = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/order_products__prior.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># orderId  userId</span></span><br><span class="line">orders = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/orders.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># aisles_nameid  aislesId</span></span><br><span class="line">aisles = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/aisles.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并product和order_pro, 通过product_id</span></span><br><span class="line">mg1 = pd.merge(order_pro, product, on=[<span class="string">&#x27;product_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg1 和orders 通过order_id</span></span><br><span class="line">mg2 = pd.merge(mg1, orders, on=[<span class="string">&#x27;order_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg2 和aisles 通过aisle_id</span></span><br><span class="line">mg3 = pd.merge(mg2, aisles, on=[<span class="string">&#x27;aisle_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户购买的所有类商品的数量</span></span><br><span class="line">user_ai = pd.crosstab(mg3[<span class="string">&#x27;user_id&#x27;</span>],mg3[<span class="string">&#x27;aisle&#x27;</span>])</span><br><span class="line">print(user_ai)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="聚合分组1"><a href="#聚合分组1" class="headerlink" title="聚合分组1"></a>聚合分组1</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 按国家分组</span></span><br><span class="line">df_country = df.groupby(<span class="string">&#x27;Country&#x27;</span>)</span><br><span class="line">print(df_country.count().reset_index())</span><br><span class="line"><span class="comment"># 按国家 和省分组</span></span><br><span class="line">df_country_Province = df.gourpby([<span class="string">&#x27;Country&#x27;</span>,<span class="string">&#x27;State/Province&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看数据</span></span><br><span class="line">print(df_country_Province.count().reset_index())</span><br></pre></td></tr></table></figure>
+
+<p>聚合函数+分组</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;color&#x27;</span>: [<span class="string">&#x27;white&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object&#x27;</span>: [<span class="string">&#x27;pen&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;ashtray&#x27;</span>, <span class="string">&#x27;pen&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;price1&#x27;</span>: [<span class="number">5.56</span>, <span class="number">4.20</span>, <span class="number">1.30</span>, <span class="number">0.56</span>, <span class="number">2.75</span>],</span><br><span class="line">    <span class="string">&#x27;price2&#x27;</span>: [<span class="number">4.75</span>, <span class="number">4.12</span>, <span class="number">1.60</span>, <span class="number">0.75</span>, <span class="number">3.15</span>]</span><br><span class="line">&#125;)</span><br><span class="line">      </span><br><span class="line">print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先分组， 后聚合</span></span><br><span class="line">df_color = df.groupby(<span class="string">&#x27;color&#x27;</span>)</span><br><span class="line">print(type(df_color))</span><br><span class="line">print(df_color.mean())</span><br><span class="line">print(df_color.max())</span><br><span class="line">print(<span class="string">&#x27;---------------------------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 第二种  先聚合 再分组 （不常用）</span></span><br><span class="line">price_m = df[<span class="string">&#x27;price2&#x27;</span>].groupby(df[<span class="string">&#x27;color&#x27;</span>]).mean()</span><br><span class="line">print(price_m)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>pandas 数据处理</category>
+      </categories>
+      <tags>
+        <tag>pandas 数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pandas 数据清洗</title>
     <url>/2020/12/25/pandas%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/</url>
     <content><![CDATA[<p>pandas 数据清洗</p>
@@ -1446,41 +1483,268 @@ server.on(&#39;request&#39;,(req,res)=&gt;&#123;
       </tags>
   </entry>
   <entry>
-    <title>pandas 数据处理02  groupby</title>
-    <url>/2020/12/28/pandas02/</url>
-    <content><![CDATA[<p> pandas 数据处理02 聚合分组 </p>
+    <title>rpc  的特点 &amp;&amp;Python 应用广泛的RPC方案</title>
+    <url>/2020/12/25/rpc%20%20%E7%9A%84%E7%89%B9%E7%82%B9/</url>
+    <content><![CDATA[<p>rpc的特点<br>1.Python 应用广泛的RPC方案<br>2.RPC 目标</p>
 <a id="more"></a>
 
-<h4 id="时间戳-转换时间"><a href="#时间戳-转换时间" class="headerlink" title="时间戳 转换时间"></a>时间戳 转换时间</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">df &#x3D; pd.read_csv(&quot;.&#x2F;train.csv&quot;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">d_time &#x3D; pd.to_datetime(df[&#39;time&#39;], unit&#x3D;&#39;s&#39;)</span><br><span class="line">print(type(d_time)) # &lt;class &#39;pandas.core.series.Series&#39;&gt;</span><br><span class="line">print(&#39;--------------&#39;)</span><br><span class="line">print(d_time)</span><br></pre></td></tr></table></figure>
+<h2 id="rpc-的特点"><a href="#rpc-的特点" class="headerlink" title="rpc  的特点"></a>rpc  的特点</h2><ul>
+<li>为了快递进行子系统之间的功能调用，节省网络传输的开销，把数据大量压榨。采用二进制数据直接传递，不是标准的HTTP协议  这种是rpc调用</li>
+<li>缺点：不通用，有专门的客户端 和服务器支持，自己定义一套二进制数据的协议，才能完成通讯</li>
+<li>优点：通讯效率高</li>
+<li>应用：产品内部间的 功能之间调用，选择rpc  </li>
+</ul>
+<h2 id="Python-应用广泛的RPC方案、"><a href="#Python-应用广泛的RPC方案、" class="headerlink" title="Python 应用广泛的RPC方案、"></a>Python 应用广泛的RPC方案、</h2><ul>
+<li>Facebook  thrift</li>
+<li>Google gRPC</li>
+</ul>
+<h3 id="RPC-目标"><a href="#RPC-目标" class="headerlink" title="RPC 目标"></a>RPC 目标</h3><ul>
+<li><p>高效通讯</p>
+</li>
+<li><p>封装，把网络调用细节尽量隐藏封装，让使用RPC的的人，感觉就像编写本地函数一样进行远程调用</p>
+</li>
+<li><p>尽量通用，可以跨平台，跨语言使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install grpcio  必须的核心依赖库</span><br><span class="line">pip install grpcio-tools   提供了protobuf 语法的编译工具。用来生成代码（python）	</span><br><span class="line">pip install protobuf</span><br><span class="line">python代码 一部分写 一部分生成</span><br></pre></td></tr></table></figure>
 
+<p>1.使用protocol Buffers（proto3）的IDL接口定义语言定义接口服务，编写在文本文件（以<code>.proto</code>为后缀中。</p>
+<p>2.使用protocol编译器生成服务器和客户端使用的stub代码</p>
+<p>3.编写补充服务器和客户端逻辑代码</p>
+<p>![、](rpc  的特点.assets/1636096352812.png)</p>
+</li>
+</ul>
+<h3 id="proto-代码生成"><a href="#proto-代码生成" class="headerlink" title="proto 代码生成"></a>proto 代码生成</h3><p>编译生成代码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. reco.proto</span><br></pre></td></tr></table></figure>
 
-
-<h4 id="时间值-处理"><a href="#时间值-处理" class="headerlink" title="时间值 处理"></a>时间值 处理</h4><p><img src="http://qny.jkraise.top/pandas02assets/1609116502837.png~01style" alt="1609116502837"></p>
-<h4 id="删除-缺失值-dropna"><a href="#删除-缺失值-dropna" class="headerlink" title="删除 缺失值 dropna"></a>删除 缺失值 dropna</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;./breast-cancer-wisconsin.data&#x27;</span>)</span><br><span class="line"></span><br><span class="line">df = df.replace(to_replace=<span class="string">&#x27;?&#x27;</span>, value=np.nan)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">print(<span class="string">&#x27;--------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 默认是0 删除行数据  为1 删除列数据</span></span><br><span class="line"><span class="comment"># how=&#x27;all&#x27; 全部是nan 删除</span></span><br><span class="line"><span class="comment"># how=&#x27;any&#x27; 有nan就删除</span></span><br><span class="line"></span><br><span class="line">df1 = df.dropna(axis=<span class="number">0</span>, how=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line">print(df1)</span><br></pre></td></tr></table></figure>
-
-<h4 id="pandas的合并"><a href="#pandas的合并" class="headerlink" title="pandas的合并"></a>pandas的合并</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 指定列的 合并</span></span><br><span class="line">pd.merge()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>merge 案例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 商品详情 product_id 商品的名字 和 aisle_id</span></span><br><span class="line">product = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/products.csv&quot;</span>)</span><br><span class="line"><span class="comment"># orderid  product_id</span></span><br><span class="line">order_pro = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/order_products__prior.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># orderId  userId</span></span><br><span class="line">orders = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/orders.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># aisles_nameid  aislesId</span></span><br><span class="line">aisles = pd.read_csv(<span class="string">&quot;C:/Users/halon/Desktop/数据挖掘/day05/instacart/aisles.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并product和order_pro, 通过product_id</span></span><br><span class="line">mg1 = pd.merge(order_pro, product, on=[<span class="string">&#x27;product_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg1 和orders 通过order_id</span></span><br><span class="line">mg2 = pd.merge(mg1, orders, on=[<span class="string">&#x27;order_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并mg2 和aisles 通过aisle_id</span></span><br><span class="line">mg3 = pd.merge(mg2, aisles, on=[<span class="string">&#x27;aisle_id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户购买的所有类商品的数量</span></span><br><span class="line">user_ai = pd.crosstab(mg3[<span class="string">&#x27;user_id&#x27;</span>],mg3[<span class="string">&#x27;aisle&#x27;</span>])</span><br><span class="line">print(user_ai)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="聚合分组1"><a href="#聚合分组1" class="headerlink" title="聚合分组1"></a>聚合分组1</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df_data = pd.read_csv(<span class="string">&#x27;./directory.csv&#x27;</span>)</span><br><span class="line">print(df)</span><br><span class="line"><span class="comment"># 按国家分组</span></span><br><span class="line">df_country = df.groupby(<span class="string">&#x27;Country&#x27;</span>)</span><br><span class="line">print(df_country.count().reset_index())</span><br><span class="line"><span class="comment"># 按国家 和省分组</span></span><br><span class="line">df_country_Province = df.gourpby([<span class="string">&#x27;Country&#x27;</span>,<span class="string">&#x27;State/Province&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看数据</span></span><br><span class="line">print(df_country_Province.count().reset_index())</span><br></pre></td></tr></table></figure>
-
-<p>聚合函数+分组</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;color&#x27;</span>: [<span class="string">&#x27;white&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;green&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object&#x27;</span>: [<span class="string">&#x27;pen&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;pencil&#x27;</span>, <span class="string">&#x27;ashtray&#x27;</span>, <span class="string">&#x27;pen&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;price1&#x27;</span>: [<span class="number">5.56</span>, <span class="number">4.20</span>, <span class="number">1.30</span>, <span class="number">0.56</span>, <span class="number">2.75</span>],</span><br><span class="line">    <span class="string">&#x27;price2&#x27;</span>: [<span class="number">4.75</span>, <span class="number">4.12</span>, <span class="number">1.60</span>, <span class="number">0.75</span>, <span class="number">3.15</span>]</span><br><span class="line">&#125;)</span><br><span class="line">      </span><br><span class="line">print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先分组， 后聚合</span></span><br><span class="line">df_color = df.groupby(<span class="string">&#x27;color&#x27;</span>)</span><br><span class="line">print(type(df_color))</span><br><span class="line">print(df_color.mean())</span><br><span class="line">print(df_color.max())</span><br><span class="line">print(<span class="string">&#x27;---------------------------------&#x27;</span>)</span><br><span class="line"><span class="comment"># 第二种  先聚合 再分组 （不常用）</span></span><br><span class="line">price_m = df[<span class="string">&#x27;price2&#x27;</span>].groupby(df[<span class="string">&#x27;color&#x27;</span>]).mean()</span><br><span class="line">print(price_m)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<ul>
+<li><p><code>-I</code>表示搜索proto文件中被导入文件的目录</p>
+</li>
+<li><p><code>--python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的数据类型</p>
+</li>
+<li><p><code>--grpc_python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的服务类型</p>
+</li>
+<li><p>reco_pb2.py 保存根据接口定义文件中的数据类型生成的python类</p>
+</li>
+<li><p>reco_pb2_grpc.py 保存根据接口定义文件中的服务方法类型生成的python调用RPC方法</p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>pandas 数据处理</category>
+        <category>rpc</category>
       </categories>
       <tags>
-        <tag>pandas 数据处理</tag>
+        <tag>rpc</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/14/springBoot2/</url>
+    <content><![CDATA[<h3 id="spring-框架"><a href="#spring-框架" class="headerlink" title="spring 框架"></a>spring 框架</h3><h2 id="What-can-Spring-do"><a href="#What-can-Spring-do" class="headerlink" title="What can Spring do?"></a>What can Spring do?</h2><p><img src="springBoot2.assets/1636868232816.png" alt="1636868232816"></p>
+<h3 id="介绍SpringBoot框架"><a href="#介绍SpringBoot框架" class="headerlink" title="介绍SpringBoot框架"></a>介绍SpringBoot框架</h3><p><a href="https://spring.io/projects/spring-boot">官方文档</a></p>
+<p>查看版本新特性；</p>
+<p><a href="https://github.com/spring-projects/spring-boot/wiki#release-notes">https://github.com/spring-projects/spring-boot/wiki#release-notes</a></p>
+<p><code>spring5</code> 升级</p>
+<h4 id="1-引入响应式开发"><a href="#1-引入响应式开发" class="headerlink" title="1.引入响应式开发"></a>1.引入响应式开发</h4><p><img src="springBoot2.assets/1636868739459.png" alt="1636868739459"></p>
+<h3 id="1-1内部源码设计"><a href="#1-1内部源码设计" class="headerlink" title="1.1内部源码设计"></a>1.1内部源码设计</h3><p>基于Java8的一些新特性，如：接口默认实现。重新设计源码架构。</p>
+<p>为什么用<code>SpringBoot</code></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.</p>
+<p>能快速创建出生产级别的Spring应用</p>
+</blockquote>
+<h2 id="2-1、SpringBoot优点"><a href="#2-1、SpringBoot优点" class="headerlink" title="2.1、SpringBoot优点"></a>2.1、SpringBoot优点</h2><ul>
+<li><p>Create stand-alone Spring applications</p>
+</li>
+<li><ul>
+<li>创建独立Spring应用</li>
+</ul>
+</li>
+<li><p>Embed Tomcat, Jetty or Undertow directly (no need to deploy WAR files)</p>
+</li>
+<li><ul>
+<li>内嵌web服务器</li>
+</ul>
+</li>
+<li><p>Provide opinionated ‘starter’ dependencies to simplify your build configuration</p>
+</li>
+<li><ul>
+<li>自动starter依赖，简化构建配置</li>
+</ul>
+</li>
+<li><p>Automatically configure Spring and 3rd party libraries whenever possible</p>
+</li>
+<li><ul>
+<li>自动配置Spring以及第三方功能</li>
+</ul>
+</li>
+<li><p>Provide production-ready features such as metrics, health checks, and externalized configuration</p>
+</li>
+<li><ul>
+<li>提供生产级别的监控、健康检查及外部化配置</li>
+</ul>
+</li>
+<li><p>Absolutely no code generation and no requirement for XML configuration</p>
+</li>
+<li><ul>
+<li>无代码生成、无需编写XML</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>SpringBoot是整合Spring技术栈的一站式框架</p>
+<p>SpringBoot是简化Spring技术栈的快速开发脚手架</p>
+</blockquote>
+<h2 id="2-2、SpringBoot缺点"><a href="#2-2、SpringBoot缺点" class="headerlink" title="2.2、SpringBoot缺点"></a>2.2、SpringBoot缺点</h2><ul>
+<li>人称版本帝，迭代快，需要时刻关注变化</li>
+<li>封装太深，内部原理复杂，不容易精通</li>
+</ul>
+<h2 id="3-时代背景"><a href="#3-时代背景" class="headerlink" title="3.时代背景"></a>3.时代背景</h2><h3 id="3-1微服务"><a href="#3-1微服务" class="headerlink" title="3.1微服务"></a>3.1微服务</h3><p><a href="https://martinfowler.com/articles/microservices.html">James Lewis and Martin Fowler (2014)</a>  提出微服务完整概念。<a href="https://martinfowler.com/microservices">https://martinfowler.com/microservices</a></p>
+<blockquote>
+<p>In short, the <strong>microservice architectural style</strong> is an approach to developing a single application as a <strong>suite of small services</strong>, each <strong>running in its own process</strong> and communicating with <strong>lightweight</strong> mechanisms, often an <strong>HTTP</strong> resource API. These services are <strong>built around business capabilities</strong> and <strong>independently deployable</strong> by fully <strong>automated deployment</strong> machinery. There is a <strong>bare minimum of centralized management</strong> of these services, which may be <strong>written in different programming languages</strong> and use different data storage technologies.– <a href="https://martinfowler.com/articles/microservices.html">James Lewis and Martin Fowler (2014)</a></p>
+</blockquote>
+<ul>
+<li><p>微服务是一种架构风格</p>
+</li>
+<li><p>一个应用拆分为一组小型服务</p>
+</li>
+<li><p>每个服务运行在自己的进程内，也就是可独立部署和升级</p>
+</li>
+<li><p>服务之间使用轻量级HTTP交互</p>
+</li>
+<li><p>服务围绕业务功能拆分</p>
+</li>
+<li><p>可以由全自动部署机制独立部署</p>
+</li>
+<li><p>去中心化，服务自治。服务可以使用不同的语言、不同的存储技术</p>
+</li>
+</ul>
+<h3 id="3-2分布式的困难"><a href="#3-2分布式的困难" class="headerlink" title="3.2分布式的困难"></a>3.2分布式的困难</h3><ul>
+<li><p>远程调用</p>
+</li>
+<li><p>服务发现</p>
+</li>
+<li><p>负载均衡</p>
+</li>
+<li><p>服务容错</p>
+</li>
+<li><p>配置管理</p>
+</li>
+<li><p>服务监控</p>
+</li>
+<li><p>链路追踪</p>
+</li>
+<li><p>日志管理</p>
+</li>
+<li><p>任务调度</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h3 id="3-2-1分布式的解决"><a href="#3-2-1分布式的解决" class="headerlink" title="3.2.1分布式的解决"></a>3.2.1分布式的解决</h3><p><img src="springBoot2.assets/1636870814949.png" alt="1636870814949"></p>
+<h3 id="3-3、云原生"><a href="#3-3、云原生" class="headerlink" title="3.3、云原生"></a>3.3、云原生</h3><p>原生应用如何上云。 Cloud Native</p>
+<h3 id="上云的困难"><a href="#上云的困难" class="headerlink" title="上云的困难"></a>上云的困难</h3><ul>
+<li><p>服务自愈</p>
+</li>
+<li><p>弹性伸缩</p>
+</li>
+<li><p>服务隔离</p>
+</li>
+<li><p>自动化部署</p>
+</li>
+<li><p>灰度发布</p>
+</li>
+<li><p>流量治理</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h2 id="4-了解自动化配置"><a href="#4-了解自动化配置" class="headerlink" title="4.了解自动化配置"></a>4.了解自动化配置</h2><h3 id="1-SpringBoot特点"><a href="#1-SpringBoot特点" class="headerlink" title="1.SpringBoot特点"></a>1.SpringBoot特点</h3><h4 id="1-1-依赖配置"><a href="#1-1-依赖配置" class="headerlink" title="1.1.依赖配置"></a>1.1.依赖配置</h4><ul>
+<li><p>父项目做依赖管理</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">依赖管理    </span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">他的父项目</span><br><span class="line"> <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">几乎声明了所有开发中常用的依赖的版本号,自动版本仲裁机制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开发导入starter场景启动器</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">1、见到很多 spring-boot-starter-* ： *就某种场景</span><br><span class="line">2、只要引入starter，这个场景的所有常规需要的依赖我们都自动引入</span><br><span class="line">3、SpringBoot所有支持的场景</span><br><span class="line">https://docs.spring.io/spring-boot/docs/current/reference/html/using-spring-boot.html#using-boot-starter</span><br><span class="line">4、见到的  *-spring-boot-starter： 第三方为我们提供的简化开发的场景启动器。</span><br><span class="line">5、所有场景启动器最底层的依赖</span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无需关注版本号，自动版本仲裁</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1、引入依赖默认都可以不写版本</span><br><span class="line">2、引入非版本仲裁的jar，要写版本号。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置，默认版本号，如mysql 8.0 ，改为MySQL5.0版本</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">1、查看spring-boot-dependencies里面规定当前依赖的版本 用的 key。</span><br><span class="line">2、在当前项目里面重写配置</span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mysql.version</span>&gt;</span>5.1.43<span class="tag">&lt;/<span class="name">mysql.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2、自动配置"><a href="#1-2、自动配置" class="headerlink" title="1.2、自动配置"></a>1.2、自动配置</h4><ul>
+<li><p>自动配好Tomcat</p>
+</li>
+<li><ul>
+<li>引入Tomcat依赖。</li>
+<li>配置Tomcat</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>自动配好SpringMVC</p>
+</li>
+<li><ul>
+<li>引入SpringMVC全套组件</li>
+<li>自动配好SpringMVC常用组件（功能）</li>
+</ul>
+</li>
+<li><p>自动配好Web常见功能，如：字符编码问题</p>
+</li>
+<li><ul>
+<li>SpringBoot帮我们配置好了所有web开发的常见场景</li>
+</ul>
+</li>
+<li><p>默认的包结构</p>
+</li>
+<li><ul>
+<li>主程序所在包及其下面的所有子包里面的组件都会被默认扫描进来</li>
+<li>无需以前的包扫描配置</li>
+</ul>
+</li>
+<li><ul>
+<li>想要改变扫描路径，@SpringBootApplication(scanBasePackages=<strong>“com.atguigu”</strong>)</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>或者@ComponentScan 指定扫描路径</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">等同于</span><br><span class="line">@SpringBootConfiguration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan(&quot;com.atguigu.boot&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>各种配置拥有默认值</p>
+</li>
+<li><ul>
+<li>默认配置最终都是映射到某个类上，如：<code>MultipartProperties</code></li>
+<li>配置文件的值最终会绑定每个类上，这个类会在容器中创建对象</li>
+</ul>
+</li>
+<li><p>按需加载所有自动配置项</p>
+</li>
+<li><ul>
+<li>非常多的starter</li>
+<li>引入了哪些场景这个场景的自动配置才会开启</li>
+</ul>
+</li>
+<li><ul>
+<li>SpringBoot所有的自动配置功能都在 <code>spring-boot-autoconfigure</code> 包里面</li>
+<li></li>
+</ul>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h3 id="数据响应"><a href="#数据响应" class="headerlink" title="数据响应"></a>数据响应</h3><h4 id="1-响应json"><a href="#1-响应json" class="headerlink" title="1.响应json"></a>1.响应json</h4><p>1.1 jackson.jar+@ResponseBody</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">web场景自动引入了json场景</span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-json<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>只要给方法添加<code>@ResponseBody</code>  就会给浏览器返回json数据</p>
+]]></content>
   </entry>
   <entry>
     <title>前端工程化 &amp;&amp; vue3.0</title>
@@ -1675,156 +1939,6 @@ server.on(&#39;request&#39;,(req,res)=&gt;&#123;
       <tags>
         <tag>vue</tag>
         <tag>前端框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue 过滤器</title>
-    <url>/2021/09/07/vue%E5%AE%8C%E6%95%B4/</url>
-    <content><![CDATA[<p>vue 过滤器<br>css 盒子大小的计算方式<br>img标签，br标签 不能使用after before</p>
-<a id="more"></a>
-
-<h3 id="vue-过滤器"><a href="#vue-过滤器" class="headerlink" title="vue 过滤器"></a>vue 过滤器</h3><ul>
-<li>Vue3 没有过滤器</li>
-<li>Vue2 才有过滤器</li>
-<li></li>
-</ul>
-<h4 id="css-盒子大小的计算方式"><a href="#css-盒子大小的计算方式" class="headerlink" title="css 盒子大小的计算方式"></a>css 盒子大小的计算方式</h4><ul>
-<li>盒子的宽度=padding + border + 可变的内容的宽度</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">	border-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="img标签，br标签-不能使用after-before"><a href="#img标签，br标签-不能使用after-before" class="headerlink" title="img标签，br标签 不能使用after before"></a>img标签，br标签 不能使用after before</h4><h4 id="字体图标的特性"><a href="#字体图标的特性" class="headerlink" title="字体图标的特性"></a>字体图标的特性</h4><ul>
-<li>字体图标 放大后不会模糊</li>
-<li>通过font-size 控制大小</li>
-<li>一般是纯色</li>
-</ul>
-<h4 id="文字溢出，出现省略号"><a href="#文字溢出，出现省略号" class="headerlink" title="文字溢出，出现省略号"></a>文字溢出，出现省略号</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">/*强制文字一行显示*/</span><br><span class="line">white-space: nowarp; </span><br><span class="line">/* 超出部分*/</span><br><span class="line">overflow: hidden;</span><br><span class="line">/*ellipsis  省略号*/</span><br><span class="line">text-overflow: ellipsis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>AttributeError:“sqlalchemy.cimmutabledict。mutabledict’ object . object has no attribute[puthonetoutiao-web hmtt1s</p>
-]]></content>
-      <categories>
-        <category>vue</category>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rpc  的特点 &amp;&amp;Python 应用广泛的RPC方案</title>
-    <url>/2020/12/25/rpc%20%20%E7%9A%84%E7%89%B9%E7%82%B9/</url>
-    <content><![CDATA[<p>rpc的特点<br>1.Python 应用广泛的RPC方案<br>2.RPC 目标</p>
-<a id="more"></a>
-
-<h2 id="rpc-的特点"><a href="#rpc-的特点" class="headerlink" title="rpc  的特点"></a>rpc  的特点</h2><ul>
-<li>为了快递进行子系统之间的功能调用，节省网络传输的开销，把数据大量压榨。采用二进制数据直接传递，不是标准的HTTP协议  这种是rpc调用</li>
-<li>缺点：不通用，有专门的客户端 和服务器支持，自己定义一套二进制数据的协议，才能完成通讯</li>
-<li>优点：通讯效率高</li>
-<li>应用：产品内部间的 功能之间调用，选择rpc  </li>
-</ul>
-<h2 id="Python-应用广泛的RPC方案、"><a href="#Python-应用广泛的RPC方案、" class="headerlink" title="Python 应用广泛的RPC方案、"></a>Python 应用广泛的RPC方案、</h2><ul>
-<li>Facebook  thrift</li>
-<li>Google gRPC</li>
-</ul>
-<h3 id="RPC-目标"><a href="#RPC-目标" class="headerlink" title="RPC 目标"></a>RPC 目标</h3><ul>
-<li><p>高效通讯</p>
-</li>
-<li><p>封装，把网络调用细节尽量隐藏封装，让使用RPC的的人，感觉就像编写本地函数一样进行远程调用</p>
-</li>
-<li><p>尽量通用，可以跨平台，跨语言使用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install grpcio  必须的核心依赖库</span><br><span class="line">pip install grpcio-tools   提供了protobuf 语法的编译工具。用来生成代码（python）	</span><br><span class="line">pip install protobuf</span><br><span class="line">python代码 一部分写 一部分生成</span><br></pre></td></tr></table></figure>
-
-<p>1.使用protocol Buffers（proto3）的IDL接口定义语言定义接口服务，编写在文本文件（以<code>.proto</code>为后缀中。</p>
-<p>2.使用protocol编译器生成服务器和客户端使用的stub代码</p>
-<p>3.编写补充服务器和客户端逻辑代码</p>
-<p>![、](rpc  的特点.assets/1636096352812.png)</p>
-</li>
-</ul>
-<h3 id="proto-代码生成"><a href="#proto-代码生成" class="headerlink" title="proto 代码生成"></a>proto 代码生成</h3><p>编译生成代码</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. reco.proto</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><code>-I</code>表示搜索proto文件中被导入文件的目录</p>
-</li>
-<li><p><code>--python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的数据类型</p>
-</li>
-<li><p><code>--grpc_python_out</code>表示保存生成Python文件的目录，生成的文件中包含接口定义中的服务类型</p>
-</li>
-<li><p>reco_pb2.py 保存根据接口定义文件中的数据类型生成的python类</p>
-</li>
-<li><p>reco_pb2_grpc.py 保存根据接口定义文件中的服务方法类型生成的python调用RPC方法</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>rpc</category>
-      </categories>
-      <tags>
-        <tag>rpc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xpath 语法</title>
-    <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<p> xpath 语法</p>
-<a id="more"></a>
-
-
-
-<p> 相信写过爬虫的同学，都知道XPath的存在。博主最近在学习<a href="https://link.jianshu.com/?t=http://scrapy-chs.readthedocs.io/zh_CN/1.0/topics/debug.html">Scrapy</a>的时候，就了解了一下XPath语法，这里给大家简单地介绍一下： </p>
-<h4 id="节点（node）"><a href="#节点（node）" class="headerlink" title="节点（node）"></a>节点（node）</h4><p> 在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML 文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。 </p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">class</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span> <span class="attr">gender</span>=<span class="string">&quot;boy&quot;</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ID</span>&gt;</span>24<span class="tag">&lt;/<span class="name">ID</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span> <span class="attr">gender</span>=<span class="string">&quot;girl&quot;</span>&gt;</span>Li Rose<span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">red</span>&gt;</span>（monitor）<span class="tag">&lt;/<span class="name">font</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ID</span>&gt;</span>1<span class="tag">&lt;/<span class="name">ID</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>以上例子的节点为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;classs&gt; （文档节点&#x2F;根节点）</span><br><span class="line">&lt;ID&gt;24&lt;&#x2F;ID&gt; （元素节点）</span><br><span class="line">gender&#x3D;&quot;boy&quot; （属性节点） </span><br></pre></td></tr></table></figure>
-
-<p><strong>节点关系</strong></p>
-<p>父：每个元素以及属性都有一个父。例子中<student>的父是<class>;<br> 子：元素节点可有零个、一个或多个子。例子中<class>的子是<student>;<br> 兄弟：拥有相同的父的节点。例子中<name>和<ID>是兄弟;<br> 祖先：某节点的父、父的父，等等。<br> 后代：某节点的子、子的子，等等。</p>
-<p><strong>1. nodeName</strong></p>
-<p>选取此节点的所有子节点</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parsel</span>(<span class="params">self, response</span>):</span></span><br><span class="line">	<span class="comment"># 生成xpath 对象</span></span><br><span class="line">	selector = Selector(response)</span><br><span class="line">	content = selector.xpath(<span class="string">&quot;class&quot;</span>)  <span class="comment"># 选取 class 元素的所有子节点。</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>2./</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parsel(self, response):</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line">	选取根元素 class。</span><br><span class="line">    注释：假如路径起始于正斜杠( &#x2F; )，则此路径始终代表到某元素的绝对路径！</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line">	# 生成xpath 对象</span><br><span class="line">	selector &#x3D; Selector(response)</span><br><span class="line">	content1&#x3D;selector.xpath(&quot;&#x2F;class&quot;)</span><br><span class="line">    content2&#x3D;selector.xpath(&quot;&#x2F;class&#x2F;student&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><strong>3. //</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parse(self, response):</span><br><span class="line">    selector&#x3D;Selector(response)</span><br><span class="line">    content&#x3D;selector.xpath(&#x2F;&#x2F;ID)# 选取所有ID子元素，而不管它们在文档中的位置。</span><br></pre></td></tr></table></figure>
-
-<p><strong>4.  .</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">选取当前节点</span><br></pre></td></tr></table></figure>
-
-<p><strong>5.  ..</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">选取当前的节点的父节点</span><br></pre></td></tr></table></figure>
-
-<p><strong>6. @</strong></p>
-<p>选取属性</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parse(self, response):</span><br><span class="line">    selector&#x3D;Selector(response)  </span><br><span class="line">    # 选取所有gender&#x3D;&quot;boy&quot;属性的节点，而不管它们在文档中的位置。</span><br><span class="line">    content&#x3D;selector.xpath(&#x2F;&#x2F;[@gender&#x3D;&quot;boy&quot;])	</span><br></pre></td></tr></table></figure>
-
-<p><strong>7 谓语 （predicates）</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;class&#x2F;student[1]  </span><br><span class="line">选取属于 class 子元素的第一个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[last()]</span><br><span class="line">选取属于 class 子元素的最后一个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[last()-1]</span><br><span class="line">选取属于 class 子元素的倒数第二个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[position()&lt;3]</span><br><span class="line">选取属于 class 子元素的前两个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[@gender]</span><br><span class="line">选取所有拥有名为 gender 的属性的 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[@gender&#x3D;&quot;boy&quot;]</span><br><span class="line">选取所有拥有 gender&#x3D;&quot;boy&quot; 属性的 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[ID&lt;50]</span><br><span class="line">选取 class 元素的所有 student 元素，且其中的 ID 元素的值须小于 50。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[ID&lt;50]&#x2F;name</span><br><span class="line">选取 class 元素中的 student 元素的所有 name 元素，且其中的 ID 元素的值须小于 35。</span><br></pre></td></tr></table></figure>
-
-<p><strong>8 通配符</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. *              匹配任何元素节点</span><br><span class="line">2. @*            匹配任何属性节点</span><br><span class="line">3. node()        匹配任何类型的节点</span><br></pre></td></tr></table></figure>
-
-<p><strong>9 拓展</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;test2&quot;&gt;美女，&lt;font color&#x3D;red&gt;你的微信是多少？&lt;&#x2F;font&gt;&lt;div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果使用：<br> <code>data = selector.xpath(&#39;//div[@id=&quot;test2&quot;]/text()&#39;).extract()[0]</code><br> 只能提取到“美女，”；</p>
-<p>如果使用：<br> <code>data = selector.xpath(&#39;//div[@id=&quot;test2&quot;]/font/text()&#39;).extract()[0]</code><br> 又只能提取到“你的微信是多少？”</p>
-<p>到底我们要怎样才能把“美女，你的微信是多少”提取出来？</p>
-<h5 id="可以使用xpath的string-来达到目的"><a href="#可以使用xpath的string-来达到目的" class="headerlink" title="可以使用xpath的string(.)来达到目的"></a>可以使用xpath的string(.)来达到目的</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data &#x3D; selector.xpath(&#39;&#x2F;&#x2F;div[@id&#x3D;&quot;test2&quot;])</span><br><span class="line">info &#x3D; data.xpath(&#39;string(.)&#39;).extract()[0]</span><br></pre></td></tr></table></figure>
-
-<p>以上博客参照于 <a href="https://www.jianshu.com/p/2391950137a4">此博客</a></p>
-<p> 转载请告知！！博主个人博客：<a href="https://www.jkraise.top/">http://www.jkraise.top</a><br>文章有不完善的地方，请留言告知！My lord </p>
-]]></content>
-      <categories>
-        <category>xpath</category>
-        <category>xpath的子目录</category>
-      </categories>
-      <tags>
-        <tag>xpath 语法</tag>
-        <tag>爬虫必备-语法</tag>
       </tags>
   </entry>
   <entry>
@@ -2100,6 +2214,117 @@ app.component(&#39;grandson&#39;, &#123;
       </tags>
   </entry>
   <entry>
+    <title>vue 过滤器</title>
+    <url>/2021/09/07/vue%E5%AE%8C%E6%95%B4/</url>
+    <content><![CDATA[<p>vue 过滤器<br>css 盒子大小的计算方式<br>img标签，br标签 不能使用after before</p>
+<a id="more"></a>
+
+<h3 id="vue-过滤器"><a href="#vue-过滤器" class="headerlink" title="vue 过滤器"></a>vue 过滤器</h3><ul>
+<li>Vue3 没有过滤器</li>
+<li>Vue2 才有过滤器</li>
+<li></li>
+</ul>
+<h4 id="css-盒子大小的计算方式"><a href="#css-盒子大小的计算方式" class="headerlink" title="css 盒子大小的计算方式"></a>css 盒子大小的计算方式</h4><ul>
+<li>盒子的宽度=padding + border + 可变的内容的宽度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">	border-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="img标签，br标签-不能使用after-before"><a href="#img标签，br标签-不能使用after-before" class="headerlink" title="img标签，br标签 不能使用after before"></a>img标签，br标签 不能使用after before</h4><h4 id="字体图标的特性"><a href="#字体图标的特性" class="headerlink" title="字体图标的特性"></a>字体图标的特性</h4><ul>
+<li>字体图标 放大后不会模糊</li>
+<li>通过font-size 控制大小</li>
+<li>一般是纯色</li>
+</ul>
+<h4 id="文字溢出，出现省略号"><a href="#文字溢出，出现省略号" class="headerlink" title="文字溢出，出现省略号"></a>文字溢出，出现省略号</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">/*强制文字一行显示*/</span><br><span class="line">white-space: nowarp; </span><br><span class="line">/* 超出部分*/</span><br><span class="line">overflow: hidden;</span><br><span class="line">/*ellipsis  省略号*/</span><br><span class="line">text-overflow: ellipsis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>AttributeError:“sqlalchemy.cimmutabledict。mutabledict’ object . object has no attribute[puthonetoutiao-web hmtt1s</p>
+]]></content>
+      <categories>
+        <category>vue</category>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xpath 语法</title>
+    <url>/2020/10/09/xpath%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<p> xpath 语法</p>
+<a id="more"></a>
+
+
+
+<p> 相信写过爬虫的同学，都知道XPath的存在。博主最近在学习<a href="https://link.jianshu.com/?t=http://scrapy-chs.readthedocs.io/zh_CN/1.0/topics/debug.html">Scrapy</a>的时候，就了解了一下XPath语法，这里给大家简单地介绍一下： </p>
+<h4 id="节点（node）"><a href="#节点（node）" class="headerlink" title="节点（node）"></a>节点（node）</h4><p> 在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML 文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。 </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">class</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span> <span class="attr">gender</span>=<span class="string">&quot;boy&quot;</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ID</span>&gt;</span>24<span class="tag">&lt;/<span class="name">ID</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">student</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span> <span class="attr">gender</span>=<span class="string">&quot;girl&quot;</span>&gt;</span>Li Rose<span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">red</span>&gt;</span>（monitor）<span class="tag">&lt;/<span class="name">font</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ID</span>&gt;</span>1<span class="tag">&lt;/<span class="name">ID</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">student</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上例子的节点为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;classs&gt; （文档节点&#x2F;根节点）</span><br><span class="line">&lt;ID&gt;24&lt;&#x2F;ID&gt; （元素节点）</span><br><span class="line">gender&#x3D;&quot;boy&quot; （属性节点） </span><br></pre></td></tr></table></figure>
+
+<p><strong>节点关系</strong></p>
+<p>父：每个元素以及属性都有一个父。例子中<student>的父是<class>;<br> 子：元素节点可有零个、一个或多个子。例子中<class>的子是<student>;<br> 兄弟：拥有相同的父的节点。例子中<name>和<ID>是兄弟;<br> 祖先：某节点的父、父的父，等等。<br> 后代：某节点的子、子的子，等等。</p>
+<p><strong>1. nodeName</strong></p>
+<p>选取此节点的所有子节点</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Selector</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parsel</span>(<span class="params">self, response</span>):</span></span><br><span class="line">	<span class="comment"># 生成xpath 对象</span></span><br><span class="line">	selector = Selector(response)</span><br><span class="line">	content = selector.xpath(<span class="string">&quot;class&quot;</span>)  <span class="comment"># 选取 class 元素的所有子节点。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2./</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parsel(self, response):</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line">	选取根元素 class。</span><br><span class="line">    注释：假如路径起始于正斜杠( &#x2F; )，则此路径始终代表到某元素的绝对路径！</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line">	# 生成xpath 对象</span><br><span class="line">	selector &#x3D; Selector(response)</span><br><span class="line">	content1&#x3D;selector.xpath(&quot;&#x2F;class&quot;)</span><br><span class="line">    content2&#x3D;selector.xpath(&quot;&#x2F;class&#x2F;student&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. //</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parse(self, response):</span><br><span class="line">    selector&#x3D;Selector(response)</span><br><span class="line">    content&#x3D;selector.xpath(&#x2F;&#x2F;ID)# 选取所有ID子元素，而不管它们在文档中的位置。</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.  .</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">选取当前节点</span><br></pre></td></tr></table></figure>
+
+<p><strong>5.  ..</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">选取当前的节点的父节点</span><br></pre></td></tr></table></figure>
+
+<p><strong>6. @</strong></p>
+<p>选取属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from scrapy import Selector</span><br><span class="line"></span><br><span class="line">def parse(self, response):</span><br><span class="line">    selector&#x3D;Selector(response)  </span><br><span class="line">    # 选取所有gender&#x3D;&quot;boy&quot;属性的节点，而不管它们在文档中的位置。</span><br><span class="line">    content&#x3D;selector.xpath(&#x2F;&#x2F;[@gender&#x3D;&quot;boy&quot;])	</span><br></pre></td></tr></table></figure>
+
+<p><strong>7 谓语 （predicates）</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;class&#x2F;student[1]  </span><br><span class="line">选取属于 class 子元素的第一个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[last()]</span><br><span class="line">选取属于 class 子元素的最后一个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[last()-1]</span><br><span class="line">选取属于 class 子元素的倒数第二个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[position()&lt;3]</span><br><span class="line">选取属于 class 子元素的前两个 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[@gender]</span><br><span class="line">选取所有拥有名为 gender 的属性的 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[@gender&#x3D;&quot;boy&quot;]</span><br><span class="line">选取所有拥有 gender&#x3D;&quot;boy&quot; 属性的 student 元素。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[ID&lt;50]</span><br><span class="line">选取 class 元素的所有 student 元素，且其中的 ID 元素的值须小于 50。</span><br><span class="line"></span><br><span class="line">&#x2F;class&#x2F;student[ID&lt;50]&#x2F;name</span><br><span class="line">选取 class 元素中的 student 元素的所有 name 元素，且其中的 ID 元素的值须小于 35。</span><br></pre></td></tr></table></figure>
+
+<p><strong>8 通配符</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. *              匹配任何元素节点</span><br><span class="line">2. @*            匹配任何属性节点</span><br><span class="line">3. node()        匹配任何类型的节点</span><br></pre></td></tr></table></figure>
+
+<p><strong>9 拓展</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;test2&quot;&gt;美女，&lt;font color&#x3D;red&gt;你的微信是多少？&lt;&#x2F;font&gt;&lt;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用：<br> <code>data = selector.xpath(&#39;//div[@id=&quot;test2&quot;]/text()&#39;).extract()[0]</code><br> 只能提取到“美女，”；</p>
+<p>如果使用：<br> <code>data = selector.xpath(&#39;//div[@id=&quot;test2&quot;]/font/text()&#39;).extract()[0]</code><br> 又只能提取到“你的微信是多少？”</p>
+<p>到底我们要怎样才能把“美女，你的微信是多少”提取出来？</p>
+<h5 id="可以使用xpath的string-来达到目的"><a href="#可以使用xpath的string-来达到目的" class="headerlink" title="可以使用xpath的string(.)来达到目的"></a>可以使用xpath的string(.)来达到目的</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data &#x3D; selector.xpath(&#39;&#x2F;&#x2F;div[@id&#x3D;&quot;test2&quot;])</span><br><span class="line">info &#x3D; data.xpath(&#39;string(.)&#39;).extract()[0]</span><br></pre></td></tr></table></figure>
+
+<p>以上博客参照于 <a href="https://www.jianshu.com/p/2391950137a4">此博客</a></p>
+<p> 转载请告知！！博主个人博客：<a href="https://www.jkraise.top/">http://www.jkraise.top</a><br>文章有不完善的地方，请留言告知！My lord </p>
+]]></content>
+      <categories>
+        <category>xpath</category>
+        <category>xpath的子目录</category>
+      </categories>
+      <tags>
+        <tag>xpath 语法</tag>
+        <tag>爬虫必备-语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>哈佛曼编码</title>
+    <url>/2020/12/25/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>哈佛曼编码</p>
+<a id="more"></a>
+<p>哈弗曼</p>
+]]></content>
+      <categories>
+        <category>哈佛曼编码</category>
+      </categories>
+      <tags>
+        <tag>哈佛曼编码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分布式 爬虫 Scrapy项目 scrapyd</title>
     <url>/2020/12/25/%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%ABScrapy/</url>
     <content><![CDATA[<p>分布式 爬虫 Scrapy项目 scrapyd</p>
@@ -2157,17 +2382,29 @@ app.component(&#39;grandson&#39;, &#123;
       </tags>
   </entry>
   <entry>
-    <title>哈佛曼编码</title>
-    <url>/2020/12/25/%E5%93%88%E5%BC%97%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
-    <content><![CDATA[<p>哈佛曼编码</p>
+    <title>微信小程序知识点 总结</title>
+    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
 <a id="more"></a>
-<p>哈弗曼</p>
+<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
+<ol>
+<li>开搞  按思路来</li>
+</ol>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
+<p>2，web 与小程序的不同</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
+<p>3，最后利用 判断时间戳</p>
+<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>哈佛曼编码</category>
+        <category>微信小程序</category>
       </categories>
       <tags>
-        <tag>哈佛曼编码</tag>
+        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -2499,32 +2736,6 @@ pip install scrapyd  -i https://pypi.tuna.tsinghua.edu.cn/simple
         <tag>Python排序算法</tag>
         <tag>排序算法</tag>
         <tag>数据算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微信小程序知识点 总结</title>
-    <url>/2021/01/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<a id="more"></a>
-<h2 id="微信小程序知识点-总结"><a href="#微信小程序知识点-总结" class="headerlink" title="微信小程序知识点 总结"></a>微信小程序知识点 总结</h2><p>缓存技术</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615249714299.png~01style" alt="1615249714299"></p>
-<ol>
-<li>开搞  按思路来</li>
-</ol>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615250065955.png~01style" alt="1615250065955"></p>
-<p>2，web 与小程序的不同</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251158606"></p>
-<p>3，最后利用 判断时间戳</p>
-<p><img src="http://qny.jkraise.top/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%82%B9.assets/1615251158606.png~01style" alt="1615251240231"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>微信小程序</category>
-      </categories>
-      <tags>
-        <tag>微信小程序</tag>
       </tags>
   </entry>
   <entry>

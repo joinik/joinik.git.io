@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="ZK&#96;s Blog">
 <meta property="og:description" content="RabbitMQ介绍消息队列概念">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://jkraise.top/2022/07/23/RabbitMQ/RabbitMQ.assets/1636618068256.png">
+<meta property="og:image" content="https://py.jkraise.top/RabbitMQ.assets/1636618068256.png~01style">
 <meta property="article:published_time" content="2022-07-23T05:33:22.000Z">
-<meta property="article:modified_time" content="2022-07-23T05:38:14.800Z">
+<meta property="article:modified_time" content="2022-10-25T05:40:08.832Z">
 <meta property="article:author" content="zhaokui">
 <meta property="article:tag" content="RabbitMQ">
 <meta property="article:tag" content="消息队列">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://jkraise.top/2022/07/23/RabbitMQ/RabbitMQ.assets/1636618068256.png">
+<meta name="twitter:image" content="https://py.jkraise.top/RabbitMQ.assets/1636618068256.png~01style">
 
 <link rel="canonical" href="http://jkraise.top/2022/07/23/RabbitMQ/">
 
@@ -237,10 +237,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-23 13:33:22 / 修改时间：13:38:14" itemprop="dateCreated datePublished" datetime="2022-07-23T13:33:22+08:00">2022-07-23</time>
+              <time title="创建时间：2022-07-23 13:33:22" itemprop="dateCreated datePublished" datetime="2022-07-23T13:33:22+08:00">2022-07-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-25 13:40:08" itemprop="dateModified" datetime="2022-10-25T13:40:08+08:00">2022-10-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -313,7 +319,7 @@
 <li><strong>相关概念</strong></li>
 </ul>
 <p>通常我们谈到队列服务, 会有三个概念： 发消息者、队列、收消息者，RabbitMQ 在这个基本概念之上, 多做了一层抽象, 在发消息者和 队列之间, 加入了交换器 (Exchange). 这样发消息者和队列就没有直接联系, 转而变成发消息者把消息给交换器, 交换器根据调度策略再把消息再给队列。</p>
-<p><img src="RabbitMQ.assets/1636618068256.png" alt="1636618068256"></p>
+<p><img src="https://py.jkraise.top/RabbitMQ.assets/1636618068256.png~01style" alt="1636618068256"></p>
 <ul>
 <li><ul>
 <li>左侧 P 代表 生产者，也就是往 RabbitMQ 发消息的程序。</li>

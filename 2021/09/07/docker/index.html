@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="ZK&#96;s Blog">
 <meta property="og:description" content="Docker指令&amp;&amp; 容器使用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qny.jkraise.top/docker/642_1.png">
-<meta property="og:image" content="https://qny.jkraise.top/docker/643_1.png">
-<meta property="og:image" content="https://qny.jkraise.top/docker/645_1.png">
-<meta property="og:image" content="https://qny.jkraise.top/docker/644_1.png">
+<meta property="og:image" content="https://py.jkraise.top/docker/642_1.png">
+<meta property="og:image" content="https://py.jkraise.top/docker/643_1.png">
+<meta property="og:image" content="https://py.jkraise.top/docker/645_1.png">
+<meta property="og:image" content="https://py.jkraise.top/docker/644_1.png">
 <meta property="article:published_time" content="2021-09-07T14:39:19.000Z">
-<meta property="article:modified_time" content="2021-09-07T14:39:44.082Z">
+<meta property="article:modified_time" content="2022-10-24T07:39:47.299Z">
 <meta property="article:author" content="zhaokui">
 <meta property="article:tag" content="Docker指令&amp;&amp; 容器使用">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://qny.jkraise.top/docker/642_1.png">
+<meta name="twitter:image" content="https://py.jkraise.top/docker/642_1.png">
 
 <link rel="canonical" href="http://jkraise.top/2021/09/07/docker/">
 
@@ -239,10 +239,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-07 22:39:19 / 修改时间：22:39:44" itemprop="dateCreated datePublished" datetime="2021-09-07T22:39:19+08:00">2021-09-07</time>
+              <time title="创建时间：2021-09-07 22:39:19" itemprop="dateCreated datePublished" datetime="2021-09-07T22:39:19+08:00">2021-09-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-24 15:39:47" itemprop="dateModified" datetime="2022-10-24T15:39:47+08:00">2022-10-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -319,13 +325,13 @@
 <li>exit 退出了这个容器</li>
 </ul>
 <h5 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://qny.jkraise.top/docker/642_1.png"></p>
+<p><img src="https://py.jkraise.top/docker/642_1.png"></p>
 <h5 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run ... -v 主机目录:容器中的目录 ...</span><br></pre></td></tr></table></figure>
 <h5 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 源目录 目标目录</span><br></pre></td></tr></table></figure>
 
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker images -----&gt; 查看已下载的镜像</span><br><span class="line">docker rmi 镜像名称:标签名      -----&gt; 删除已下载镜像</span><br><span class="line">docker search 镜像   -----&gt;   从官方仓库（hub.docker.com）查找镜像</span><br><span class="line">docker pull 镜像名称:标签名   -----&gt; 标签名默认是 latest，代表最新版本。</span><br><span class="line">docker pull 镜像名 ------&gt;下载最新版</span><br><span class="line">docker ps      -----&gt;  列出运行中的容器（运行中）</span><br><span class="line">docker ps -a  ------&gt; 列出所有的容器（运行、未运行）</span><br><span class="line">docker ps -a 查看所有的容器</span><br><span class="line">CONTAINER ID   IMAGE        COMMAND     CREATED         STATUS         PORTS     NAMES</span><br><span class="line">7c291fb47b70   python:3.9   &quot;python3&quot;   4 minutes ago   Up 4 minutes             priceless_almeida</span><br><span class="line">docker stop 容器名称id  -----&gt;  停止容器</span><br><span class="line">docker start 容器名称id   -----&gt;  启动容器</span><br><span class="line">docker start -i 容器的id  ---&gt;在将一个停止的容器运行起来的同时，指定交互模式</span><br><span class="line">docker restart 容器名称id  -----&gt;  重启容器</span><br><span class="line">docker rm 容器id   -----&gt; 删除 已经停止运行的容器</span><br><span class="line">docker rm $(docker ps -a -q)    -----&gt; 删除所有停止运行的容器 （慎用）</span><br><span class="line">docker rm -f 容器的id  -----&gt; 强制删除容器 （无论是否停止运行）</span><br><span class="line">docker rmi  镜像的id</span><br><span class="line">docker run 镜像名字:版本  -----&gt;创建一个容器且运行</span><br><span class="line">                -it ---&gt;交互模式</span><br><span class="line">docker exec  执行容器中的指令</span><br></pre></td></tr></table></figure>
 <p><strong>Dockerfile 参数</strong></p>
-<p>FROM：指定基础镜像，必须为第一个命令<br>MAINTAINER: 维护者信息<br>ENV：设置环境变量<br>RUN：构建镜像时执行的命令<br>ADD：将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget<br>EXPOSE：指定于外界交互的端口<br>VOLUME：用于指定持久化目录<br>WORKDIR：工作目录，类似于cd命令<br><img src="https://qny.jkraise.top/docker/643_1.png"></p>
+<p>FROM：指定基础镜像，必须为第一个命令<br>MAINTAINER: 维护者信息<br>ENV：设置环境变量<br>RUN：构建镜像时执行的命令<br>ADD：将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget<br>EXPOSE：指定于外界交互的端口<br>VOLUME：用于指定持久化目录<br>WORKDIR：工作目录，类似于cd命令<br><img src="https://py.jkraise.top/docker/643_1.png"></p>
 <h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>使用MySQL镜像</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name&#x3D;mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.5</span><br></pre></td></tr></table></figure>
 
@@ -337,8 +343,8 @@
 <li>-e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码为123456。</li>
 <li>mysql:5.5 要使用的镜像的名称</li>
 </ul>
-<h4 id="网络-指令"><a href="#网络-指令" class="headerlink" title="网络 指令"></a>网络 指令</h4><p><strong>查看 网络列表</strong><br><code>docker network ls</code><br><img src="https://qny.jkraise.top/docker/645_1.png"></p>
-<p><strong>当我们在使用docker-compose构建服务时，会自动创建一个新的网络如下</strong><br><strong>查看这个网络中所有的容器ip以及其他信息</strong><br><code>docker network inspect 网络id</code><br><img src="https://qny.jkraise.top/docker/644_1.png"></p>
+<h4 id="网络-指令"><a href="#网络-指令" class="headerlink" title="网络 指令"></a>网络 指令</h4><p><strong>查看 网络列表</strong><br><code>docker network ls</code><br><img src="https://py.jkraise.top/docker/645_1.png"></p>
+<p><strong>当我们在使用docker-compose构建服务时，会自动创建一个新的网络如下</strong><br><strong>查看这个网络中所有的容器ip以及其他信息</strong><br><code>docker network inspect 网络id</code><br><img src="https://py.jkraise.top/docker/644_1.png"></p>
 <p><strong>新建一个网络</strong><br><code>$ docker network create -d bridge my-net</code></p>
 <p><strong>运行容器连接到my-net 网络</strong><br><code>docker run --rm -it --network my-net my_flask:1.0 bash</code></p>
 
